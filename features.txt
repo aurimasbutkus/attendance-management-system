@@ -1,2 +1,13 @@
 Default format: Feature name - description
 pakeitimai
+-vartotojai turi savo paskyras
+-vartotoju privilegijos(darbdavys,projekto vadybininkas t.t)
+-public ar projekto prie kurio dirba darbuotojai(group) chatroomas
+-traktuojamas darbuotojo atejimo i darba ir isejimo is darbo laikas.(kai prisijungi paspaudi kad dirbi ir t.t)
+-tam tikras privilegijas turintis (arba ne) asmuo realiu laiku gali matyti ka dabar daro jo darbininkas
+ (arba ziurint jo profili arba gal koki saraso langa darbuotoju dirbanciu prie to projekto sukursim).
+-apie darbininka renkami jo darbo efektyvumo duomenis.(kiek sia diena dirbo, kiek dirba per savaite vidurkis, 
+kiek uzduociu ivykde) Pateikiami grafikai apie darbo sias darbo statistikas.
+-darbdavio sukuriami darbu moduliai(projektai) kuriuose uzregistruojamos uzduotys, ju reikalavimai.
+-darbdavys ar projekto vadybininkas (pagal privilegijas) priskiria darbininkus prie projektu ir duoda jiems uzduotis.
+-pranesimai apie uzduotis siunciami vartotojams pastu
