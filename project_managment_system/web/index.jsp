@@ -8,57 +8,8 @@
 
 <html>
 <body data-id = "home">
-<style>
-  h1 {
-    font-family: Robo mono, Monospace;
-    padding: 10px;
-    font-size: 26px;
-  }
-  .tree-list{
-    font-size: 20px;
-    font-family: Monospace;
-    display: block;
-    padding: 7px 10px 7px 0;
-    color: #696969;
-    line-height: 15px;
-    font-weight: 500;
-    text-decoration: none;
-    cursor: pointer;
-  }
-  .section-style {
-    position: absolute;
-    top: 150px;
-    bottom: 0;
-    left: 0;
-    z-index: 1;
-    overflow: hidden;
-    width: 216px;
-    background: #D3FFCE;
-    font-size: 12px;
-  }
-  .panel_main {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    height: 150px;
-    z-index: 2;
-    background: #D3FFCE;
-  }
-  .logged {
-    position: absolute;
-    font-family: Robo mono, Monospace;
-    padding: 10px;
-    font-size: 26px;
-    right: 0;
-    top: 0;
-  }
-  h3{
-    vertical-align: text-top;
-  }
-</style>
 <div>
+  <link rel="stylesheet" type="text/css" href="index.css">
   <section class="section-style">
     <div>
       <h1>Settings:</h1>
@@ -67,7 +18,7 @@
         <li><a href="#" class = "tree-list">Projects</a></li>
         <li><a href="#" class = "tree-list">Team</a></li>
         <li><a href="#" class = "tree-list">Options</a></li>
-        <li><a href="#" class = "tree-list">Log Out</a></li>
+        <li><a href="login.jsp" class = "tree-list">Log Out</a></li>
       </ul>
     </div>
   </section>
