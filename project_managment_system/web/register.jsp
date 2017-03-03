@@ -15,11 +15,12 @@
 <body>
     <div class="login-page">
         <div class="form">
-            <form action = "login" method="post" class="login-form" style = "display: block">
-                <input name="uname"type="text" placeholder="username"/>
-                <input name="upass" type="password" placeholder="password"/>
-                <input type="submit" value="login">
-                <p class="message">Not registered? <a href="register.jsp">Create an account</a></p>
+            <form action = "register" method="post" class="register-form" style = "display: block">
+                <input name="name" type="text" placeholder="name"/>
+                <input name="pass" type="password" placeholder="password"/>
+                <input name="email" type="text" placeholder="email address"/>
+                <input type="submit" value="create">
+                <p class="message">Already registered? <a href="login.jsp">Sign In</a></p>
             </form>
         </div>
     </div>
