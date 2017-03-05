@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.sql.*;
 
 /**
  * Created by Marius on 2017-03-03.
@@ -37,7 +38,7 @@ public class LoginServlet extends HttpServlet {
         }
     }
     private static boolean verify(String name, String pass) throws IOException {
-        BufferedReader br = new BufferedReader(new FileReader(file));
+        /*BufferedReader br = new BufferedReader(new FileReader(file));
         try {
             String line = br.readLine();
             while (line != null) {
@@ -56,6 +57,28 @@ public class LoginServlet extends HttpServlet {
         } finally {
             br.close();
         }
+        return false;*/
+        String driver = "com.mysql.jdbc.Driver";
+        String url = "jdbc:mysql://localhost:3306/employee_management_system";
+        try {
+            Class.forName(driver);
+            Connection conn = DriverManager.getConnection(url,"root","");
+
+
+            String query = "SELECT account.username, account.password FROM account";
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery(query);
+
+            while(rs.next())
+            {
+               if(rs.getString("username").compareTo(name)==0 && rs.getString("password").compareTo(pass)==0)
+                   return true;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         return false;
     }
 }

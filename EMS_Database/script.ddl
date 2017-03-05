@@ -5,20 +5,20 @@ CREATE TABLE Living_Adress_Info
 	street varchar (255) NOT NULL,
 	house_number integer NOT NULL,
 	apartment_numer integer NULL,
-	adress_info_id integer NOT NULL,
+	adress_info_id integer NOT NULL AUTO_INCREMENT,
 	PRIMARY KEY(adress_info_id)
 );
 
 CREATE TABLE Team
 (
-	team_id integer NOT NULL,
+	team_id integer NOT NULL AUTO_INCREMENT,
 	size integer NOT NULL,
 	PRIMARY KEY(team_id)
 );
 
 CREATE TABLE Employees_Work_Status
 (
-	id integer NOT NULL,
+	id integer NOT NULL AUTO_INCREMENT,
 	name char (13) NOT NULL,
 	PRIMARY KEY(id)
 );
@@ -30,7 +30,7 @@ INSERT INTO Employees_Work_Status(id, name) VALUES(5, 'checked_in');
 
 CREATE TABLE Roles_For_Users
 (
-	id integer NOT NULL,
+	id integer NOT NULL AUTO_INCREMENT,
 	name char (7) NOT NULL,
 	PRIMARY KEY(id)
 );
@@ -40,7 +40,7 @@ INSERT INTO Roles_For_Users(id, name) VALUES(3, 'default');
 
 CREATE TABLE Task_Status
 (
-	id integer NOT NULL,
+	id integer NOT NULL AUTO_INCREMENT,
 	name char (15) NOT NULL,
 	PRIMARY KEY(id)
 );
@@ -51,7 +51,7 @@ INSERT INTO Task_Status(id, name) VALUES(4, 'finished');
 
 CREATE TABLE Employee
 (
-	employee_id integer NOT NULL,
+	employee_id integer NOT NULL AUTO_INCREMENT,
 	phone varchar (255) NULL,
 	nationality varchar (255) NOT NULL,
 	birthdate date NOT NULL,
@@ -70,12 +70,12 @@ CREATE TABLE Employee
 
 CREATE TABLE Account
 (
-	user_id integer NOT NULL,
+	user_id integer NOT NULL AUTO_INCREMENT,
 	username varchar (255) NOT NULL,
 	password varchar (255) NOT NULL,
 	email_address varchar (255) NOT NULL,
 	user_role integer NOT NULL,
-	fk_Employee integer NOT NULL,
+	fk_Employee integer NULL,
 	PRIMARY KEY(user_id),
 	UNIQUE(fk_Employee),
 	FOREIGN KEY(user_role) REFERENCES Roles_For_Users (id),
@@ -87,7 +87,7 @@ CREATE TABLE Contract_Info
 	start_date date NOT NULL,
 	end_date date NOT NULL,
 	salary DECIMAL(10,2) NOT NULL,
-	contract_id integer NOT NULL,
+	contract_id integer NOT NULL AUTO_INCREMENT,
 	fk_Employee integer NOT NULL,
 	PRIMARY KEY(contract_id),
 	UNIQUE(fk_Employee),
@@ -96,7 +96,7 @@ CREATE TABLE Contract_Info
 
 CREATE TABLE Project
 (
-	project_id integer NOT NULL,
+	project_id integer NOT NULL AUTO_INCREMENT,
 	name varchar (255) NOT NULL,
 	description varchar (255) NOT NULL,
 	start_date date NOT NULL,
@@ -109,7 +109,7 @@ CREATE TABLE Project
 CREATE TABLE Project_Teams
 (
 	number_of_teams integer NOT NULL,
-	collective_id integer NOT NULL PRIMARY KEY,
+	collective_id integer NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	fk_Team integer NOT NULL,
 	fk_Project integer NOT NULL,
 	CONSTRAINT fkc_A_Team FOREIGN KEY(fk_Team) REFERENCES Team (team_id),
@@ -123,7 +123,7 @@ CREATE TABLE Task
 	modification_date date NULL,
 	deadline date NOT NULL,
 	completion_date date NULL,
-	task_id integer NOT NULL,
+	task_id integer NOT NULL AUTO_INCREMENT,
 	status integer NOT NULL,
 	fk_Project integer NOT NULL,
 	fk_project_manager integer NOT NULL,
@@ -145,7 +145,7 @@ CREATE TABLE Employees_Tasks
 
 CREATE TABLE Task_Comment
 (
-	comment_id integer NOT NULL,
+	comment_id integer NOT NULL AUTO_INCREMENT,
 	content varchar (255) NOT NULL,
 	creation_date date NOT NULL,
 	modify_date date NULL,

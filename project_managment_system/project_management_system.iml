@@ -22,5 +22,6 @@
     <orderEntry type="library" scope="PROVIDED" name="Tomcat 8.5.11" level="application_server_libraries" />
     <orderEntry type="library" name="jQuery-2.0.0" level="application" />
     <orderEntry type="library" name="jquery" level="application" />
+    <orderEntry type="library" name="mysql-connector-java-5.1.41-bin" level="application" />
   </component>
 </module>
