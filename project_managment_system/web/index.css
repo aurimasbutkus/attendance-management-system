@@ -1,48 +1,68 @@
-h1 {
-    font-family: Robo mono, monospace;
-    padding: 10px;
-    font-size: 26px;
+
+ul {
+	list-style-type: none;
+	margin: 0;
+	padding-left: 0;
 }
-.tree-list{
-    font-size: 20px;
-    font-family: Robo mono, monospace;
-    display: block;
-    padding: 7px 10px 7px 0;
-    color: #696969;
-    line-height: 15px;
-    font-weight: 500;
-    text-decoration: none;
-    cursor: pointer;
+
+h1, h2, p, a, span{
+	color: #fff;
 }
-.section-style {
-    position: absolute;
-    top: 150px;
-    bottom: 0;
-    left: 0;
-    z-index: 1;
-    overflow: hidden;
-    width: 216px;
-    background: #D3FFCE;
-    font-size: 12px;
+
+.horizontal-list {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
 }
-.panel_main {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    height: 150px;
-    z-index: 2;
-    background: #D3FFCE;
+	.horizontal-list li {
+		float: left;
+	}
+/** MAIN CONTAINER **/
+
+.main-container {
+	font-family: 'Ubuntu', sans-serif;
+	width: 950px;
+	margin: 6em auto;
 }
-.logged {
-    position: absolute;
-    font-family: Robo mono, monospace;
-    padding: 10px;
-    font-size: 26px;
-    right: 0;
-    top: 0;
+body {
+  background: #76b852;
+  background: -webkit-linear-gradient(right, #9bcb80, #b7daa4);
+  background: -moz-linear-gradient(right, #9bcb80, #b7daa4);
+  background: -o-linear-gradient(right, #9bcb80, #b7daa4);
+  background: linear-gradient(to left, #9bcb80, #b7daa4);
 }
-h3{
-    vertical-align: text-top;
-}
+	/*********************************************** HEADER ***********************************************/
+	header {
+		height: 80px;
+	}
+		.header-menu {
+			font-size: 20px;
+			line-height: 80px;
+      font-family: "Roboto", sans-serif;
+		}
+				.header-menu-tab {
+          text-decoration: none;
+					padding: 0 45px;
+					display: block;
+					line-height: 74px;
+					font-size: 20px;
+          border-radius: 10px;
+          height: 80px;
+					-webkit-transition: background .5s;
+					transition: background .5s;
+				}
+					.header-menu-tab:hover {
+            border-radius: 10px;
+						background:#64a343;
+						text-decoration: none;
+					}
+	/** CONTAINERS **/
+		.block {
+			margin-bottom: 25px;
+       background: #59913b;
+        background: -webkit-linear-gradient(#64a343, #7ebc5c);
+        background: -moz-linear-gradient( #64a343, #7ebc5c);
+        background: -o-linear-gradient(#64a343, #7ebc5c);
+        background: linear-gradient(#64a343, #7ebc5c);
+      	border-radius: 10px;
+		}
