@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>EMS Register Page</title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <link href="../static/css/login.css" th:href="@{css/login.css}" rel="stylesheet" />
+</head>
+<body>
+    <div class="login-page">
+        <div class="form">
+            <form th:action = "@{/register}" th:object="${userForm}" method="post" class="register-form" style = "display: block">
+                <input th:field="*{username}" type="text" placeholder="username"/>
+                <input th:field="*{email_address}" type="text" placeholder="email address"/>
+                <input th:field="*{password}" type="password" placeholder="password"/>
+                <input type="submit" value="create"/>
+                <p class="message">Already registered? <a th:href="@{/login}">Sign In</a></p>
+            </form>
+        </div>
+    </div>
+</body>>
+</html>
