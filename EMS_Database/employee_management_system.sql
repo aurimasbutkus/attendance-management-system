@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 26, 2017 at 06:28 PM
+-- Generation Time: May 04, 2017 at 08:15 PM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 7.1.1
 
@@ -23,6 +23,28 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `account`
+--
+
+CREATE TABLE `account` (
+  `user_id` int(11) NOT NULL,
+  `email_address` varchar(255) NOT NULL,
+  `fk_employee` int(11) DEFAULT NULL,
+  `password` varchar(255) NOT NULL,
+  `user_role` int(11) DEFAULT NULL,
+  `username` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `account`
+--
+
+INSERT INTO `account` (`user_id`, `email_address`, `fk_employee`, `password`, `user_role`, `username`) VALUES
+(1, 'lala@lala.com', NULL, 'asdawe11', 3, 'lulelaa');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `contract_info`
 --
 
@@ -31,30 +53,7 @@ CREATE TABLE `contract_info` (
   `start_date` date NOT NULL,
   `end_date` date NOT NULL,
   `salary` decimal(10,0) NOT NULL,
-  `fk_Employee` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `employee`
---
-
-CREATE TABLE `employee` (
-  `employee_id` int(11) NOT NULL,
-  `username` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `first_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `last_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `gender` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `nationality` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `email_address` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `birthdate` date NOT NULL,
-  `phone` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `current_task` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `work_status` int(11) NOT NULL,
-  `user_role` int(11) NOT NULL,
-  `fk_Team` int(11) DEFAULT NULL
+  `fk_User` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -67,7 +66,7 @@ CREATE TABLE `employees_tasks` (
   `tasklist_id` int(11) NOT NULL,
   `number_of_tasks` int(11) NOT NULL,
   `fk_Subtask` int(11) NOT NULL,
-  `fk_Employee` int(11) NOT NULL
+  `fk_User` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -196,6 +195,28 @@ CREATE TABLE `team` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `user`
+--
+
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL,
+  `username` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `email_address` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `first_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `last_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `date_of_birth` date DEFAULT NULL,
+  `phone_number` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `gender` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `nationality` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `work_status` int(11) DEFAULT NULL,
+  `user_role` int(11) NOT NULL DEFAULT '3',
+  `fk_Team` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `user_role`
 --
 
@@ -218,20 +239,17 @@ INSERT INTO `user_role` (`id`, `name`) VALUES
 --
 
 --
+-- Indexes for table `account`
+--
+ALTER TABLE `account`
+  ADD PRIMARY KEY (`user_id`);
+
+--
 -- Indexes for table `contract_info`
 --
 ALTER TABLE `contract_info`
   ADD PRIMARY KEY (`contract_id`),
-  ADD UNIQUE KEY `fk_Employee` (`fk_Employee`);
-
---
--- Indexes for table `employee`
---
-ALTER TABLE `employee`
-  ADD PRIMARY KEY (`employee_id`),
-  ADD KEY `user_role` (`user_role`),
-  ADD KEY `work_status` (`work_status`),
-  ADD KEY `fkc_Team` (`fk_Team`);
+  ADD UNIQUE KEY `fk_Employee` (`fk_User`);
 
 --
 -- Indexes for table `employees_tasks`
@@ -239,7 +257,7 @@ ALTER TABLE `employee`
 ALTER TABLE `employees_tasks`
   ADD PRIMARY KEY (`tasklist_id`),
   ADD KEY `fkc_List_Subtask` (`fk_Subtask`),
-  ADD KEY `fkc_List_Employee` (`fk_Employee`);
+  ADD KEY `fkc_List_Employee` (`fk_User`);
 
 --
 -- Indexes for table `employees_work_status`
@@ -296,6 +314,15 @@ ALTER TABLE `team`
   ADD PRIMARY KEY (`team_id`);
 
 --
+-- Indexes for table `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_role` (`user_role`),
+  ADD KEY `work_status` (`work_status`),
+  ADD KEY `fkc_Team` (`fk_Team`);
+
+--
 -- Indexes for table `user_role`
 --
 ALTER TABLE `user_role`
@@ -306,15 +333,15 @@ ALTER TABLE `user_role`
 --
 
 --
+-- AUTO_INCREMENT for table `account`
+--
+ALTER TABLE `account`
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
 -- AUTO_INCREMENT for table `contract_info`
 --
 ALTER TABLE `contract_info`
   MODIFY `contract_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `employee`
---
-ALTER TABLE `employee`
-  MODIFY `employee_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `employees_tasks`
 --
@@ -361,6 +388,11 @@ ALTER TABLE `task_comment`
 ALTER TABLE `team`
   MODIFY `team_id` int(11) NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT for table `user`
+--
+ALTER TABLE `user`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `user_role`
 --
 ALTER TABLE `user_role`
@@ -373,21 +405,13 @@ ALTER TABLE `user_role`
 -- Constraints for table `contract_info`
 --
 ALTER TABLE `contract_info`
-  ADD CONSTRAINT `fkc_Employee` FOREIGN KEY (`fk_Employee`) REFERENCES `employee` (`employee_id`);
-
---
--- Constraints for table `employee`
---
-ALTER TABLE `employee`
-  ADD CONSTRAINT `employee_ibfk_1` FOREIGN KEY (`user_role`) REFERENCES `user_role` (`id`),
-  ADD CONSTRAINT `employee_ibfk_2` FOREIGN KEY (`work_status`) REFERENCES `employees_work_status` (`id`),
-  ADD CONSTRAINT `fkc_Team` FOREIGN KEY (`fk_Team`) REFERENCES `team` (`team_id`);
+  ADD CONSTRAINT `fkc_Employee` FOREIGN KEY (`fk_User`) REFERENCES `user` (`id`);
 
 --
 -- Constraints for table `employees_tasks`
 --
 ALTER TABLE `employees_tasks`
-  ADD CONSTRAINT `fkc_List_Employee` FOREIGN KEY (`fk_Employee`) REFERENCES `employee` (`employee_id`),
+  ADD CONSTRAINT `fkc_List_Employee` FOREIGN KEY (`fk_User`) REFERENCES `user` (`id`),
   ADD CONSTRAINT `fkc_List_Subtask` FOREIGN KEY (`fk_Subtask`) REFERENCES `subtask` (`subtask_id`);
 
 --
@@ -415,6 +439,14 @@ ALTER TABLE `task`
 --
 ALTER TABLE `task_comment`
   ADD CONSTRAINT `fkc_Subtask` FOREIGN KEY (`fk_Subtask`) REFERENCES `subtask` (`subtask_id`);
+
+--
+-- Constraints for table `user`
+--
+ALTER TABLE `user`
+  ADD CONSTRAINT `fkc_Team` FOREIGN KEY (`fk_Team`) REFERENCES `team` (`team_id`),
+  ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`user_role`) REFERENCES `user_role` (`id`),
+  ADD CONSTRAINT `user_ibfk_2` FOREIGN KEY (`work_status`) REFERENCES `employees_work_status` (`id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

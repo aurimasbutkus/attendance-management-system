@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 
 
 @Entity
-@Table(name = "account")
+@Table(name = "user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -17,9 +17,23 @@ public class User {
     @NotNull
     private String username;
     @NotNull
-    private String email_address;
-    @NotNull
     private String password;
+    @NotNull
+    private String first_name;
+    @NotNull
+    private String last_name;
+    @NotNull
+    private String gender;
+    @NotNull
+    private String nationality;
+    @NotNull
+    private String date_of_birth;
+    @NotNull
+    private String phone_number;
+    @NotNull
+    private String current_task;
+    @NotNull
+    private String work_status;
     private Integer user_role;
     private Integer fk_Employee;
 
