@@ -14,10 +14,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class WebController {
@@ -31,16 +29,17 @@ public class WebController {
     @Autowired
     private MessageSource messageSource;
 
-    @RequestMapping("/")
-    public String login() {
-        return "redirect:/login";
-    }
+
 
     @RequestMapping("/index")
     public String index() {
         return "index";
     }
 
+    @RequestMapping("/")
+    public String login() {
+        return "redirect:/login";
+    }
     @GetMapping(value = "/login")
     public String getLogin(Model model) {
         model.addAttribute("userForm", new User());
@@ -58,7 +57,6 @@ public class WebController {
             return "redirect:/index";
         else return "login";
     }
-
     @GetMapping(value = "/register")
     public String getRegister(Model model) {
         model.addAttribute("userForm", new User());

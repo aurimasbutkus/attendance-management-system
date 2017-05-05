@@ -8,7 +8,7 @@
 </head>
   <body>
       <div class="main-container">
-
+          <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
           <!-- HEADER -->
           <header class="block">
               <ul class="header-menu horizontal-list">
@@ -17,7 +17,11 @@
                   <li><a class="header-menu-tab" href="#">Messages</a> </li>
                   <li><a class="header-menu-tab" href="#">Team</a></li>
                   <li><a class="header-menu-tab" href="#">Options</a></li>
-                  <li><a class="header-menu-tab" href="#">Log Out</a></li>
+                  <li>
+                      <form th:action="@{/logout}" class="header-menu-tab" method="post">
+                        <input type="submit" value="Sign Out"/>
+                      </form>
+                  </li>
               </ul>
           </header>
       </div> <!-- end main-container -->

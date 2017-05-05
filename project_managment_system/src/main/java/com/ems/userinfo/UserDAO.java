@@ -11,7 +11,7 @@ public interface UserDAO {
      * This is the method to be used to create
      * a record in the User table.
      */
-    void create(String username, String password, String email);
+    void create(String username, String email, String password, String first_name, String last_name);
     /**
      * This is the method to be used to create
      * a record in the User table.
@@ -45,7 +45,7 @@ public interface UserDAO {
      */
     void updateRole(String id, Integer role);
     void updateEmployee(String id, Integer employee);
-
+    void updateInfo(String username, String date_of_birth, String phone_number, int gender, String nationality);
     boolean userExists(Integer user_id);
     boolean userExists(String username);
     boolean userExists(User user);

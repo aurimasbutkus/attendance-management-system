@@ -19,7 +19,7 @@ public class userJDBCtest extends AbstractTransactionalJUnit4SpringContextTests 
 	private User user;
 	@Before
 	public void setUp() throws Exception {
-		user = new User("Test", "test@test.com", "Password123");
+		user = new User("Test", "Password123@test.com", "test@test.com", "Name", "Last name");
 	}
 	@Test
 	public void createUser_withUserClass(){
@@ -28,12 +28,12 @@ public class userJDBCtest extends AbstractTransactionalJUnit4SpringContextTests 
 	}
 	@Test
 	public void createUser_withUserName(){
-		sql.create("Test1", "test@test.com", "Password123");
+		sql.create("Test1", "Password123", "test@test.com", "Name", "Last name");
 		Assert.assertTrue(sql.userExists("Test1"));
 	}
 	@Test
 	public void deleteUser() {
-		sql.create("Test2", "test@test.com", "Password123");
+		sql.create("Test2", "Password123", "test@test.com", "Name", "Last name");
 		boolean deleted = sql.userExists("Test2");
 		sql.delete("Test2");
 		if(sql.userExists("Test2")) deleted = false;
@@ -41,7 +41,7 @@ public class userJDBCtest extends AbstractTransactionalJUnit4SpringContextTests 
 	}
 	@Test
 	public void getUser_Valid(){
-		sql.create("Test3", "test@test.com", "Password123");
+		sql.create("Test3", "Password123", "test@test.com", "Name", "Last name");
 		Assert.assertEquals(sql.getUser("Test3").getUsername(), "Test3");
 	}
 	@Test

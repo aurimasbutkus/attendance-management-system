@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 04, 2017 at 08:15 PM
+-- Generation Time: May 05, 2017 at 05:05 PM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 7.1.1
 
@@ -27,20 +27,29 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `account` (
-  `user_id` int(11) NOT NULL,
-  `email_address` varchar(255) NOT NULL,
-  `fk_employee` int(11) DEFAULT NULL,
-  `password` varchar(255) NOT NULL,
-  `user_role` int(11) DEFAULT NULL,
-  `username` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `id` int(11) NOT NULL,
+  `username` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `email_address` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `first_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `last_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `date_of_birth` date DEFAULT NULL,
+  `phone_number` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `gender` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `nationality` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `work_status` int(11) DEFAULT NULL,
+  `account_role` int(11) DEFAULT NULL,
+  `fk_Team` int(11) DEFAULT NULL,
+  `enabled` tinyint(1) DEFAULT '1',
+  `active` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `account`
 --
 
-INSERT INTO `account` (`user_id`, `email_address`, `fk_employee`, `password`, `user_role`, `username`) VALUES
-(1, 'lala@lala.com', NULL, 'asdawe11', 3, 'lulelaa');
+INSERT INTO `account` (`id`, `username`, `password`, `email_address`, `first_name`, `last_name`, `date_of_birth`, `phone_number`, `gender`, `nationality`, `work_status`, `account_role`, `fk_Team`, `enabled`, `active`) VALUES
+(10, 'adminas', '$2a$10$6KbN.YzXE3hIselwx.z0yOJo79jwEnE/kA3bqQXO/8cdTcjFzHcH2', 'admin@ems.com', 'Adminas', 'Adminiskauskas', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -121,6 +130,25 @@ CREATE TABLE `project_teams` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `roles`
+--
+
+CREATE TABLE `roles` (
+  `username` varchar(20) NOT NULL DEFAULT '',
+  `role` varchar(20) NOT NULL DEFAULT ''
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `roles`
+--
+
+INSERT INTO `roles` (`username`, `role`) VALUES
+('adminas', 'ADMIN'),
+('adminas', 'USER');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `subtask`
 --
 
@@ -192,48 +220,6 @@ CREATE TABLE `team` (
   `size` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `user`
---
-
-CREATE TABLE `user` (
-  `id` int(11) NOT NULL,
-  `username` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `email_address` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `first_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `last_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `date_of_birth` date DEFAULT NULL,
-  `phone_number` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `gender` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `nationality` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `work_status` int(11) DEFAULT NULL,
-  `user_role` int(11) NOT NULL DEFAULT '3',
-  `fk_Team` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `user_role`
---
-
-CREATE TABLE `user_role` (
-  `id` int(11) NOT NULL,
-  `name` char(7) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Dumping data for table `user_role`
---
-
-INSERT INTO `user_role` (`id`, `name`) VALUES
-(1, 'owner'),
-(2, 'manager'),
-(3, 'default');
-
 --
 -- Indexes for dumped tables
 --
@@ -242,7 +228,10 @@ INSERT INTO `user_role` (`id`, `name`) VALUES
 -- Indexes for table `account`
 --
 ALTER TABLE `account`
-  ADD PRIMARY KEY (`user_id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_role` (`account_role`),
+  ADD KEY `work_status` (`work_status`),
+  ADD KEY `fkc_Team` (`fk_Team`);
 
 --
 -- Indexes for table `contract_info`
@@ -280,6 +269,12 @@ ALTER TABLE `project_teams`
   ADD KEY `fkc_Project_Team` (`fk_Team`);
 
 --
+-- Indexes for table `roles`
+--
+ALTER TABLE `roles`
+  ADD PRIMARY KEY (`username`,`role`);
+
+--
 -- Indexes for table `subtask`
 --
 ALTER TABLE `subtask`
@@ -314,21 +309,6 @@ ALTER TABLE `team`
   ADD PRIMARY KEY (`team_id`);
 
 --
--- Indexes for table `user`
---
-ALTER TABLE `user`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `user_role` (`user_role`),
-  ADD KEY `work_status` (`work_status`),
-  ADD KEY `fkc_Team` (`fk_Team`);
-
---
--- Indexes for table `user_role`
---
-ALTER TABLE `user_role`
-  ADD PRIMARY KEY (`id`);
-
---
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -336,7 +316,7 @@ ALTER TABLE `user_role`
 -- AUTO_INCREMENT for table `account`
 --
 ALTER TABLE `account`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `contract_info`
 --
@@ -388,30 +368,28 @@ ALTER TABLE `task_comment`
 ALTER TABLE `team`
   MODIFY `team_id` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT for table `user`
---
-ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `user_role`
---
-ALTER TABLE `user_role`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
---
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `account`
+--
+ALTER TABLE `account`
+  ADD CONSTRAINT `account_ibfk_1` FOREIGN KEY (`account_role`) REFERENCES `role` (`role_id`),
+  ADD CONSTRAINT `account_ibfk_2` FOREIGN KEY (`work_status`) REFERENCES `employees_work_status` (`id`),
+  ADD CONSTRAINT `fkc_Team` FOREIGN KEY (`fk_Team`) REFERENCES `team` (`team_id`);
 
 --
 -- Constraints for table `contract_info`
 --
 ALTER TABLE `contract_info`
-  ADD CONSTRAINT `fkc_Employee` FOREIGN KEY (`fk_User`) REFERENCES `user` (`id`);
+  ADD CONSTRAINT `fkc_Employee` FOREIGN KEY (`fk_User`) REFERENCES `account` (`id`);
 
 --
 -- Constraints for table `employees_tasks`
 --
 ALTER TABLE `employees_tasks`
-  ADD CONSTRAINT `fkc_List_Employee` FOREIGN KEY (`fk_User`) REFERENCES `user` (`id`),
+  ADD CONSTRAINT `fkc_List_Employee` FOREIGN KEY (`fk_User`) REFERENCES `account` (`id`),
   ADD CONSTRAINT `fkc_List_Subtask` FOREIGN KEY (`fk_Subtask`) REFERENCES `subtask` (`subtask_id`);
 
 --
@@ -439,14 +417,6 @@ ALTER TABLE `task`
 --
 ALTER TABLE `task_comment`
   ADD CONSTRAINT `fkc_Subtask` FOREIGN KEY (`fk_Subtask`) REFERENCES `subtask` (`subtask_id`);
-
---
--- Constraints for table `user`
---
-ALTER TABLE `user`
-  ADD CONSTRAINT `fkc_Team` FOREIGN KEY (`fk_Team`) REFERENCES `team` (`team_id`),
-  ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`user_role`) REFERENCES `user_role` (`id`),
-  ADD CONSTRAINT `user_ibfk_2` FOREIGN KEY (`work_status`) REFERENCES `employees_work_status` (`id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

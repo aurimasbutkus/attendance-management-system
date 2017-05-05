@@ -7,30 +7,35 @@ package com.ems.userinfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
 public class UserJDBC implements UserDAO {
-
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
     @Autowired
     private JdbcTemplate jdbcTemplateObject;
-
     @Override
     public void create(User user) {
         if(!userExists(user)){
-            String SQL = "insert into account (username, password, email_address, user_role) values (?, ?, ?, ?)";
-            jdbcTemplateObject.update( SQL, user.getUsername(), user.getPassword(), user.getEmail_address(), user.getUser_role());
+            String SQLuser = "insert into account (username, password, email_address, first_name, last_name) values (?, ?, ?, ?, ?)";
+            String SQLrole = "insert into roles (username, role) values (?, ?)";
+            jdbcTemplateObject.update( SQLuser, user.getUsername(), bCryptPasswordEncoder.encode(user.getPassword()), user.getEmail_address(), user.getFirst_name(), user.getLast_name());
+            jdbcTemplateObject.update( SQLrole, user.getUsername(), "USER");
             System.out.println("Created User = " +  user.getUsername());
         }
         else System.out.println("User name already exists! = " + user.getUsername());
     }
     @Override
-    public void create(String username, String email, String password) {
+    public void create(String username, String email, String password, String first_name, String last_name) {
         if(!userExists(username)){
-            String SQL = "insert into account (username, password, email_address, user_role) values (?, ?, ?, ?)";
-            jdbcTemplateObject.update( SQL, username, password, email, 3);
+            String SQLuser = "insert into account (username, password, email_address, first_name, last_name) values (?, ?, ?, ?, ?)";
+            String SQLrole = "insert into roles (username, role) values (?, ?)";
+            jdbcTemplateObject.update( SQLuser, username, bCryptPasswordEncoder.encode(password), email, first_name, last_name);
+            jdbcTemplateObject.update( SQLrole, username, "USER");
             System.out.println("Created User = " + username);
         }
         else System.out.println("User name already exists! = " + username);
@@ -111,6 +116,12 @@ public class UserJDBC implements UserDAO {
         String SQL = "update account set user_role = ? where user_id = ?";
         jdbcTemplateObject.update(SQL, role, username);
         System.out.println("Updated role with username = " + username );
+    }
+    @Override
+    public void updateInfo(String username, String date_of_birth, String phone_number, int gender, String nationality){
+        String SQL = "update account set date_of_birth = ?, phone_number = ?, gender = ?, nationality = ? where username = ?";
+        jdbcTemplateObject.update(SQL, date_of_birth, phone_number, gender, nationality, username);
+        System.out.println("Updated info with username = " + username );
     }
     @Override
     public void updateEmployee(String username, Integer employee){

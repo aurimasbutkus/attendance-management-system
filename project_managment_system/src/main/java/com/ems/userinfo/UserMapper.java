@@ -12,13 +12,12 @@ import java.sql.SQLException;
 public class UserMapper implements RowMapper<User> {
     public User mapRow(ResultSet rs, int rowNum) throws SQLException {
         User user = new User();
-        user.setUser_id(null);
+        user.setId(null);
         user.setUsername(rs.getString("username"));
         user.setEmail_address(rs.getString("email_address"));
         user.setPassword(rs.getString("password"));
-        user.setUser_role(rs.getInt("user_role"));
-        user.setFk_Employee(rs.getInt("fk_Employee"));
-
+        user.setFirst_name(rs.getString("first_name"));
+        user.setLast_name(rs.getString("last_name"));
         return user;
     }
 }
