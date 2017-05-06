@@ -15,7 +15,9 @@ public interface ProjectService {
     Project getProject(String name);
     Project getProject(Project project);
     List<Project> listAllProjects();
-    //List<Project> listAllUserProjects();
+    List<Project> listAllUserProjects();
+    List<Task> listAllTasks();
+    List<Subtask> listAllSubtasks();
     void delete(Integer id);
     void delete(String username);
 
@@ -23,4 +25,6 @@ public interface ProjectService {
     boolean projectExists(Integer project_id);
     boolean projectExists(String name);
     boolean projectExists(Project project);
+
+
 }
