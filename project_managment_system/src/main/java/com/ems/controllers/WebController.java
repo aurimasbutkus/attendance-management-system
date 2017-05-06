@@ -29,7 +29,15 @@ public class WebController {
     @Autowired
     private MessageSource messageSource;
 
+    @RequestMapping("/admin")
+    public String admin() {
+        return "admin";
+    }
 
+    @RequestMapping("/access-denied")
+    public String access() {
+        return "access-denied";
+    }
 
     @RequestMapping("/index")
     public String index() {
@@ -53,9 +61,7 @@ public class WebController {
             printErrors(bindingResult);
             return "login";
         }
-        else if(loginUser.getPassword().equals(userForm.getPassword()))
-            return "redirect:/index";
-        else return "login";
+        else return "redirect:/index";
     }
     @GetMapping(value = "/register")
     public String getRegister(Model model) {

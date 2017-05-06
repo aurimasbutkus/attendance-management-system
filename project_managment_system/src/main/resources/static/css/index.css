@@ -21,7 +21,7 @@ h1, h2, p, a, span{
 
 .main-container {
 	font-family: 'Ubuntu', sans-serif;
-	width: 950px;
+	width: 1250px;
 	margin: 6em auto;
 }
 body {
@@ -46,23 +46,33 @@ body {
 					display: block;
 					line-height: 74px;
 					font-size: 20px;
-          border-radius: 10px;
+          /**border-radius: 10px;**/
           height: 80px;
 					-webkit-transition: background .5s;
 					transition: background .5s;
+					background: #59913b;
+					 background: -webkit-linear-gradient(#64a343, #7ebc5c);
+					 background: -moz-linear-gradient( #64a343, #7ebc5c);
+					 background: -o-linear-gradient(#64a343, #7ebc5c);
+					 background: linear-gradient(#64a343, #7ebc5c);
 				}
 					.header-menu-tab:hover {
-            border-radius: 10px;
+            /**border-radius: 10px;**/
 						background:#64a343;
+						text-decoration: none;
+					}
+					.header-menu-tab:active {
+						/**border-radius: 10px;**/
+						background:#64a500;
 						text-decoration: none;
 					}
 	/** CONTAINERS **/
 		.block {
 			margin-bottom: 25px;
-       background: #59913b;
+       /**background: #59913b;
         background: -webkit-linear-gradient(#64a343, #7ebc5c);
         background: -moz-linear-gradient( #64a343, #7ebc5c);
         background: -o-linear-gradient(#64a343, #7ebc5c);
         background: linear-gradient(#64a343, #7ebc5c);
-      	border-radius: 10px;
+      	border-radius: 10px;**/
 		}

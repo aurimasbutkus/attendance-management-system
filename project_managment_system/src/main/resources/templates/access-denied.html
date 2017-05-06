@@ -9,9 +9,7 @@
 <body>
     <div class="login-page">
         <div class="form">
-            <h4>Success!</h4>
-                <p th:text="${username}" />
-                <p class="message">Go ahead, <a th:href="@{/login}">login!</a></p>
+            <h1 th:inline="text">Sorri [[${#httpServletRequest.remoteUser}]], neturi privilegiju</h1>
         </div>
     </div>
 </body>>

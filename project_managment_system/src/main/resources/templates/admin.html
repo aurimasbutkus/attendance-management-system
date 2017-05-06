@@ -8,16 +8,15 @@
 </head>
   <body>
       <div class="main-container">
-          <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
+          <h1 th:inline="text">Zdarova [[${#httpServletRequest.remoteUser}]]!</h1>
           <!-- HEADER -->
           <header class="block">
               <ul class="header-menu horizontal-list">
-                  <li><a class="header-menu-tab" th:href="@{/index}">Home</a></li>
-                  <li><a class="header-menu-tab" th:href="@{/projects}">Projects</a> </li>
-                  <li><a class="header-menu-tab" href="#">Messages</a> </li>
-                  <li><a class="header-menu-tab" href="#">Team</a></li>
-                  <li sec:authorize="hasAuthority('ADMIN')"><a class="header-menu-tab" th:href="@{/admin}">Admin</a></li>
-                  <li><a class="header-menu-tab" href="#">Options</a></li>
+                  <li><a class="header-menu-tab" th:href="@{/index}">TU</a></li>
+                  <li><a class="header-menu-tab" th:href="@{/projects}">ESI</a> </li>
+                  <li><a class="header-menu-tab" href="#">ADMINAS</a> </li>
+                  <li><a class="header-menu-tab" href="#">MLDC</a></li>
+                  <li><a class="header-menu-tab" href="#">HELLYEAH</a></li>
                   <li>
                       <form th:action="@{/logout}" class="header-menu-tab" method="post">
                         <input type="submit" value="Sign Out"/>

@@ -48,6 +48,7 @@ class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         httpSecurity
                 .authorizeRequests()
                 .antMatchers("/css/**","/js/**", "/register", "/login").permitAll()
+                .antMatchers("/admin").hasAuthority("ADMIN")
                 .anyRequest().authenticated()
                     .and()
                 .formLogin().loginPage("/login")
@@ -55,6 +56,9 @@ class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .usernameParameter("username")
                 .passwordParameter("password")
                 .and()
-                .logout().logoutSuccessUrl("/login?logout");
+                .logout().logoutSuccessUrl("/login?logout")
+                .and()
+                .exceptionHandling()
+                .accessDeniedPage("/access-denied");
     }
 }
