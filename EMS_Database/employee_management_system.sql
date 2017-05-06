@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 06, 2017 at 10:47 AM
+-- Generation Time: May 06, 2017 at 04:04 PM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 7.1.1
 
@@ -103,6 +103,20 @@ INSERT INTO `employees_work_status` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `private_message`
+--
+
+CREATE TABLE `private_message` (
+  `message_id` int(11) NOT NULL,
+  `text` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `date` date NOT NULL,
+  `fk_account_sender` int(11) NOT NULL,
+  `fk_account_receiver` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `project`
 --
 
@@ -113,6 +127,14 @@ CREATE TABLE `project` (
   `start_date` date NOT NULL,
   `end_date` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `project`
+--
+
+INSERT INTO `project` (`project_id`, `name`, `description`, `start_date`, `end_date`) VALUES
+(1, 'Projektas1', 'Cia yra pirmas projektas', '2017-05-01', NULL),
+(2, 'Projektas2', 'Cia yra antras projektas', '2017-05-17', '2017-06-22');
 
 -- --------------------------------------------------------
 
@@ -145,7 +167,8 @@ CREATE TABLE `roles` (
 
 INSERT INTO `roles` (`role_id`, `username`, `role`) VALUES
 (1, 'adminas', 'ADMIN'),
-(2, 'adminas', 'USER');
+(2, 'adminas', 'USER'),
+(3, 'cartman', 'USER');
 
 -- --------------------------------------------------------
 
@@ -256,6 +279,14 @@ ALTER TABLE `employees_work_status`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `private_message`
+--
+ALTER TABLE `private_message`
+  ADD PRIMARY KEY (`message_id`),
+  ADD KEY `fkc_account_sender` (`fk_account_sender`),
+  ADD KEY `fkc_account_receiver` (`fk_account_receiver`);
+
+--
 -- Indexes for table `project`
 --
 ALTER TABLE `project`
@@ -317,7 +348,7 @@ ALTER TABLE `team`
 -- AUTO_INCREMENT for table `account`
 --
 ALTER TABLE `account`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT for table `contract_info`
 --
@@ -337,7 +368,7 @@ ALTER TABLE `employees_work_status`
 -- AUTO_INCREMENT for table `project`
 --
 ALTER TABLE `project`
-  MODIFY `project_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `project_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `project_teams`
 --
@@ -347,7 +378,7 @@ ALTER TABLE `project_teams`
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `role_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `role_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `subtask`
 --
@@ -397,6 +428,13 @@ ALTER TABLE `contract_info`
 ALTER TABLE `employees_tasks`
   ADD CONSTRAINT `fkc_List_Employee` FOREIGN KEY (`fk_User`) REFERENCES `account` (`id`),
   ADD CONSTRAINT `fkc_List_Subtask` FOREIGN KEY (`fk_Subtask`) REFERENCES `subtask` (`subtask_id`);
+
+--
+-- Constraints for table `private_message`
+--
+ALTER TABLE `private_message`
+  ADD CONSTRAINT `fkc_account_receiver` FOREIGN KEY (`fk_account_receiver`) REFERENCES `account` (`id`),
+  ADD CONSTRAINT `fkc_account_sender` FOREIGN KEY (`fk_account_sender`) REFERENCES `account` (`id`);
 
 --
 -- Constraints for table `project_teams`
