@@ -37,8 +37,8 @@ public class WebController {
     }
 
     @RequestMapping("/")
-    public String login() {
-        return "redirect:/login";
+    public String home() {
+        return "index";
     }
     @GetMapping(value = "/login")
     public String getLogin(Model model) {

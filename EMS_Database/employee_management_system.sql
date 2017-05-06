@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 05, 2017 at 05:05 PM
+-- Generation Time: May 06, 2017 at 10:47 AM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 7.1.1
 
@@ -134,6 +134,7 @@ CREATE TABLE `project_teams` (
 --
 
 CREATE TABLE `roles` (
+  `role_id` int(11) NOT NULL,
   `username` varchar(20) NOT NULL DEFAULT '',
   `role` varchar(20) NOT NULL DEFAULT ''
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -142,9 +143,9 @@ CREATE TABLE `roles` (
 -- Dumping data for table `roles`
 --
 
-INSERT INTO `roles` (`username`, `role`) VALUES
-('adminas', 'ADMIN'),
-('adminas', 'USER');
+INSERT INTO `roles` (`role_id`, `username`, `role`) VALUES
+(1, 'adminas', 'ADMIN'),
+(2, 'adminas', 'USER');
 
 -- --------------------------------------------------------
 
@@ -272,7 +273,7 @@ ALTER TABLE `project_teams`
 -- Indexes for table `roles`
 --
 ALTER TABLE `roles`
-  ADD PRIMARY KEY (`username`,`role`);
+  ADD PRIMARY KEY (`role_id`);
 
 --
 -- Indexes for table `subtask`
@@ -343,6 +344,11 @@ ALTER TABLE `project`
 ALTER TABLE `project_teams`
   MODIFY `teamslist_id` int(11) NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT for table `roles`
+--
+ALTER TABLE `roles`
+  MODIFY `role_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
 -- AUTO_INCREMENT for table `subtask`
 --
 ALTER TABLE `subtask`
@@ -375,7 +381,7 @@ ALTER TABLE `team`
 -- Constraints for table `account`
 --
 ALTER TABLE `account`
-  ADD CONSTRAINT `account_ibfk_1` FOREIGN KEY (`account_role`) REFERENCES `role` (`role_id`),
+  ADD CONSTRAINT `account_ibfk_1` FOREIGN KEY (`account_role`) REFERENCES `roles` (`role_id`),
   ADD CONSTRAINT `account_ibfk_2` FOREIGN KEY (`work_status`) REFERENCES `employees_work_status` (`id`),
   ADD CONSTRAINT `fkc_Team` FOREIGN KEY (`fk_Team`) REFERENCES `team` (`team_id`);
 
