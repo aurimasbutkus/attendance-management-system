@@ -9,6 +9,7 @@ import java.util.List;
 public interface MessageService {
 
     void create(String text, Date date, Integer sender_id, Integer receiver_id);
-    //List<Message> listAllMessages(Integer receiver_id);
-    List<Message> listAllMessages(int userId);
+    List<Message> listAllReceivedMessages(int userId);
+    List<Message> listAllSentMessages(int userId);
+
 }
