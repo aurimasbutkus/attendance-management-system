@@ -3,7 +3,7 @@ nav {
     font-size: 13px;
     line-height: 1.5;
     margin: 50px auto;
-    width: 200px;
+    width: 250px;
     -webkit-box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
     -moz-box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
     box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
@@ -11,7 +11,7 @@ nav {
 
 .menu-item {
     background: #fff;
-    width: 200px;
+    width: auto; /*buvo 250px */
 }
 
 /*Menu Header Styles*/
@@ -50,7 +50,7 @@ nav {
     color: white;
     display: block;
     text-decoration: none;
-    width: 200px;
+    width: auto; /*buvo 250px */
 }
 
 /*ul Styles*/
@@ -82,31 +82,17 @@ nav {
     text-decoration: none;
     color: #aaa;
     display: block;
-    width: 200px;
+    width: 250px;
 }
 
 /*li Styles*/
 .menu-item li {
     border-bottom: 1px solid #eee;
+    word-wrap: break-word; /* kad perkeltu zodi i kita eilute */
 }
 
 .menu-item li:hover {
     background: #eee;
-}
-
-/*First Item Styles*/
-.alpha p {
-    padding: 8px 12px;
-    color: #aaa;
-}
-
-.alpha p a {
-    color: #aaa;
-    font-style: italic;
-}
-
-.alpha p a:hover {
-    color: #ccc;
 }
 
 ul {
@@ -115,7 +101,7 @@ ul {
     padding-left: 0;
 }
 
-h1, h2, p, a, span{
+h1, h2, a, p, span{
     color: #fff;
 }
 
