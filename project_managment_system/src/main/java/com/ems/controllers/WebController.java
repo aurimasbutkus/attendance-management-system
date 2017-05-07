@@ -29,11 +29,6 @@ public class WebController {
     @Autowired
     private MessageSource messageSource;
 
-    @RequestMapping("/admin")
-    public String admin() {
-        return "admin";
-    }
-
     @RequestMapping("/access-denied")
     public String access() {
         return "access-denied";
