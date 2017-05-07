@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 2017 m. Geg 07 d. 14:06
+-- Generation Time: May 07, 2017 at 02:32 PM
 -- Server version: 10.1.21-MariaDB
--- PHP Version: 5.6.30
+-- PHP Version: 7.1.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -23,7 +23,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Sukurta duomenų struktūra lentelei `account`
+-- Table structure for table `account`
 --
 
 CREATE TABLE `account` (
@@ -45,18 +45,19 @@ CREATE TABLE `account` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Sukurta duomenų kopija lentelei `account`
+-- Dumping data for table `account`
 --
 
 INSERT INTO `account` (`id`, `username`, `password`, `email_address`, `first_name`, `last_name`, `date_of_birth`, `phone_number`, `gender`, `nationality`, `work_status`, `account_role`, `fk_Team`, `enabled`, `active`) VALUES
 (10, 'adminas', '$2a$10$6KbN.YzXE3hIselwx.z0yOJo79jwEnE/kA3bqQXO/8cdTcjFzHcH2', 'admin@ems.com', 'Adminas', 'Adminiskauskas', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL),
-(13, 'cartman', '$2a$10$.2.4Jq8RuIaqAzaim6zVbOJkGvCWhbST7WW7MjAJQ3QdLvkAm2lXy', 'eric@gmail.com', 'eric', 'cartman', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL),
-(14, 'auris331', '$2a$10$5VVTuxGAwuhGoFm1uAJ.quhsyehk3l1A9J71N87NdJad1YnrGcAZ2', 'email@email.com', 'Aurimas', 'Butkus', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL);
+(13, 'cartman', '$2a$10$.2.4Jq8RuIaqAzaim6zVbOJkGvCWhbST7WW7MjAJQ3QdLvkAm2lXy', 'eric@gmail.com', 'eric', 'cartman', NULL, NULL, NULL, NULL, NULL, NULL, 1, 1, NULL),
+(14, 'auris331', '$2a$10$5VVTuxGAwuhGoFm1uAJ.quhsyehk3l1A9J71N87NdJad1YnrGcAZ2', 'email@email.com', 'Aurimas', 'Butkus', NULL, NULL, NULL, NULL, NULL, NULL, 2, 1, NULL),
+(15, 'another', '$2a$10$Fldg.YmIDM29WX3o4flOLu5CG4hgUMCKzeWtRtotT4Mqg1yJbNpBy', 'eta@mail.co.uk', 'name', 'surname', NULL, NULL, NULL, NULL, NULL, NULL, 1, 1, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Sukurta duomenų struktūra lentelei `contract_info`
+-- Table structure for table `contract_info`
 --
 
 CREATE TABLE `contract_info` (
@@ -70,7 +71,7 @@ CREATE TABLE `contract_info` (
 -- --------------------------------------------------------
 
 --
--- Sukurta duomenų struktūra lentelei `employees_tasks`
+-- Table structure for table `employees_tasks`
 --
 
 CREATE TABLE `employees_tasks` (
@@ -83,7 +84,7 @@ CREATE TABLE `employees_tasks` (
 -- --------------------------------------------------------
 
 --
--- Sukurta duomenų struktūra lentelei `employees_work_status`
+-- Table structure for table `employees_work_status`
 --
 
 CREATE TABLE `employees_work_status` (
@@ -92,7 +93,7 @@ CREATE TABLE `employees_work_status` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Sukurta duomenų kopija lentelei `employees_work_status`
+-- Dumping data for table `employees_work_status`
 --
 
 INSERT INTO `employees_work_status` (`id`, `name`) VALUES
@@ -105,7 +106,7 @@ INSERT INTO `employees_work_status` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Sukurta duomenų struktūra lentelei `private_message`
+-- Table structure for table `private_message`
 --
 
 CREATE TABLE `private_message` (
@@ -117,7 +118,7 @@ CREATE TABLE `private_message` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Sukurta duomenų kopija lentelei `private_message`
+-- Dumping data for table `private_message`
 --
 
 INSERT INTO `private_message` (`message_id`, `text`, `date`, `fk_account_sender`, `fk_account_receiver`) VALUES
@@ -128,7 +129,7 @@ INSERT INTO `private_message` (`message_id`, `text`, `date`, `fk_account_sender`
 -- --------------------------------------------------------
 
 --
--- Sukurta duomenų struktūra lentelei `project`
+-- Table structure for table `project`
 --
 
 CREATE TABLE `project` (
@@ -143,7 +144,7 @@ CREATE TABLE `project` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Sukurta duomenų kopija lentelei `project`
+-- Dumping data for table `project`
 --
 
 INSERT INTO `project` (`project_id`, `name`, `description`, `start_date`, `end_date`, `completion_date`, `creation_date`, `deadline`) VALUES
@@ -153,20 +154,27 @@ INSERT INTO `project` (`project_id`, `name`, `description`, `start_date`, `end_d
 -- --------------------------------------------------------
 
 --
--- Sukurta duomenų struktūra lentelei `project_teams`
+-- Table structure for table `project_teams`
 --
 
 CREATE TABLE `project_teams` (
   `teamslist_id` int(11) NOT NULL,
-  `number_of_teams` int(11) NOT NULL,
   `fk_Project` int(11) NOT NULL,
   `fk_Team` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Dumping data for table `project_teams`
+--
+
+INSERT INTO `project_teams` (`teamslist_id`, `fk_Project`, `fk_Team`) VALUES
+(1, 1, 1),
+(2, 2, 2);
+
 -- --------------------------------------------------------
 
 --
--- Sukurta duomenų struktūra lentelei `roles`
+-- Table structure for table `roles`
 --
 
 CREATE TABLE `roles` (
@@ -176,7 +184,7 @@ CREATE TABLE `roles` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Sukurta duomenų kopija lentelei `roles`
+-- Dumping data for table `roles`
 --
 
 INSERT INTO `roles` (`role_id`, `username`, `role`) VALUES
@@ -184,12 +192,13 @@ INSERT INTO `roles` (`role_id`, `username`, `role`) VALUES
 (2, 'adminas', 'USER'),
 (3, 'cartman', 'USER'),
 (4, 'cartman', 'USER'),
-(5, 'auris331', 'USER');
+(5, 'auris331', 'USER'),
+(6, 'another', 'USER');
 
 -- --------------------------------------------------------
 
 --
--- Sukurta duomenų struktūra lentelei `subtask`
+-- Table structure for table `subtask`
 --
 
 CREATE TABLE `subtask` (
@@ -200,7 +209,7 @@ CREATE TABLE `subtask` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Sukurta duomenų kopija lentelei `subtask`
+-- Dumping data for table `subtask`
 --
 
 INSERT INTO `subtask` (`subtask_id`, `description`, `status`, `fk_Task`) VALUES
@@ -214,7 +223,7 @@ INSERT INTO `subtask` (`subtask_id`, `description`, `status`, `fk_Task`) VALUES
 -- --------------------------------------------------------
 
 --
--- Sukurta duomenų struktūra lentelei `subtask_status`
+-- Table structure for table `subtask_status`
 --
 
 CREATE TABLE `subtask_status` (
@@ -223,7 +232,7 @@ CREATE TABLE `subtask_status` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Sukurta duomenų kopija lentelei `subtask_status`
+-- Dumping data for table `subtask_status`
 --
 
 INSERT INTO `subtask_status` (`id`, `name`) VALUES
@@ -234,7 +243,7 @@ INSERT INTO `subtask_status` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Sukurta duomenų struktūra lentelei `task`
+-- Table structure for table `task`
 --
 
 CREATE TABLE `task` (
@@ -247,7 +256,7 @@ CREATE TABLE `task` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Sukurta duomenų kopija lentelei `task`
+-- Dumping data for table `task`
 --
 
 INSERT INTO `task` (`task_id`, `description`, `creation_date`, `deadline`, `completion_date`, `fk_Project`) VALUES
@@ -259,7 +268,7 @@ INSERT INTO `task` (`task_id`, `description`, `creation_date`, `deadline`, `comp
 -- --------------------------------------------------------
 
 --
--- Sukurta duomenų struktūra lentelei `task_comment`
+-- Table structure for table `task_comment`
 --
 
 CREATE TABLE `task_comment` (
@@ -274,13 +283,22 @@ CREATE TABLE `task_comment` (
 -- --------------------------------------------------------
 
 --
--- Sukurta duomenų struktūra lentelei `team`
+-- Table structure for table `team`
 --
 
 CREATE TABLE `team` (
   `team_id` int(11) NOT NULL,
-  `size` int(11) NOT NULL
+  `description` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `team`
+--
+
+INSERT INTO `team` (`team_id`, `description`, `name`) VALUES
+(1, 'This is a description for team Alpha.', 'Alpha'),
+(2, 'This is a description for team Bravo.', 'Bravo');
 
 --
 -- Indexes for dumped tables
@@ -386,7 +404,7 @@ ALTER TABLE `team`
 -- AUTO_INCREMENT for table `account`
 --
 ALTER TABLE `account`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT for table `contract_info`
 --
@@ -416,12 +434,12 @@ ALTER TABLE `project`
 -- AUTO_INCREMENT for table `project_teams`
 --
 ALTER TABLE `project_teams`
-  MODIFY `teamslist_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `teamslist_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `role_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `role_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `subtask`
 --
@@ -446,13 +464,13 @@ ALTER TABLE `task_comment`
 -- AUTO_INCREMENT for table `team`
 --
 ALTER TABLE `team`
-  MODIFY `team_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `team_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
--- Apribojimai eksportuotom lentelėm
+-- Constraints for dumped tables
 --
 
 --
--- Apribojimai lentelei `account`
+-- Constraints for table `account`
 --
 ALTER TABLE `account`
   ADD CONSTRAINT `account_ibfk_1` FOREIGN KEY (`account_role`) REFERENCES `roles` (`role_id`),
@@ -460,47 +478,47 @@ ALTER TABLE `account`
   ADD CONSTRAINT `fkc_Team` FOREIGN KEY (`fk_Team`) REFERENCES `team` (`team_id`);
 
 --
--- Apribojimai lentelei `contract_info`
+-- Constraints for table `contract_info`
 --
 ALTER TABLE `contract_info`
   ADD CONSTRAINT `fkc_Employee` FOREIGN KEY (`fk_User`) REFERENCES `account` (`id`);
 
 --
--- Apribojimai lentelei `employees_tasks`
+-- Constraints for table `employees_tasks`
 --
 ALTER TABLE `employees_tasks`
   ADD CONSTRAINT `fkc_List_Employee` FOREIGN KEY (`fk_User`) REFERENCES `account` (`id`),
   ADD CONSTRAINT `fkc_List_Subtask` FOREIGN KEY (`fk_Subtask`) REFERENCES `subtask` (`subtask_id`);
 
 --
--- Apribojimai lentelei `private_message`
+-- Constraints for table `private_message`
 --
 ALTER TABLE `private_message`
   ADD CONSTRAINT `fkc_account_receiver` FOREIGN KEY (`fk_account_receiver`) REFERENCES `account` (`id`),
   ADD CONSTRAINT `fkc_account_sender` FOREIGN KEY (`fk_account_sender`) REFERENCES `account` (`id`);
 
 --
--- Apribojimai lentelei `project_teams`
+-- Constraints for table `project_teams`
 --
 ALTER TABLE `project_teams`
   ADD CONSTRAINT `fkc_Current_Project` FOREIGN KEY (`fk_Project`) REFERENCES `project` (`project_id`),
   ADD CONSTRAINT `fkc_Project_Team` FOREIGN KEY (`fk_Team`) REFERENCES `team` (`team_id`);
 
 --
--- Apribojimai lentelei `subtask`
+-- Constraints for table `subtask`
 --
 ALTER TABLE `subtask`
   ADD CONSTRAINT `fkc_Task` FOREIGN KEY (`fk_Task`) REFERENCES `task` (`task_id`),
   ADD CONSTRAINT `subtask_ibfk_1` FOREIGN KEY (`status`) REFERENCES `subtask_status` (`id`);
 
 --
--- Apribojimai lentelei `task`
+-- Constraints for table `task`
 --
 ALTER TABLE `task`
   ADD CONSTRAINT `fkc_Project` FOREIGN KEY (`fk_Project`) REFERENCES `project` (`project_id`);
 
 --
--- Apribojimai lentelei `task_comment`
+-- Constraints for table `task_comment`
 --
 ALTER TABLE `task_comment`
   ADD CONSTRAINT `fkc_Subtask` FOREIGN KEY (`fk_Subtask`) REFERENCES `subtask` (`subtask_id`);
