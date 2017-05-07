@@ -84,6 +84,13 @@ public class UserJDBC implements UserDAO {
             return null;
         }
     }
+
+    @Override
+    public int getIdByUsername(String name) {
+        int userId = jdbcTemplateObject.queryForObject("select id from account where account.username = ?", Integer.class, name);
+        return userId;
+    }
+
     @Override
     public User getUser(User user) {
         String SQL = "select * from account where username = ?";
