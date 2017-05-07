@@ -110,9 +110,9 @@ public class ProjectJDBC implements ProjectService {
     }
 
     @Override
-    public List<Project> listAllUserProjects() {
-        String SQL = "select * from project";
-        return jdbcTemplateObject.query(SQL, new ProjectMapper());
+    public List<Project> listAllUserProjects(Integer id) {
+        String SQL = "select project.* from project, account, team, project_teams where account.fk_Team = team.team_id and project_teams.fk_Team = team.team_id and project_teams.fk_Project = project.project_id and account.id = ?";
+        return jdbcTemplateObject.query(SQL, new Object[]{id}, new ProjectMapper());
     }
 
     @Override

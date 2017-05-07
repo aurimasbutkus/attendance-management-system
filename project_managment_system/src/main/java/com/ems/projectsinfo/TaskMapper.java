@@ -11,7 +11,7 @@ import java.sql.SQLException;
 public class TaskMapper implements RowMapper<Task> {
     public Task mapRow(ResultSet rs, int rowNum) throws SQLException {
         Task task = new Task();
-        task.setTask_id(null);
+        task.setTask_id(rs.getInt("task_id"));
         task.setDescription(rs.getString("description"));
         task.setCreation_date(rs.getDate("creation_date"));
         task.setDeadline(rs.getDate("deadline"));

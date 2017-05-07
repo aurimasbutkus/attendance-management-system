@@ -15,7 +15,7 @@ public interface ProjectService {
     Project getProject(String name);
     Project getProject(Project project);
     List<Project> listAllProjects();
-    List<Project> listAllUserProjects();
+    List<Project> listAllUserProjects(Integer id);
     List<Task> listAllTasks();
     List<Subtask> listAllSubtasks();
     void delete(Integer id);

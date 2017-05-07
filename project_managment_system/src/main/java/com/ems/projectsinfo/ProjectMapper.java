@@ -11,7 +11,7 @@ import java.sql.SQLException;
 public class ProjectMapper implements RowMapper<Project> {
     public Project mapRow(ResultSet rs, int rowNum) throws SQLException {
         Project project = new Project();
-        project.setProject_id(null);
+        project.setProject_id(rs.getInt("project_id"));
         project.setName(rs.getString("name"));
         project.setDescription(rs.getString("description"));
         project.setStart_date(rs.getDate("start_date"));
