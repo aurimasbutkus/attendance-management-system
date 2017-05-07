@@ -37,8 +37,9 @@
     <div>
         <ul>
             <li th:each="message : ${messages}">
-                <a href="#" th:text="${message.formattedText}">
-                </a>
+                <a href="#">Mark as read </a>
+                <a href="#">Respond</a>
+                <a th:text="${message.formattedText}"></a>
             </li>
         </ul>
     </div>
