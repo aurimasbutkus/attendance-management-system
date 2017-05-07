@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.sql.Date;
 import java.util.Set;
 
 /**
@@ -34,15 +35,15 @@ public class User {
     @NotEmpty(message = "*Please provide your last name")
     private String last_name;
     @Nullable
-    private String gender;
+    private Integer gender;
     @Nullable
     private String nationality;
     @Nullable
-    private String date_of_birth;
+    private Date date_of_birth;
     @Nullable
     private String phone_number;
     @Nullable
-    private String work_status;
+    private Integer work_status;
     @Column(name = "enabled")
     private Integer enabled;
     @Nullable
@@ -112,11 +113,11 @@ public class User {
         this.last_name = last_name;
     }
 
-    public String getGender() {
+    public Integer getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(Integer gender) {
         this.gender = gender;
     }
 
@@ -128,11 +129,11 @@ public class User {
         this.nationality = nationality;
     }
 
-    public String getDate_of_birth() {
+    public Date getDate_of_birth() {
         return date_of_birth;
     }
 
-    public void setDate_of_birth(String date_of_birth) {
+    public void setDate_of_birth(Date date_of_birth) {
         this.date_of_birth = date_of_birth;
     }
 
@@ -144,11 +145,11 @@ public class User {
         this.phone_number = phone_number;
     }
 
-    public String getWork_status() {
+    public Integer getWork_status() {
         return work_status;
     }
 
-    public void setWork_status(String work_status) {
+    public void setWork_status(Integer work_status) {
         this.work_status = work_status;
     }
 

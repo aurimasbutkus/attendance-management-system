@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Date;
 import java.util.List;
 
 @Repository
@@ -131,7 +132,7 @@ public class UserJDBC implements UserDAO {
         System.out.println("Updated role with username = " + username );
     }
     @Override
-    public void updateInfo(String username, String date_of_birth, String phone_number, Integer gender, String nationality){
+    public void updateInfo(String username, Date date_of_birth, String phone_number, Integer gender, String nationality){
         String SQL = "update account set date_of_birth = ?, phone_number = ?, gender = ?, nationality = ? where username = ?";
         jdbcTemplateObject.update(SQL, date_of_birth, phone_number, gender, nationality, username);
         System.out.println("Updated info with username = " + username );
@@ -140,7 +141,7 @@ public class UserJDBC implements UserDAO {
 //    public void updateEverything(Integer id, String username, String email, String password, String first_name, String last_name,
 //                          String date_of_birth, String phone_number, Integer gender, String nationality, String work_status,
 //                          Integer enabled, Integer fk_Team){
-//        String SQL = "update account set username = ?, email = ?, password = ?, first_name = ?, first_name = ?," +
+//        String SQL = "update account set username = ?, email_address= ?, password = ?, first_name = ?, first_name = ?," +
 //                " last_name = ?, date_of_birth = ?, phone_number = ?, gender = ?, nationality = ?," +
 //                " work_status = ?, enabled = ?, fk_Team = ? where id = ?";
 //        jdbcTemplateObject.update(SQL, id, username, email, password, first_name, last_name, date_of_birth,
@@ -149,12 +150,12 @@ public class UserJDBC implements UserDAO {
 //    }
     @Override
     public void updateEverything(User user){
-        String SQL = "update account set username = ?, email = ?, password = ?, first_name = ?, first_name = ?," +
+        String SQL = "update account set username = ?, email_address= ?, first_name = ?," +
                 " last_name = ?, date_of_birth = ?, phone_number = ?, gender = ?, nationality = ?," +
                 " work_status = ?, enabled = ?, fk_Team = ? where id = ?";
-        jdbcTemplateObject.update(SQL, user.getId(), user.getUsername(), user.getEmail_address(), user.getPassword(),
-                user.getFirst_name(), user.getLast_name(), user.getDate_of_birth(), user.getPhone_number(),
-                user.getGender(), user.getNationality(), user.getWork_status(), user.getEnabled(), user.getFk_Team());
+        jdbcTemplateObject.update(SQL, user.getUsername(), user.getEmail_address(), user.getFirst_name(),
+                user.getLast_name(), user.getDate_of_birth(), user.getPhone_number(), user.getGender(),
+                user.getNationality(), user.getWork_status(), user.getEnabled(), user.getFk_Team(), user.getId());
         System.out.println("Updated info with id: " + user.getId() );
     }
 }

@@ -3,8 +3,8 @@
 	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
   <head>
     <title>Bootstrap 3, from LayoutIt!</title>
-	  <link href="../../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
-	  <link href="../../static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet" />
+	  <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+	  <link th:href="@{/css/style.css}" rel="stylesheet" />
   </head>
   <body>
 	<div>
@@ -16,8 +16,9 @@
 		<div class="row">
 			<div class="col-md-2">
 				<div class="list-group">
-					 <a th:href="@{/index}" class="list-group-item active">Home</a>
-
+					<a th:href="@{/index}" class="list-group-item">Home</a>
+					<a th:href="@{/admin}" class="list-group-item">Admin</a>
+					<a th:href="@{/admin/users}" class="list-group-item">Users</a>
 				</div>
 			</div>
 			<div class="col-md-10">
@@ -53,7 +54,7 @@
 							<td th:text="${user.work_status}"></td>
 							<td th:text="${user.enabled}"></td>
 							<td th:text="${user.fk_Team}"></td>
-							<td> <a th:href="@{/admin/{id}(id=${user.id})}" class="btn btn-info btn-xs">edit</a></td>
+							<td> <a th:href="@{/admin/users/{id}(id=${user.id})}" class="btn btn-info btn-xs">edit</a></td>
 						</tr>
 					</tbody>
 				</table>

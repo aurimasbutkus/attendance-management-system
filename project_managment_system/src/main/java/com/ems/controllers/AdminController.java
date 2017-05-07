@@ -29,19 +29,22 @@ public class AdminController {
     public String projects(Model model) {
         model.addAttribute("users", userService.listUsers());
         return "admin/admin";
+    }    @RequestMapping(value="/admin/users", method = RequestMethod.GET)
+    public String users(Model model) {
+        model.addAttribute("users", userService.listUsers());
+        return "admin/admin";
     }
-    @GetMapping(value = "/admin/{Id}")
-    public String showEditForm(Model model, @PathVariable("Id") int id )
+    @GetMapping(value = "/admin/users/{id}")
+    public String showEditForm(Model model, @PathVariable("id") int id )
     {
         model.addAttribute("userForm", userService.getUser(id));
         return "admin/edit";
     }
-    @PostMapping(value = "/admin/{Id}")
-    public String confirmEditForm(@ModelAttribute("userForm") User userForm, @PathVariable("Id") int id )
+    @PostMapping(value = "/admin/users/{id}")
+    public String confirmEditForm(@ModelAttribute("userForm") User userForm )
     {
-        System.out.println("IT POSTED "+ id);
         userService.updateEverything(userForm);
-        return "admin/admin";
+        return "redirect:/admin/users";
     }
 
 }

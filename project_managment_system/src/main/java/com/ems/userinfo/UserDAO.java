@@ -3,6 +3,7 @@ package com.ems.userinfo;
 /**
  * Created by Marius on 2017-04-08.
  */
+import java.sql.Date;
 import java.util.List;
 
 public interface UserDAO {
@@ -46,7 +47,7 @@ public interface UserDAO {
      * a record into the User table.
      */
     void updateRole(String username, Integer role);
-    void updateInfo(String username, String date_of_birth, String phone_number, Integer gender, String nationality);
+    void updateInfo(String username, Date date_of_birth, String phone_number, Integer gender, String nationality);
 //    void updateEverything(Integer id, String username, String email, String password, String first_name, String last_name,
 //                          String date_of_birth, String phone_number, Integer gender, String nationality, String work_status,
 //                          Integer enabled, Integer fk_Team);
