@@ -10,7 +10,7 @@
     <div class="login-page">
         <div class="form">
             <form th:action = "@{/register}" th:object="${userForm}" method="post" class="register-form" style = "display: block">
-                <label	th:if="${#fields.hasErrors('')}" th:errors="*{username}"></label>
+                <label	th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></label>
                 <input th:field="*{username}" type="text" placeholder="username"/>
                 <label	th:if="${#fields.hasErrors('first_name')}" th:errors="*{first_name}"></label>
                 <input th:field="*{first_name}" type="text" placeholder="first name"/>

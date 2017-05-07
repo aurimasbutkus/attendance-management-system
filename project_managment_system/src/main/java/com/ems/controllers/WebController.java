@@ -50,7 +50,6 @@ public class WebController {
     }
     @PostMapping(value = "/login")
     public String postLogin(@ModelAttribute("userForm") User userForm, BindingResult bindingResult) {
-        User loginUser = sql.getUser(userForm);
         loginValidator.validate(userForm, bindingResult);
         if (bindingResult.hasErrors()) {
             printErrors(bindingResult);

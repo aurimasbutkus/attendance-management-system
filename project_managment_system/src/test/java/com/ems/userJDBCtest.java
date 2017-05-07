@@ -34,10 +34,13 @@ public class userJDBCtest extends AbstractTransactionalJUnit4SpringContextTests 
 	@Test
 	public void deleteUser() {
 		sql.create("Test2", "Password123", "test@test.com", "Name", "Last name");
-		boolean deleted = sql.userExists("Test2");
+		boolean exists = sql.userExists("Test2");
 		sql.delete("Test2");
-		if(sql.userExists("Test2")) deleted = false;
-		Assert.assertTrue(deleted);
+		if(sql.userExists("Test2"))
+			exists = true;
+		else
+			exists = false;
+		Assert.assertFalse(exists);
 	}
 	@Test
 	public void getUser_Valid(){

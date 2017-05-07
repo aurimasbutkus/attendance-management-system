@@ -44,7 +44,7 @@ public class User {
     @Nullable
     private String work_status;
     @Column(name = "enabled")
-    private int enabled;
+    private Integer enabled;
     @Nullable
     private Integer fk_Team;
 
@@ -152,7 +152,7 @@ public class User {
         this.work_status = work_status;
     }
 
-    public int getEnabled() {
+    public Integer getEnabled() {
         return enabled;
     }
 
