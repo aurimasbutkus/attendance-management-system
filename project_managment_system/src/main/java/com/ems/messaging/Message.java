@@ -1,6 +1,9 @@
 package com.ems.messaging;
 
+import com.ems.userinfo.UserDAO;
+import com.ems.userinfo.UserJDBC;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -12,6 +15,10 @@ import java.sql.Date;
 @Entity
 @Table(name = "private_message")
 public class Message {
+
+    @Transient
+    public String formattedText;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer message_id;
@@ -60,6 +67,14 @@ public class Message {
 
     public Integer getFk_account_receiver() {
         return fk_account_receiver;
+    }
+
+    public String getSenderUsername(UserDAO userDAO){
+        return userDAO.getUsernameById(fk_account_sender);
+    }
+
+    public void getFormattedText(UserDAO userDAO){
+        formattedText = date.toString() + " | " + getSenderUsername(userDAO) + " | " + text;
     }
 
     public void setFk_account_receiver(Integer fk_account_receiver) {

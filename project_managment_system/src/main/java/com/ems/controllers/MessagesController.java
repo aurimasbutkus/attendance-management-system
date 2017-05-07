@@ -1,5 +1,6 @@
 package com.ems.controllers;
 
+import com.ems.messaging.Message;
 import com.ems.messaging.MessageService;
 import com.ems.userinfo.UserDAO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import java.util.List;
 
 /**
  * Created by Aurimas on 2017-05-07.
@@ -23,7 +26,11 @@ public class MessagesController {
     @RequestMapping(value="messages", method = RequestMethod.GET)
     public String messages(Model model, Authentication authentication){
         int userId = userDAO.getIdByUsername(authentication.getName());
-        model.addAttribute("messages", messageService.listAllMessages(userId));
+        List<Message> messages = messageService.listAllMessages(userId);
+        for (Message message : messages) {
+            message.getFormattedText(userDAO);
+        }
+        model.addAttribute("messages", messages);
         return "messages";
     }
 
