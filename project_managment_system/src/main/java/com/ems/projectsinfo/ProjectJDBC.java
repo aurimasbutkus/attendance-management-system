@@ -109,11 +109,23 @@ public class ProjectJDBC implements ProjectService {
         return jdbcTemplateObject.query(SQL, new ProjectMapper());
     }
 
-    /*@Override
+    @Override
     public List<Project> listAllUserProjects() {
         String SQL = "select * from project";
         return jdbcTemplateObject.query(SQL, new ProjectMapper());
-    }*/
+    }
+
+    @Override
+    public List<Task> listAllTasks() {
+        String SQL = "select * from task";
+        return jdbcTemplateObject.query(SQL, new TaskMapper());
+    }
+
+    @Override
+    public List<Subtask> listAllSubtasks() {
+        String SQL = "select * from subtask";
+        return jdbcTemplateObject.query(SQL, new SubtaskMapper());
+    }
 
     @Override
     public void delete(Integer id) {

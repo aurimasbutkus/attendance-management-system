@@ -25,6 +25,7 @@ public interface UserDAO {
     User getUser(Integer id);
     User getUser(String username);
     User getUser(User user);
+    int getIdByUsername(String name);
     /**
      * This is the method to be used to list down
      * all the records from the User table.

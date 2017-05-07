@@ -1,5 +1,7 @@
 package com.ems.projectsinfo;
 
+import com.sun.istack.internal.Nullable;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Date;
@@ -21,10 +23,14 @@ public class Project {
     private String description;
     @NotNull
     private Date start_date;
+    @Nullable
     private Date end_date;
 
     public Project() {
-
+        this.name = "";
+        this.description = "";
+        this.start_date = null;
+        this.end_date = null;
     }
 
     public Project(String name, String description, Date start_date, Date end_date) {

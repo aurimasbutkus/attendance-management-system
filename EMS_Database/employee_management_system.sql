@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 06, 2017 at 10:47 AM
+-- Generation Time: May 06, 2017 at 10:22 PM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 7.1.1
 
@@ -49,7 +49,8 @@ CREATE TABLE `account` (
 --
 
 INSERT INTO `account` (`id`, `username`, `password`, `email_address`, `first_name`, `last_name`, `date_of_birth`, `phone_number`, `gender`, `nationality`, `work_status`, `account_role`, `fk_Team`, `enabled`, `active`) VALUES
-(10, 'adminas', '$2a$10$6KbN.YzXE3hIselwx.z0yOJo79jwEnE/kA3bqQXO/8cdTcjFzHcH2', 'admin@ems.com', 'Adminas', 'Adminiskauskas', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL);
+(10, 'adminas', '$2a$10$6KbN.YzXE3hIselwx.z0yOJo79jwEnE/kA3bqQXO/8cdTcjFzHcH2', 'admin@ems.com', 'Adminas', 'Adminiskauskas', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL),
+(13, 'cartman', '$2a$10$.2.4Jq8RuIaqAzaim6zVbOJkGvCWhbST7WW7MjAJQ3QdLvkAm2lXy', 'eric@gmail.com', 'eric', 'cartman', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -103,6 +104,20 @@ INSERT INTO `employees_work_status` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `private_message`
+--
+
+CREATE TABLE `private_message` (
+  `message_id` int(11) NOT NULL,
+  `text` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `date` date NOT NULL,
+  `fk_account_sender` int(11) NOT NULL,
+  `fk_account_receiver` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `project`
 --
 
@@ -111,8 +126,21 @@ CREATE TABLE `project` (
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `start_date` date NOT NULL,
-  `end_date` date DEFAULT NULL
+  `end_date` date DEFAULT NULL,
+  `task_id` int(11) NOT NULL,
+  `completion_date` date DEFAULT NULL,
+  `creation_date` date NOT NULL,
+  `deadline` date DEFAULT NULL,
+  `fk_project` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `project`
+--
+
+INSERT INTO `project` (`project_id`, `name`, `description`, `start_date`, `end_date`, `task_id`, `completion_date`, `creation_date`, `deadline`, `fk_project`) VALUES
+(1, 'Projektas1', 'Cia yra pirmas projektas', '2017-05-01', NULL, 0, NULL, '0000-00-00', NULL, 0),
+(2, 'Projektas2', 'Cia yra antras projektas', '2017-05-17', '2017-06-22', 0, NULL, '0000-00-00', NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -145,7 +173,9 @@ CREATE TABLE `roles` (
 
 INSERT INTO `roles` (`role_id`, `username`, `role`) VALUES
 (1, 'adminas', 'ADMIN'),
-(2, 'adminas', 'USER');
+(2, 'adminas', 'USER'),
+(3, 'cartman', 'USER'),
+(4, 'cartman', 'USER');
 
 -- --------------------------------------------------------
 
@@ -159,6 +189,18 @@ CREATE TABLE `subtask` (
   `status` int(11) NOT NULL,
   `fk_Task` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `subtask`
+--
+
+INSERT INTO `subtask` (`subtask_id`, `description`, `status`, `fk_Task`) VALUES
+(1, 'Task One', 1, 1),
+(2, 'Task Two', 1, 1),
+(3, 'Task Three', 1, 1),
+(5, 'Task Hotel', 1, 3),
+(6, 'Task Omega', 3, 3),
+(7, 'Task ToTo', 1, 4);
 
 -- --------------------------------------------------------
 
@@ -194,6 +236,16 @@ CREATE TABLE `task` (
   `completion_date` date DEFAULT NULL,
   `fk_Project` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `task`
+--
+
+INSERT INTO `task` (`task_id`, `description`, `creation_date`, `deadline`, `completion_date`, `fk_Project`) VALUES
+(1, 'This is a simple task with a deadline and completion date', '2017-05-06', '2017-05-31', '2017-05-23', 1),
+(2, 'This is another simple task with a deadline but no completion date', '2017-05-06', '2017-05-30', NULL, 1),
+(3, 'This is the third task with no deadline and no completion date', '2017-05-06', NULL, NULL, 1),
+(4, 'Task for project 2', '2017-05-07', NULL, NULL, 2);
 
 -- --------------------------------------------------------
 
@@ -254,6 +306,14 @@ ALTER TABLE `employees_tasks`
 --
 ALTER TABLE `employees_work_status`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `private_message`
+--
+ALTER TABLE `private_message`
+  ADD PRIMARY KEY (`message_id`),
+  ADD KEY `fkc_account_sender` (`fk_account_sender`),
+  ADD KEY `fkc_account_receiver` (`fk_account_receiver`);
 
 --
 -- Indexes for table `project`
@@ -317,7 +377,7 @@ ALTER TABLE `team`
 -- AUTO_INCREMENT for table `account`
 --
 ALTER TABLE `account`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT for table `contract_info`
 --
@@ -337,7 +397,7 @@ ALTER TABLE `employees_work_status`
 -- AUTO_INCREMENT for table `project`
 --
 ALTER TABLE `project`
-  MODIFY `project_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `project_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `project_teams`
 --
@@ -347,12 +407,12 @@ ALTER TABLE `project_teams`
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `role_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `role_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `subtask`
 --
 ALTER TABLE `subtask`
-  MODIFY `subtask_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `subtask_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `subtask_status`
 --
@@ -362,7 +422,7 @@ ALTER TABLE `subtask_status`
 -- AUTO_INCREMENT for table `task`
 --
 ALTER TABLE `task`
-  MODIFY `task_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `task_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `task_comment`
 --
@@ -397,6 +457,13 @@ ALTER TABLE `contract_info`
 ALTER TABLE `employees_tasks`
   ADD CONSTRAINT `fkc_List_Employee` FOREIGN KEY (`fk_User`) REFERENCES `account` (`id`),
   ADD CONSTRAINT `fkc_List_Subtask` FOREIGN KEY (`fk_Subtask`) REFERENCES `subtask` (`subtask_id`);
+
+--
+-- Constraints for table `private_message`
+--
+ALTER TABLE `private_message`
+  ADD CONSTRAINT `fkc_account_receiver` FOREIGN KEY (`fk_account_receiver`) REFERENCES `account` (`id`),
+  ADD CONSTRAINT `fkc_account_sender` FOREIGN KEY (`fk_account_sender`) REFERENCES `account` (`id`);
 
 --
 -- Constraints for table `project_teams`
