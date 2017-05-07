@@ -19,6 +19,9 @@ public class Message {
     @Transient
     public String formattedText;
 
+    @Transient
+    private String receiver_username;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer message_id;
@@ -87,6 +90,14 @@ public class Message {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public String getReceiver_username() {
+        return receiver_username;
+    }
+
+    public void setReceiver_username(String receiver_username) {
+        this.receiver_username = receiver_username;
     }
 
     @Override

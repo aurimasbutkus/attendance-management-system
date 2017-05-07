@@ -19,13 +19,13 @@ public class MessageJDBC implements MessageService{
 
     @Override
     public void create(String text, Date date, Integer sender_id, Integer receiver_id) {
-        String SQL = "insert into private_message (text, sender_id, receiver_id) values (?, ?, ?)";
-        jdbcTemplateObject.update( SQL, text, sender_id, receiver_id);
+        String SQL = "insert into private_message (text, date, fk_account_sender, fk_account_receiver) values (?, ?, ?, ?)";
+        jdbcTemplateObject.update( SQL, text, date, sender_id, receiver_id);
         System.out.println("Created Message From = " + sender_id);
     }
     @Override
     public List<Message> listAllMessages(int userId) {
-        String SQL = "select * from private_message where private_message.fk_account_receiver = ?";
+        String SQL = "select * from private_message where private_message.fk_account_receiver = ? order by private_message.date desc ";
         return jdbcTemplateObject.query(SQL, new MessageMapper(), userId);
     }
 }

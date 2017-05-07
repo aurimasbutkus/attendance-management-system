@@ -7,9 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
+import org.thymeleaf.expression.Dates;
+import sun.util.calendar.BaseCalendar;
 
+import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -34,9 +37,16 @@ public class MessagesController {
         return "messages";
     }
 
-    @RequestMapping(value="new-message", method = RequestMethod.GET)
-    public String newMessage(Model model){
+    @GetMapping(value="new-message")
+    public String getNewMessage(Model model){
+        model.addAttribute("newMessage", new Message());
+        return "new-message";
+    }
 
+    @PostMapping(value="new-message")
+    public String postNewMessage(@ModelAttribute("newMessage") Message newMessage, Model model, Authentication authentication){
+        newMessage.setDate(new Date(System.currentTimeMillis()));
+        messageService.create(newMessage.getText(), newMessage.getDate(), userDAO.getIdByUsername(authentication.getName()), userDAO.getIdByUsername(newMessage.getReceiver_username()));
         return "new-message";
     }
 }

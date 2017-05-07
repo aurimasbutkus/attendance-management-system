@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
-    <title>EMS - Messages</title>
+    <title>EMS - New Message</title>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <link href="../static/css/index.css" th:href="@{css/index.css}" rel="stylesheet" />
 </head>
@@ -27,20 +27,13 @@
     </header>
 
     <div>
-        <ul>
-            <li>
-                <a th:href="@{/new-message}">New Message</a>
-            </li>
-        </ul>
-    </div>
-
-    <div>
-        <ul>
-            <li th:each="message : ${messages}">
-                <a href="#" th:text="${message.formattedText}">
-                </a>
-            </li>
-        </ul>
+        <form th:action = "@{/new-message}" th:object="${newMessage}" method="post" class="new-message-form" style = "display: block">
+            <!--<label	th:if="${#fields.hasErrors('receiver_username')}" th:errors="*{receiver_username}"></label>-->
+            <input th:field="*{receiver_username}" type="text" placeholder="Receiver's username"/>
+            <!--<label	th:if="${#fields.hasErrors('text')}" th:errors="*{text}"></label>-->
+            <input th:field="*{text}" type="text" placeholder="Message"/>
+            <input type="submit" value="Send"/>
+        </form>
     </div>
 </div> <!-- end main-container -->
 </body>
