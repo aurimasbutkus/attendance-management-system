@@ -1,6 +1,7 @@
 package com.ems.controllers;
 
 import com.ems.messaging.MessageService;
+import com.ems.userinfo.UserDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -16,11 +17,13 @@ public class MessagesController {
 
     @Autowired
     private MessageService messageService;
+    @Autowired
+    private UserDAO userDAO;
 
     @RequestMapping(value="messages", method = RequestMethod.GET)
     public String messages(Model model, Authentication authentication){
-        String name = authentication.getName();
-        model.addAttribute("messages", messageService.listAllMessages(name));
+        int userId = userDAO.getIdByUsername(authentication.getName());
+        model.addAttribute("messages", messageService.listAllMessages(userId));
         return "messages";
     }
 

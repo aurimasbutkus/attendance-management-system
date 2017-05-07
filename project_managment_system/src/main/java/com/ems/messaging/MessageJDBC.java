@@ -16,8 +16,6 @@ public class MessageJDBC implements MessageService{
 
     @Autowired
     private JdbcTemplate jdbcTemplateObject;
-    @Autowired
-    private UserDAO userDAO;
 
     @Override
     public void create(String text, Date date, Integer sender_id, Integer receiver_id) {
@@ -26,9 +24,8 @@ public class MessageJDBC implements MessageService{
         System.out.println("Created Message From = " + sender_id);
     }
     @Override
-    public List<Message> listAllMessages(String name) {
+    public List<Message> listAllMessages(int userId) {
         String SQL = "select * from private_message where private_message.fk_account_receiver = ?";
-        int userId = userDAO.getIdByUsername(name);
         return jdbcTemplateObject.query(SQL, new MessageMapper(), userId);
     }
 }
