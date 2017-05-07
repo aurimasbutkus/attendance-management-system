@@ -76,8 +76,10 @@ public class Message {
         return userDAO.getUsernameById(fk_account_sender);
     }
 
+    public String getReceiverUsername(UserDAO userDAO) { return userDAO.getUsernameById(fk_account_receiver); }
+
     public void getFormattedText(UserDAO userDAO){
-        formattedText = date.toString() + " | " + getSenderUsername(userDAO) + " | " + text;
+        formattedText = date.toString() + " | " + getSenderUsername(userDAO) + " -> " + getReceiverUsername(userDAO) + " | " + text;
     }
 
     public void setFk_account_receiver(Integer fk_account_receiver) {

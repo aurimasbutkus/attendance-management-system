@@ -8,11 +8,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.thymeleaf.expression.Dates;
-import sun.util.calendar.BaseCalendar;
 
 import java.sql.Date;
-import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -29,12 +26,23 @@ public class MessagesController {
     @RequestMapping(value="messages", method = RequestMethod.GET)
     public String messages(Model model, Authentication authentication){
         int userId = userDAO.getIdByUsername(authentication.getName());
-        List<Message> messages = messageService.listAllMessages(userId);
+        List<Message> messages = messageService.listAllReceivedMessages(userId);
         for (Message message : messages) {
             message.getFormattedText(userDAO);
         }
         model.addAttribute("messages", messages);
         return "messages";
+    }
+
+    @RequestMapping(value="messages/sent", method = RequestMethod.GET)
+    public String messagesSent(Model model, Authentication authentication){
+        int userId = userDAO.getIdByUsername(authentication.getName());
+        List<Message> messages = messageService.listAllSentMessages(userId);
+        for(Message message : messages){
+            message.getFormattedText(userDAO);
+        }
+        model.addAttribute("messages", messages);
+        return "messages/sent";
     }
 
     @GetMapping(value="new-message")
