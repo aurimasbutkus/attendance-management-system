@@ -20,8 +20,4 @@ public class MessageMapper implements RowMapper<Message> {
 
         return message;
     }
-
-    public MessageMapper(){
-
-    }
 }

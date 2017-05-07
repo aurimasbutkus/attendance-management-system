@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 2017 m. Geg 07 d. 12:28
+-- Generation Time: 2017 m. Geg 07 d. 14:06
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -137,20 +137,18 @@ CREATE TABLE `project` (
   `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `start_date` date NOT NULL,
   `end_date` date DEFAULT NULL,
-  `task_id` int(11) NOT NULL,
   `completion_date` date DEFAULT NULL,
   `creation_date` date NOT NULL,
-  `deadline` date DEFAULT NULL,
-  `fk_project` int(11) NOT NULL
+  `deadline` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Sukurta duomenų kopija lentelei `project`
 --
 
-INSERT INTO `project` (`project_id`, `name`, `description`, `start_date`, `end_date`, `task_id`, `completion_date`, `creation_date`, `deadline`, `fk_project`) VALUES
-(1, 'Projektas1', 'Cia yra pirmas projektas', '2017-05-01', NULL, 0, NULL, '0000-00-00', NULL, 0),
-(2, 'Projektas2', 'Cia yra antras projektas', '2017-05-17', '2017-06-22', 0, NULL, '0000-00-00', NULL, 0);
+INSERT INTO `project` (`project_id`, `name`, `description`, `start_date`, `end_date`, `completion_date`, `creation_date`, `deadline`) VALUES
+(1, 'Projektas1', 'Cia yra pirmas projektas', '2017-05-01', NULL, NULL, '0000-00-00', NULL),
+(2, 'Projektas2', 'Cia yra antras projektas', '2017-05-17', '2017-06-22', NULL, '0000-00-00', NULL);
 
 -- --------------------------------------------------------
 
