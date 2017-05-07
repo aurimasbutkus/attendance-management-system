@@ -92,6 +92,12 @@ public class UserJDBC implements UserDAO {
     }
 
     @Override
+    public String getUsernameById(int id) {
+        String username = jdbcTemplateObject.queryForObject("select username from account where account.id = ?", String.class, id);
+        return username;
+    }
+
+    @Override
     public User getUser(User user) {
         String SQL = "select * from account where username = ?";
         try {
