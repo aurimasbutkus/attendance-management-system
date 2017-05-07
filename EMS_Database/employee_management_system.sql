@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 07, 2017 at 02:32 PM
+-- Generation Time: May 07, 2017 at 10:51 PM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 7.1.1
 
@@ -138,8 +138,6 @@ CREATE TABLE `project` (
   `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `start_date` date NOT NULL,
   `end_date` date DEFAULT NULL,
-  `completion_date` date DEFAULT NULL,
-  `creation_date` date NOT NULL,
   `deadline` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -147,9 +145,9 @@ CREATE TABLE `project` (
 -- Dumping data for table `project`
 --
 
-INSERT INTO `project` (`project_id`, `name`, `description`, `start_date`, `end_date`, `completion_date`, `creation_date`, `deadline`) VALUES
-(1, 'Projektas1', 'Cia yra pirmas projektas', '2017-05-01', NULL, NULL, '0000-00-00', NULL),
-(2, 'Projektas2', 'Cia yra antras projektas', '2017-05-17', '2017-06-22', NULL, '0000-00-00', NULL);
+INSERT INTO `project` (`project_id`, `name`, `description`, `start_date`, `end_date`, `deadline`) VALUES
+(1, 'Projektas1', 'Cia yra pirmas projektas', '2017-05-01', NULL, NULL),
+(2, 'Projektas2', 'Cia yra antras projektas', '2017-05-17', '2017-06-22', NULL);
 
 -- --------------------------------------------------------
 
@@ -218,7 +216,9 @@ INSERT INTO `subtask` (`subtask_id`, `description`, `status`, `fk_Task`) VALUES
 (3, 'Task Three', 1, 1),
 (5, 'Task Hotel', 1, 3),
 (6, 'Task Omega', 3, 3),
-(7, 'Task ToTo', 1, 4);
+(7, 'Task ToTo', 1, 4),
+(8, 'Badasaaaaaaaaaaaaaaaaaasaaaaaaaaaaaaaaaaaasaaaaaaaaaaaaaaaaaasaaaaaaaaaaaaaaaaaasaaaaaaaaaaaaaaaaaa', 2, 2),
+(9, 'WewLad', 1, 2);
 
 -- --------------------------------------------------------
 
@@ -404,7 +404,7 @@ ALTER TABLE `team`
 -- AUTO_INCREMENT for table `account`
 --
 ALTER TABLE `account`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 --
 -- AUTO_INCREMENT for table `contract_info`
 --
@@ -429,7 +429,7 @@ ALTER TABLE `private_message`
 -- AUTO_INCREMENT for table `project`
 --
 ALTER TABLE `project`
-  MODIFY `project_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `project_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 --
 -- AUTO_INCREMENT for table `project_teams`
 --
@@ -439,12 +439,12 @@ ALTER TABLE `project_teams`
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `role_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `role_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `subtask`
 --
 ALTER TABLE `subtask`
-  MODIFY `subtask_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `subtask_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT for table `subtask_status`
 --
