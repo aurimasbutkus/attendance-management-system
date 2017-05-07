@@ -1,10 +1,7 @@
 package com.ems.projectsinfo;
 
-import com.sun.istack.internal.Nullable;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.sql.Date;
 
 /**
  * Created by Martynas on 5/6/2017.
