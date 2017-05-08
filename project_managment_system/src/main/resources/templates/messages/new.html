@@ -14,7 +14,7 @@
         <ul class="header-menu horizontal-list">
             <li><a class="header-menu-tab" th:href="@{/index}">Home</a></li>
             <li><a class="header-menu-tab" th:href="@{/projects}">Projects</a> </li>
-            <li><a class="header-menu-tab" th:href="@{/messages}">Messages</a> </li>
+            <li><a class="header-menu-tab" th:href="@{/templates/messages}">Messages</a> </li>
             <li><a class="header-menu-tab" th:href="@{/team}">Team</a></li>
             <li sec:authorize="hasAuthority('ADMIN')"><a class="header-menu-tab" th:href="@{/admin}">Admin</a></li>
             <li><a class="header-menu-tab" href="#">Options</a></li>
@@ -27,7 +27,7 @@
     </header>
 
     <div>
-        <form th:action = "@{/new-message}" th:object="${newMessage}" method="post" class="new-message-form" style = "display: block">
+        <form th:action = "@{/messages/new}" th:object="${newMessage}" method="post" class="new-message-form" style = "display: block">
             <!--<label	th:if="${#fields.hasErrors('receiver_username')}" th:errors="*{receiver_username}"></label>-->
             <input th:field="*{receiver_username}" type="text" placeholder="Receiver's username"/>
             <!--<label	th:if="${#fields.hasErrors('text')}" th:errors="*{text}"></label>-->
