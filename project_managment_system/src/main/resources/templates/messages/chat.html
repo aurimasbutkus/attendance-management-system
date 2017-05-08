@@ -2,12 +2,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
-    <title>EMS - Sent Messages</title>
+    <title>EMS - Chat</title>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <link href="../static/css/index.css" th:href="@{/css/index.css}" rel="stylesheet" />
+    <link th:href="@{/css/index.css}" rel="stylesheet" />
 </head>
 <body>
-<div class="main-container">
     <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
     <!-- HEADER -->
     <header class="block">
@@ -27,26 +26,18 @@
     </header>
 
     <div>
-        <ul>
-            <li>
-                <a th:href="@{/messages/sent}">Sent Messages</a>
-                <a th:href="@{/messages}"> Received Messages</a>
-            </li>
-            <li>
-                <a th:href="@{/messages/new}">New Message</a>
-            </li>
-        </ul>
+        <form th:action = "@{/messages/chat/{id}(id=${receiver})}" th:object="${newMessage}" method="post" class="new-message-form" style = "display: block">
+            <input th:field="*{text}" type="text" placeholder="Message"/>
+            <input type="submit" value="Send"/>
+        </form>
     </div>
 
     <div>
         <ul>
             <li th:each="message : ${messages}">
-                <a href="#">Mark as read </a>
-                <a href="#">Respond</a>
                 <a th:text="${message.formattedText}"></a>
             </li>
         </ul>
     </div>
-</div> <!-- end main-container -->
 </body>
 </html>

@@ -29,10 +29,6 @@
     <div>
         <ul>
             <li>
-                <a th:href="@{/messages/sent}">Sent Messages</a>
-                <a th:href="@{/messages}">Received Messages</a>
-            </li>
-            <li>
                 <a th:href="@{/messages/new}">New Message</a>
             </li>
         </ul>
@@ -40,10 +36,8 @@
 
     <div>
         <ul>
-            <li th:each="message : ${messages}">
-                <a href="#">Mark as read </a>
-                <a href="#">Respond</a>
-                <a th:text="${message.formattedText}"></a>
+            <li th:each="user : ${users}">
+                <a th:href="@{/messages/chat/{id}(id=${user.id})}" th:text="${user.username}"></a>
             </li>
         </ul>
     </div>

@@ -14,7 +14,7 @@
         <ul class="header-menu horizontal-list">
             <li><a class="header-menu-tab" th:href="@{/index}">Home</a></li>
             <li><a class="header-menu-tab" th:href="@{/projects}">Projects</a> </li>
-            <li><a class="header-menu-tab" th:href="@{/templates/messages}">Messages</a> </li>
+            <li><a class="header-menu-tab" th:href="@{/messages}">Messages</a> </li>
             <li><a class="header-menu-tab" th:href="@{/team}">Team</a></li>
             <li sec:authorize="hasAuthority('ADMIN')"><a class="header-menu-tab" th:href="@{/admin}">Admin</a></li>
             <li><a class="header-menu-tab" href="#">Options</a></li>
