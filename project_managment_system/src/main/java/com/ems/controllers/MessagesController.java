@@ -55,6 +55,6 @@ public class MessagesController {
     public String postNewMessage(@ModelAttribute("newMessage") Message newMessage, Model model, Authentication authentication){
         newMessage.setDate(new Date(System.currentTimeMillis()));
         messageService.create(newMessage.getText(), newMessage.getDate(), userDAO.getIdByUsername(authentication.getName()), userDAO.getIdByUsername(newMessage.getReceiver_username()));
-        return "new-message";
+        return "messages";
     }
 }
