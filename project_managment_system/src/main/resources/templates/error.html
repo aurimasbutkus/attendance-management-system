@@ -8,8 +8,11 @@
 </head>
 <body>
     <div class="login-page">
-        <div class="form">
-            <h1 th:inline="text">Nepyk [[${#httpServletRequest.remoteUser}]], bet neturi privilegiju</h1>
+        <div th:action="@{/error}" class="form">
+            <h1>Oops. Something went wrong</h1>
+            <span th:text="${status}">status-code</span>
+            <span th:text="${error}">error-code</span>
+            <h2><a th:href="@{/index}" style="text-decoration: none">Go back to index</a></h2>
         </div>
     </div>
 </body>>

@@ -4,6 +4,7 @@ package com.ems.controllers;
  * Created by Marius on 2017-04-07.
  */
 
+import com.ems.projectsinfo.ProjectService;
 import com.ems.userinfo.User;
 import com.ems.userinfo.UserJDBC;
 import com.ems.validator.LoginValidator;
@@ -28,6 +29,8 @@ public class WebController {
     private LoginValidator loginValidator;
     @Autowired
     private MessageSource messageSource;
+    @Autowired
+    private ProjectService projectService;
 
     @RequestMapping("/access-denied")
     public String access() {
@@ -35,7 +38,8 @@ public class WebController {
     }
 
     @RequestMapping("/index")
-    public String index() {
+    public String index(Model model) {
+        model.addAttribute("tasks", projectService.listAllTasks());
         return "index";
     }
 
@@ -50,7 +54,6 @@ public class WebController {
     }
     @PostMapping(value = "/login")
     public String postLogin(@ModelAttribute("userForm") User userForm, BindingResult bindingResult) {
-        User loginUser = sql.getUser(userForm);
         loginValidator.validate(userForm, bindingResult);
         if (bindingResult.hasErrors()) {
             printErrors(bindingResult);

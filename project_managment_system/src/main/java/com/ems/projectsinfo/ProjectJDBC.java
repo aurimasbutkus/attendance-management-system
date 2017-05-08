@@ -122,6 +122,12 @@ public class ProjectJDBC implements ProjectService {
     }
 
     @Override
+    public List<Task> listAllProjectTasks(Integer id) {
+        String SQL = "select * from task where task.fk_Project = ?";
+        return jdbcTemplateObject.query(SQL, new Object[]{id}, new TaskMapper());
+    }
+
+    @Override
     public List<Subtask> listAllSubtasks() {
         String SQL = "select * from subtask";
         return jdbcTemplateObject.query(SQL, new SubtaskMapper());

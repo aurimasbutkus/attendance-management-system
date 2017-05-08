@@ -4,7 +4,10 @@
 <head>
     <title>EMS Home Page</title>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <link href="../static/css/index.css" th:href="@{css/index.css}" rel="stylesheet" />
+    <link th:href="@{/css/index.css}" rel="stylesheet" />
+    <link th:href="@{/css/bootstrap-theme.min.css}" rel="stylesheet" />
+    <link  th:href="@{/css/calendar.css}" rel="stylesheet" />
+    <script th:src="@{/js/calendar.js}"></script>
 </head>
   <body>
       <div class="main-container">
@@ -25,6 +28,39 @@
                   </li>
               </ul>
           </header>
+          <div align="center" id="calendar"></div>
+          <div align="center">
+              <p id="task-description"></p>
+          </div>
       </div> <!-- end main-container -->
+      <script th:inline="javascript">
+          //<![CDATA[
+          var tasks = [[${tasks}]];
+          $(document).ready(function () {
+              for (var i = 0; i < tasks.length; i++) {
+                  var fullDate = new Date(tasks[i].deadline);
+                  var month = parseInt(fullDate.getMonth()) + 1;
+                  var date = fullDate.getFullYear() + "-" + (month < 10 ? "0" + month : month) + "-" + fullDate.getDate();
+                  $("td[data-day='" + date + "']").addClass("deadline-day");
+
+              }
+              $("td.deadline-day").click(function () {
+                  console.log('veikia');
+                  for (var i = 0; i < tasks.length; i++) {
+                      var fullDate = new Date(tasks[i].deadline);
+                      var month = parseInt(fullDate.getMonth()) + 1;
+                      var date = fullDate.getFullYear() + "-" + (month < 10 ? "0" + month : month) + "-" + fullDate.getDate();
+                      if(date == $(this).data("day")) {
+                          $("#task-description").html(tasks[i].description);
+                      }
+
+                  }
+              });
+          });
+
+          //]]>
+
+
+      </script>
   </body>
 </html>

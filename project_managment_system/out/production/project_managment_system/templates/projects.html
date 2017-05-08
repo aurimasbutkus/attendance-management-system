@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <title>EMS Projects Page</title>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
@@ -14,8 +14,9 @@
         <ul class="header-menu horizontal-list">
             <li><a class="header-menu-tab" th:href="@{/index}">Home</a></li>
             <li><a class="header-menu-tab" th:href="@{/projects}">Projects</a> </li>
-            <li><a class="header-menu-tab" href="#">Messages</a> </li>
-            <li><a class="header-menu-tab" href="#">Team</a></li>
+            <li><a class="header-menu-tab" th:href="@{/messages}">Messages</a> </li>
+            <li><a class="header-menu-tab" th:href="@{/team}">Team</a></li>
+            <li sec:authorize="hasAuthority('ADMIN')"><a class="header-menu-tab" th:href="@{/admin}">Admin</a></li>
             <li><a class="header-menu-tab" href="#">Options</a></li>
             <li>
                 <form th:action="@{/logout}" class="header-menu-tab" method="post">
@@ -24,14 +25,10 @@
             </li>
         </ul>
     </header>
-
     <div>
         <ul>
             <li th:each="project : ${projects}">
-                <a href="#">
-                    <b th:text="${project.name}"></b>
-                    <b th:text="${project.description}"></b>
-                    <b th:text="${project.start_date}"></b>
+                <a th:href="@{/project-core/{id}(id=${project.project_id})}" th:text="${project.name}">
                 </a>
             </li>
         </ul>

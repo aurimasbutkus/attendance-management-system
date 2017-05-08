@@ -4,7 +4,7 @@
 <head>
     <title>EMS - New Message</title>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <link href="../static/css/index.css" th:href="@{css/index.css}" rel="stylesheet" />
+    <link th:href="@{/css/index.css}" rel="stylesheet" />
 </head>
 <body>
 <div class="main-container">
@@ -15,7 +15,7 @@
             <li><a class="header-menu-tab" th:href="@{/index}">Home</a></li>
             <li><a class="header-menu-tab" th:href="@{/projects}">Projects</a> </li>
             <li><a class="header-menu-tab" th:href="@{/messages}">Messages</a> </li>
-            <li><a class="header-menu-tab" href="#">Team</a></li>
+            <li><a class="header-menu-tab" th:href="@{/team}">Team</a></li>
             <li sec:authorize="hasAuthority('ADMIN')"><a class="header-menu-tab" th:href="@{/admin}">Admin</a></li>
             <li><a class="header-menu-tab" href="#">Options</a></li>
             <li>

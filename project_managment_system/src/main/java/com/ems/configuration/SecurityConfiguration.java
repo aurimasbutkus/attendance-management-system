@@ -40,8 +40,9 @@ class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         httpSecurity
                 .authorizeRequests()
                 .antMatchers("/css/**","/js/**", "/register", "/login").permitAll()
-                .antMatchers("/admin").hasAuthority("ADMIN")
-                .antMatchers("/adminas").hasAuthority("ADMIN")
+                .antMatchers("/admin/users/{Id:[\\d+]}/").hasAuthority("ADMIN")
+                .antMatchers("/admin/users").hasAuthority("ADMIN")
+                .antMatchers("/admin/**").hasAuthority("ADMIN")
                 .anyRequest().authenticated()
                     .and()
                 .formLogin().loginPage("/login")

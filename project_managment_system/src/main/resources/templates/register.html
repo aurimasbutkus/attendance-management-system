@@ -4,13 +4,13 @@
 <head>
     <title>EMS Register Page</title>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <link href="../static/css/login.css" th:href="@{css/login.css}" rel="stylesheet" />
+    <link th:href="@{/css/login.css}" rel="stylesheet" />
 </head>
 <body>
     <div class="login-page">
         <div class="form">
             <form th:action = "@{/register}" th:object="${userForm}" method="post" class="register-form" style = "display: block">
-                <label	th:if="${#fields.hasErrors('')}" th:errors="*{username}"></label>
+                <label	th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></label>
                 <input th:field="*{username}" type="text" placeholder="username"/>
                 <label	th:if="${#fields.hasErrors('first_name')}" th:errors="*{first_name}"></label>
                 <input th:field="*{first_name}" type="text" placeholder="first name"/>
