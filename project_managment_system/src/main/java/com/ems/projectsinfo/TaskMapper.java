@@ -11,12 +11,12 @@ import java.sql.SQLException;
 public class TaskMapper implements RowMapper<Task> {
     public Task mapRow(ResultSet rs, int rowNum) throws SQLException {
         Task task = new Task();
-        task.setTask_id(rs.getInt("task_id"));
+        task.setId(rs.getInt("id"));
         task.setDescription(rs.getString("description"));
-        task.setCreation_date(rs.getDate("creation_date"));
+        task.setCreationDate(rs.getDate("creation_date"));
         task.setDeadline(rs.getDate("deadline"));
-        task.setCompletion_date(rs.getDate("completion_date"));
-        task.setFk_Project(rs.getInt("fk_Project"));
+        task.setCompletionDate(rs.getDate("completion_date"));
+        task.setFkProject(rs.getInt("fk_Project"));
         return task;
     }
 }

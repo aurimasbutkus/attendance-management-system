@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 public class Team {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer team_id;
+    private Integer id;
     @Nullable
     private String description;
     @NotNull
@@ -35,12 +35,12 @@ public class Team {
         this.name = name;
     }
 
-    public Integer getTeam_id() {
-        return team_id;
+    public Integer getId() {
+        return id;
     }
 
-    public void setTeam_id(Integer team_id) {
-        this.team_id = team_id;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {

@@ -23,7 +23,7 @@ public class ProjectJDBC implements ProjectService {
     public void create(Project project) {
         if(!projectExists(project)){
             String SQL = "insert into project (name, description, start_date, end_date) values (?, ?, ?, ?)";
-            jdbcTemplateObject.update( SQL, project.getName(), project.getDescription(), project.getStart_date(), project.getEnd_date());
+            jdbcTemplateObject.update( SQL, project.getName(), project.getDescription(), project.getStartDate(), project.getEndDate());
             System.out.println("Created Project = " +  project.getName());
         }
         else System.out.println("Project name already exists! = " + project.getName());
@@ -50,9 +50,9 @@ public class ProjectJDBC implements ProjectService {
     }
 
     @Override
-    public boolean projectExists(Integer project_id) {
-        String SQL = "select * from project where project_id = ?";
-        return project_id != null && project_id != 0 && validate(SQL, project_id);
+    public boolean projectExists(Integer id) {
+        String SQL = "select * from project where id = ?";
+        return id != null && id != 0 && validate(SQL, id);
     }
     @Override
     public boolean projectExists(String name) {
@@ -74,10 +74,10 @@ public class ProjectJDBC implements ProjectService {
         }
     }
     @Override
-    public Project getProject(Integer project_id) {
-        String SQL = "select * from project where project_id = ?";
+    public Project getProject(Integer id) {
+        String SQL = "select * from project where id = ?";
         try {
-            return jdbcTemplateObject.queryForObject(SQL, new Object[]{project_id}, new ProjectMapper());
+            return jdbcTemplateObject.queryForObject(SQL, new Object[]{id}, new ProjectMapper());
         }
         catch (EmptyResultDataAccessException e) {
             return null;
@@ -111,7 +111,8 @@ public class ProjectJDBC implements ProjectService {
 
     @Override
     public List<Project> listAllUserProjects(Integer id) {
-        String SQL = "select project.* from project, account, team, project_teams where account.fk_Team = team.team_id and project_teams.fk_Team = team.team_id and project_teams.fk_Project = project.project_id and account.id = ?";
+        String SQL = "select project.* from project, account, team, project_teams where account.fk_Team = team.id" +
+                " and project_teams.fk_Team = team.id and project_teams.fk_Project = project.id and account.id = ?";
         return jdbcTemplateObject.query(SQL, new Object[]{id}, new ProjectMapper());
     }
 
@@ -135,7 +136,7 @@ public class ProjectJDBC implements ProjectService {
 
     @Override
     public void delete(Integer id) {
-        String SQL = "delete from project where project_id = ?";
+        String SQL = "delete from project where id = ?";
         jdbcTemplateObject.update(SQL, id);
         System.out.println("Deleted Record with ID = " + id );
     }
@@ -144,6 +145,14 @@ public class ProjectJDBC implements ProjectService {
         String SQL = "delete from project where name = ?";
         jdbcTemplateObject.update(SQL, name);
         System.out.println("Deleted Record with name = " + name );
+    }
+    @Override
+    public void updateEverything(Project project){
+        String SQL = "update project set name = ?, description = ?, start_date = ?," +
+                " end_date = ?, deadline = ? where id = ?";
+        jdbcTemplateObject.update(SQL, project.getName(), project.getDescription(), project.getStartDate(),
+        project.getEndDate(), project.getDeadline(), project.getId());
+        System.out.println("Updated project info with id: " + project.getId() );
     }
 
 }

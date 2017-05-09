@@ -11,9 +11,11 @@ import java.util.List;
 public interface MessageService {
 
     void create(String text, Date date, Integer sender_id, Integer receiver_id);
-    List<Message> listAllReceivedMessages(int userId);
-    List<Message> listAllSentMessages(int userId);
-    List<User> listAllInteractedUsers(int userId); //Used to get all users current person has sent or received messages.
-    List<Message> listAllMessagesWith(int userId, int receiverId);
-
+    List<Message> listAllReceivedMessages(Integer userId);
+    List<Message> listAllSentMessages(Integer userId);
+    List<User> listAllInteractedUsers(Integer userId); //Used to get all users current person has sent or received messages.
+    List<Message> listAllMessagesWith(Integer userId, Integer receiverId);
+    List<Message> listAllMessages();
+    Message getMessage(Integer id);
+    void updateEverything(Message message);
 }

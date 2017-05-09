@@ -26,7 +26,7 @@ class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             throws Exception {
         final String findUserQuery = "select username, password, enabled "
                 + "from account " + "where username = ?";
-        final String findRoles = "select username,role " + "from roles "
+        final String findRoles = "select username, role " + "from roles "
                 + "where username = ?";
         auth.
                 jdbcAuthentication()

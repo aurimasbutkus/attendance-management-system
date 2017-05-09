@@ -12,7 +12,7 @@ import java.sql.SQLException;
 public class TeamMapper implements RowMapper<Team> {
     public Team mapRow(ResultSet rs, int rowNum) throws SQLException {
         Team team = new Team();
-        team.setTeam_id(rs.getInt("team_id"));
+        team.setId(rs.getInt("id"));
         team.setName(rs.getString("name"));
         team.setDescription(rs.getString("description"));
         return team;

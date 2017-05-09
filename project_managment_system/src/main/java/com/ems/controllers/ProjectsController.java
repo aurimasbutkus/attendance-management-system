@@ -2,7 +2,7 @@ package com.ems.controllers;
 
 import com.ems.projectsinfo.Project;
 import com.ems.projectsinfo.ProjectService;
-import com.ems.userinfo.UserDAO;
+import com.ems.userinfo.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -10,9 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import java.sql.Date;
 
 
 /**
@@ -25,7 +22,7 @@ public class ProjectsController {
     private ProjectService projectService;
 
     @Autowired
-    private UserDAO userService;
+    private UserService userService;
 
     @RequestMapping(value="projects", method = RequestMethod.GET)
     public String projects( Model model, Authentication authentication){

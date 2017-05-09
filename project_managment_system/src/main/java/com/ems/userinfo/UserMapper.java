@@ -14,17 +14,17 @@ public class UserMapper implements RowMapper<User> {
         User user = new User();
         user.setId(rs.getInt("id"));
         user.setUsername(rs.getString("username"));
-        user.setEmail_address(rs.getString("email_address"));
+        user.setEmailAddress(rs.getString("email_address"));
         user.setPassword(rs.getString("password"));
-        user.setFirst_name(rs.getString("first_name"));
-        user.setLast_name(rs.getString("last_name"));
+        user.setFirstName(rs.getString("first_name"));
+        user.setLastName(rs.getString("last_name"));
         user.setGender(rs.getInt("gender"));
         user.setNationality(rs.getString("nationality"));
-        user.setDate_of_birth(rs.getDate("date_of_birth"));
-        user.setPhone_number(rs.getString("phone_number"));
-        user.setWork_status(rs.getInt("work_status"));
+        user.setDateOfBirth(rs.getDate("date_of_birth"));
+        user.setPhoneNumber(rs.getString("phone_number"));
+        user.setWorkStatus(rs.getInt("work_status"));
         user.setEnabled(rs.getInt("enabled"));
-        user.setFk_Team(rs.getInt("fk_Team"));
+        user.setFkTeam(rs.getInt("fk_Team"));
         return user;
     }
 }

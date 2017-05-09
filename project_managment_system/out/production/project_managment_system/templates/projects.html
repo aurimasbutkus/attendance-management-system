@@ -28,7 +28,7 @@
     <div>
         <ul>
             <li th:each="project : ${projects}">
-                <a th:href="@{/project-core/{id}(id=${project.project_id})}" th:text="${project.name}">
+                <a th:href="@{/project-core/{id}(id=${project.id})}" th:text="${project.name}">
                 </a>
             </li>
         </ul>

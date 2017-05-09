@@ -28,8 +28,8 @@
 
     <div>
         <form th:action = "@{/messages/new}" th:object="${newMessage}" method="post" class="new-message-form" style = "display: block">
-            <!--<label	th:if="${#fields.hasErrors('receiver_username')}" th:errors="*{receiver_username}"></label>-->
-            <input th:field="*{receiver_username}" type="text" placeholder="Receiver's username"/>
+            <!--<label	th:if="${#fields.hasErrors('receiverUsername')}" th:errors="*{receiverUsername}"></label>-->
+            <input th:field="*{receiverUsername}" type="text" placeholder="Receiver's username"/>
             <!--<label	th:if="${#fields.hasErrors('text')}" th:errors="*{text}"></label>-->
             <input th:field="*{text}" type="text" placeholder="Message"/>
             <input type="submit" value="Send"/>

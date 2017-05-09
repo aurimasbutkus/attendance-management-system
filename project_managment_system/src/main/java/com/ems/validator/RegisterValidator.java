@@ -30,10 +30,10 @@ public class RegisterValidator implements Validator {
             errors.rejectValue("username", "Duplicate.userForm.username");
         }
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email_address", "NotEmpty");
-        if (user.getEmail_address().length() < 6 || user.getEmail_address().length() > 32) {
+        if (user.getEmailAddress().length() < 6 || user.getEmailAddress().length() > 32) {
             errors.rejectValue("email_address", "Size.userForm.email_address");
         }
-        if (!user.getEmail_address().contains("@")) {
+        if (!user.getEmailAddress().contains("@")) {
             errors.rejectValue("email_address", "Invalid.userForm.email_address");
         }
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty");

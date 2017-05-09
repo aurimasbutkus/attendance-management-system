@@ -11,30 +11,30 @@ import javax.validation.constraints.NotNull;
 public class Subtask {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer subtask_id;
+    private Integer id;
     @NotNull
     private String description;
     @NotNull
     private Integer status;
     @NotNull
-    private Integer fk_Task;
+    private Integer fkTask;
 
     public Subtask() {
 
     }
 
-    public Subtask(String description, Integer status, Integer fk_Task) {
+    public Subtask(String description, Integer status, Integer fkTask) {
         this.description = description;
         this.status = status;
-        this.fk_Task = fk_Task;
+        this.fkTask = fkTask;
     }
 
-    public Integer getSubtask_id() {
-        return subtask_id;
+    public Integer getId() {
+        return id;
     }
 
-    public void setSubtask_id(Integer subtask_id) {
-        this.subtask_id = subtask_id;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getDescription() {
@@ -53,11 +53,11 @@ public class Subtask {
         this.status = status;
     }
 
-    public Integer getFk_Task() {
-        return fk_Task;
+    public Integer getFkTask() {
+        return fkTask;
     }
 
-    public void setFk_Task(Integer fk_Task) {
-        this.fk_Task = fk_Task;
+    public void setFkTask(Integer fkTask) {
+        this.fkTask = fkTask;
     }
 }

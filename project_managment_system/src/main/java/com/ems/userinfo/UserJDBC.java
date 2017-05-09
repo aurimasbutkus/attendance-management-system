@@ -14,7 +14,7 @@ import java.sql.Date;
 import java.util.List;
 
 @Repository
-public class UserJDBC implements UserDAO {
+public class UserJDBC implements UserService {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     @Autowired
@@ -24,18 +24,18 @@ public class UserJDBC implements UserDAO {
         if(!userExists(user)){
             String SQLuser = "insert into account (username, password, email_address, first_name, last_name) values (?, ?, ?, ?, ?)";
             String SQLrole = "insert into roles (username, role) values (?, ?)";
-            jdbcTemplateObject.update( SQLuser, user.getUsername(), bCryptPasswordEncoder.encode(user.getPassword()), user.getEmail_address(), user.getFirst_name(), user.getLast_name());
+            jdbcTemplateObject.update( SQLuser, user.getUsername(), bCryptPasswordEncoder.encode(user.getPassword()), user.getEmailAddress(), user.getFirstName(), user.getLastName());
             jdbcTemplateObject.update( SQLrole, user.getUsername(), "USER");
             System.out.println("Created User = " +  user.getUsername());
         }
         else System.out.println("User name already exists! = " + user.getUsername());
     }
     @Override
-    public void create(String username, String password, String email, String first_name, String last_name) {
+    public void create(String username, String password, String email, String firstName, String lastName) {
         if(!userExists(username)){
             String SQLuser = "insert into account (username, password, email_address, first_name, last_name) values (?, ?, ?, ?, ?)";
             String SQLrole = "insert into roles (username, role) values (?, ?)";
-            jdbcTemplateObject.update( SQLuser, username, bCryptPasswordEncoder.encode(password), email, first_name, last_name);
+            jdbcTemplateObject.update( SQLuser, username, bCryptPasswordEncoder.encode(password), email, firstName, lastName);
             jdbcTemplateObject.update( SQLrole, username, "USER");
             System.out.println("Created User = " + username);
         }
@@ -109,7 +109,7 @@ public class UserJDBC implements UserDAO {
         }
     }
     @Override
-    public List<User> listUsers() {
+    public List<User> listAllUsers() {
         String SQL = "select * from account";
         return jdbcTemplateObject.query(SQL, new UserMapper());
     }
@@ -132,30 +132,19 @@ public class UserJDBC implements UserDAO {
         System.out.println("Updated role with username = " + username );
     }
     @Override
-    public void updateInfo(String username, Date date_of_birth, String phone_number, Integer gender, String nationality){
+    public void updateInfo(String username, Date dateOfBirth, String phoneNumber, Integer gender, String nationality){
         String SQL = "update account set date_of_birth = ?, phone_number = ?, gender = ?, nationality = ? where username = ?";
-        jdbcTemplateObject.update(SQL, date_of_birth, phone_number, gender, nationality, username);
+        jdbcTemplateObject.update(SQL, dateOfBirth, phoneNumber, gender, nationality, username);
         System.out.println("Updated info with username = " + username );
     }
-//    @Override
-//    public void updateEverything(Integer id, String username, String email, String password, String first_name, String last_name,
-//                          String date_of_birth, String phone_number, Integer gender, String nationality, String work_status,
-//                          Integer enabled, Integer fk_Team){
-//        String SQL = "update account set username = ?, email_address= ?, password = ?, first_name = ?, first_name = ?," +
-//                " last_name = ?, date_of_birth = ?, phone_number = ?, gender = ?, nationality = ?," +
-//                " work_status = ?, enabled = ?, fk_Team = ? where id = ?";
-//        jdbcTemplateObject.update(SQL, id, username, email, password, first_name, last_name, date_of_birth,
-//                phone_number, gender, nationality, work_status, enabled, fk_Team);
-//        System.out.println("Updated info with id: " + username );
-//    }
     @Override
     public void updateEverything(User user){
         String SQL = "update account set username = ?, email_address= ?, first_name = ?," +
                 " last_name = ?, date_of_birth = ?, phone_number = ?, gender = ?, nationality = ?," +
                 " work_status = ?, enabled = ?, fk_Team = ? where id = ?";
-        jdbcTemplateObject.update(SQL, user.getUsername(), user.getEmail_address(), user.getFirst_name(),
-                user.getLast_name(), user.getDate_of_birth(), user.getPhone_number(), user.getGender(),
-                user.getNationality(), user.getWork_status(), user.getEnabled(), user.getFk_Team(), user.getId());
-        System.out.println("Updated info with id: " + user.getId() );
+        jdbcTemplateObject.update(SQL, user.getUsername(), user.getEmailAddress(), user.getFirstName(),
+                user.getLastName(), user.getDateOfBirth(), user.getPhoneNumber(), user.getGender(),
+                user.getNationality(), user.getWorkStatus(), user.getEnabled(), user.getFkTeam(), user.getId());
+        System.out.println("Updated user info with id: " + user.getId() );
     }
 }

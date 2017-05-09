@@ -14,43 +14,43 @@ import java.sql.Date;
 public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer task_id;
+    private Integer id;
     @NotNull
     private String description;
     @NotNull
-    private Date creation_date;
+    private Date creationDate;
     @Nullable
     private Date deadline;
     @Nullable
-    private Date completion_date;
+    private Date completionDate;
     @NotNull
-    private Integer fk_Project;
+    private Integer fkProject;
 
     public Task() {
 
     }
 
-    public Task(String description, Date creation_date, Date deadline, Date completion_date, Integer fk_Project) {
+    public Task(String description, Date creationDate, Date deadline, Date completionDate, Integer fkProject) {
         this.description = description;
-        this.creation_date = creation_date;
+        this.creationDate = creationDate;
         this.deadline = deadline;
-        this.completion_date = completion_date;
-        this.fk_Project = fk_Project;
+        this.completionDate = completionDate;
+        this.fkProject = fkProject;
     }
 
-    public Task(String description, Date creation_date, Date deadline, Integer fk_Project) {
+    public Task(String description, Date creationDate, Date deadline, Integer fkProject) {
         this.description = description;
-        this.creation_date = creation_date;
+        this.creationDate = creationDate;
         this.deadline = deadline;
-        this.fk_Project = fk_Project;
+        this.fkProject = fkProject;
     }
 
-    public Integer getTask_id() {
-        return task_id;
+    public Integer getId() {
+        return id;
     }
 
-    public void setTask_id(Integer task_id) {
-        this.task_id = task_id;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getDescription() {
@@ -61,12 +61,12 @@ public class Task {
         this.description = description;
     }
 
-    public Date getCreation_date() {
-        return creation_date;
+    public Date getCreationDate() {
+        return creationDate;
     }
 
-    public void setCreation_date(Date creation_date) {
-        this.creation_date = creation_date;
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
     }
 
     public Date getDeadline() {
@@ -77,19 +77,19 @@ public class Task {
         this.deadline = deadline;
     }
 
-    public Date getCompletion_date() {
-        return completion_date;
+    public Date getCompletionDate() {
+        return completionDate;
     }
 
-    public void setCompletion_date(Date completion_date) {
-        this.completion_date = completion_date;
+    public void setCompletionDate(Date completionDate) {
+        this.completionDate = completionDate;
     }
 
-    public Integer getFk_Project() {
-        return fk_Project;
+    public Integer getFkProject() {
+        return fkProject;
     }
 
-    public void setFk_Project(Integer fk_Project) {
-        this.fk_Project = fk_Project;
+    public void setFkProject(Integer fkProject) {
+        this.fkProject = fkProject;
     }
 }

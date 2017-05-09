@@ -16,43 +16,45 @@ public class Project {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer project_id;
+    private Integer id;
     @NotNull
     private String name;
     @NotNull
     private String description;
     @NotNull
-    private Date start_date;
+    private Date startDate;
     @Nullable
-    private Date end_date;
+    private Date endDate;
+    @Nullable
+    private Date deadline;
 
     public Project() {
         this.name = "";
         this.description = "";
-        this.start_date = null;
-        this.end_date = null;
+        this.startDate = null;
+        this.endDate = null;
     }
 
-    public Project(String name, String description, Date start_date, Date end_date) {
+    public Project(String name, String description, Date startDate, Date endDate) {
         this.name = name;
         this.description = description;
-        this.start_date = start_date;
-        this.end_date = end_date;
+        this.startDate = startDate;
+        this.endDate = endDate;
     }
-    public Project(String name, String description, Date start_date) {
+    public Project(String name, String description, Date startDate) {
         this.name = name;
         this.description = description;
-        this.start_date = start_date;
+        this.startDate = startDate;
     }
 
 
 
-    public Integer getProject_id() {
-        return project_id;
+    public Integer getId() {
+        return id;
     }
 
-    public void setProject_id(Integer project_id) {
-        this.project_id = project_id;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -71,20 +73,27 @@ public class Project {
         this.description = description;
     }
 
-    public Date getStart_date() {
-        return start_date;
+    public Date getStartDate() {
+        return startDate;
     }
 
-    public void setStart_date(Date start_date) {
-        this.start_date = start_date;
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
     }
 
-    public Date getEnd_date() {
-        return end_date;
+    public Date getEndDate() {
+        return endDate;
     }
 
-    public void setEnd_date(Date end_date) {
-        this.end_date = end_date;
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 
+    public Date getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(Date deadline) {
+        this.deadline = deadline;
+    }
 }

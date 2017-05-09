@@ -23,9 +23,11 @@ public interface ProjectService {
     void delete(String username);
 
 
-    boolean projectExists(Integer project_id);
+    boolean projectExists(Integer id);
     boolean projectExists(String name);
     boolean projectExists(Project project);
+
+    void updateEverything(Project project);
 
 
 }

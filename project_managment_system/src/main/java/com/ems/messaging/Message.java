@@ -1,9 +1,7 @@
 package com.ems.messaging;
 
-import com.ems.userinfo.UserDAO;
-import com.ems.userinfo.UserJDBC;
+import com.ems.userinfo.UserService;
 import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -20,36 +18,36 @@ public class Message {
     public String formattedText;
 
     @Transient
-    private String receiver_username;
+    private String receiverUsername;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer message_id;
+    private Integer id;
     @NotEmpty(message = "Your message can't be empty")
     private String text;
     @NotNull
     private Date date;
 
-    private Integer fk_account_sender;
+    private Integer fkAccountSender;
 
-    private Integer fk_account_receiver;
+    private Integer fkAccountReceiver;
 
     public Message(){
 
     }
 
-    public Message(String text, Integer fk_account_sender, Integer fk_account_receiver){
+    public Message(String text, Integer fkAccountSender, Integer fkAccountReceiver){
         this.text = text;
-        this.fk_account_sender = fk_account_sender;
-        this.fk_account_receiver = fk_account_receiver;
+        this.fkAccountSender = fkAccountSender;
+        this.fkAccountReceiver = fkAccountReceiver;
     }
 
-    public Integer getMessage_id() {
-        return message_id;
+    public Integer getId() {
+        return id;
     }
 
-    public void setMessage_id(Integer message_id) {
-        this.message_id = message_id;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getText() {
@@ -60,30 +58,30 @@ public class Message {
         this.text = text;
     }
 
-    public Integer getFk_account_sender() {
-        return fk_account_sender;
+    public Integer getFkAccountSender() {
+        return fkAccountSender;
     }
 
-    public void setFk_account_sender(Integer fk_account_sender) {
-        this.fk_account_sender = fk_account_sender;
+    public void setFkAccountSender(Integer fkAccountSender) {
+        this.fkAccountSender = fkAccountSender;
     }
 
-    public Integer getFk_account_receiver() {
-        return fk_account_receiver;
+    public Integer getFkAccountReceiver() {
+        return fkAccountReceiver;
     }
 
-    public String getSenderUsername(UserDAO userDAO){
-        return userDAO.getUsernameById(fk_account_sender);
+    public String getSenderUsername(UserService userService){
+        return userService.getUsernameById(fkAccountSender);
     }
 
-    public String getReceiverUsername(UserDAO userDAO) { return userDAO.getUsernameById(fk_account_receiver); }
+    public String getReceiverUsername(UserService userService) { return userService.getUsernameById(fkAccountReceiver); }
 
-    public void getFormattedText(UserDAO userDAO){
-        formattedText = date.toString() + " | " + getSenderUsername(userDAO) + " -> " + getReceiverUsername(userDAO) + " | " + text;
+    public void getFormattedText(UserService userService){
+        formattedText = date.toString() + " | " + getSenderUsername(userService) + " -> " + getReceiverUsername(userService) + " | " + text;
     }
 
-    public void setFk_account_receiver(Integer fk_account_receiver) {
-        this.fk_account_receiver = fk_account_receiver;
+    public void setFkAccountReceiver(Integer fkAccountReceiver) {
+        this.fkAccountReceiver = fkAccountReceiver;
     }
 
     public Date getDate() {
@@ -94,21 +92,21 @@ public class Message {
         this.date = date;
     }
 
-    public String getReceiver_username() {
-        return receiver_username;
+    public String getReceiverUsername() {
+        return receiverUsername;
     }
 
-    public void setReceiver_username(String receiver_username) {
-        this.receiver_username = receiver_username;
+    public void setReceiverUsername(String receiverUsername) {
+        this.receiverUsername = receiverUsername;
     }
 
     @Override
     public String toString() {
         return "Message{" +
-                "message_id=" + message_id +
+                "id=" + id +
                 ", text='" + text + '\'' +
-                ", fk_account_sender=" + fk_account_sender +
-                ", fk_account_receiver=" + fk_account_receiver +
+                ", fkAccountSender=" + fkAccountSender +
+                ", fkAccountReceiver=" + fkAccountReceiver +
                 '}';
     }
 }

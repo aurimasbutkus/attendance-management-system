@@ -3,7 +3,7 @@ package com.ems.controllers;
 import com.ems.messaging.Message;
 import com.ems.messaging.MessageService;
 import com.ems.userinfo.User;
-import com.ems.userinfo.UserDAO;
+import com.ems.userinfo.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -22,11 +22,11 @@ public class MessagesController {
     @Autowired
     private MessageService messageService;
     @Autowired
-    private UserDAO userDAO;
+    private UserService userService;
 
     @RequestMapping(value="/messages", method = RequestMethod.GET)
     public String messages(Model model, Authentication authentication){
-        int userId = userDAO.getIdByUsername(authentication.getName());
+        int userId = userService.getIdByUsername(authentication.getName());
         List<User> users = messageService.listAllInteractedUsers(userId);
         model.addAttribute("users", users);
         return "messages";
@@ -41,16 +41,16 @@ public class MessagesController {
     @PostMapping(value="messages/new")
     public String postNewMessage(@ModelAttribute("newMessage") Message newMessage, Model model, Authentication authentication){
         newMessage.setDate(new Date(System.currentTimeMillis()));
-        messageService.create(newMessage.getText(), newMessage.getDate(), userDAO.getIdByUsername(authentication.getName()), userDAO.getIdByUsername(newMessage.getReceiver_username()));
+        messageService.create(newMessage.getText(), newMessage.getDate(), userService.getIdByUsername(authentication.getName()), userService.getIdByUsername(newMessage.getReceiverUsername()));
         return messages(model, authentication);
     }
 
     @GetMapping(value="messages/chat/{id}")
     public String showChat(Model model, @PathVariable("id") int id, Authentication authentication){
-        int userId = userDAO.getIdByUsername(authentication.getName());
+        int userId = userService.getIdByUsername(authentication.getName());
         List<Message> messages = messageService.listAllMessagesWith(userId, id);
         for(Message message : messages){
-            message.getFormattedText(userDAO);
+            message.getFormattedText(userService);
         }
         model.addAttribute("messages", messages);
         model.addAttribute("receiver", id);
@@ -61,7 +61,7 @@ public class MessagesController {
     @PostMapping(value = "/messages/chat/{id}")
     public String postChat(@ModelAttribute("newMessage") Message newMessage, @PathVariable("id") int id, Model model, Authentication authentication){
         newMessage.setDate(new Date(System.currentTimeMillis()));
-        messageService.create(newMessage.getText(), newMessage.getDate(), userDAO.getIdByUsername(authentication.getName()), id);
+        messageService.create(newMessage.getText(), newMessage.getDate(), userService.getIdByUsername(authentication.getName()), id);
         return showChat(model, id, authentication);
     }
 }

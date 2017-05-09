@@ -15,10 +15,10 @@ import java.sql.SQLException;
 public class SubtaskMapper implements RowMapper<Subtask> {
     public Subtask mapRow(ResultSet rs, int rowNum) throws SQLException {
         Subtask subtask = new Subtask();
-        subtask.setSubtask_id(rs.getInt("subtask_id"));
+        subtask.setId(rs.getInt("id"));
         subtask.setDescription(rs.getString("description"));
         subtask.setStatus(rs.getInt("status"));
-        subtask.setFk_Task(rs.getInt("fk_Task"));
+        subtask.setFkTask(rs.getInt("fk_Task"));
         return subtask;
     }
 }

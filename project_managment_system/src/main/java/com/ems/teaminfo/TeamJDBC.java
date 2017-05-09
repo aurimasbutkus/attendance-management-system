@@ -18,14 +18,14 @@ public class TeamJDBC implements TeamService {
     private JdbcTemplate jdbcTemplateObject;
 
     @Override
-    public List<User> getMembers(Integer team_id) {
-        String SQL = "select account.* from team, account where account.fk_Team = team.team_id and team.team_id = ?";
-        return jdbcTemplateObject.query(SQL, new Object[]{team_id}, new UserMapper());
+    public List<User> getMembers(Integer teamId) {
+        String SQL = "select account.* from team, account where account.fk_Team = team.id and team.id = ?";
+        return jdbcTemplateObject.query(SQL, new Object[]{teamId}, new UserMapper());
     }
 
     @Override
     public Team getTeamByUser(Integer id) {
-        String SQL = "select team.* from team, account where account.fk_Team = team.team_id and account.id = ?";
+        String SQL = "select team.* from team, account where account.fk_Team = team.id and account.id = ?";
         return jdbcTemplateObject.queryForObject(SQL, new Object[]{id}, new TeamMapper());
     }
 }
