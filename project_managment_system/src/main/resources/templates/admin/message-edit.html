@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+  <head>
+    <title>Bootstrap 3, from LayoutIt!</title>
+	  <link href="../../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+	  <link href="../../static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet" />
+  </head>
+  <body>
+	<div>
+		<div class="row">
+			<div class="col-md-12">
+				<h1 th:inline="text">Hello, [[${#httpServletRequest.remoteUser}]]!</h1>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-2">
+				<div class="list-group">
+                    <a th:href="@{/index}" class="list-group-item" th:text="#{admin.home}"></a>
+                    <a th:href="@{/admin}" class="list-group-item" th:text="#{admin.admin}"></a>
+                    <a th:href="@{/admin/user}" class="list-group-item" th:text="#{admin.user}"></a>
+                    <a th:href="@{/admin/role}" class="list-group-item" th:text="#{admin.role}"></a>
+                    <a th:href="@{/admin/message}" class="list-group-item" th:text="#{admin.message}"></a>
+                    <a th:href="@{/admin/project}" class="list-group-item" th:text="#{admin.project}"></a>
+                    <a th:href="@{/admin/task}" class="list-group-item" th:text="#{admin.task}"></a>
+                    <a th:href="@{/admin/subtask}" class="list-group-item" th:text="#{admin.subtask}"></a>
+				</div>
+			</div>
+			<div class="col-md-10">
+                <form th:object="${messageForm}" th:action = "@{/admin/message/{id}(id=${messageForm.id})}" method="post">
+                    <label th:text="#{admin.id}"></label>
+                    <input th:field="*{id}" type="text" class="form-control" />
+                    <label th:text="#{admin.text}"></label>
+                    <input th:field="*{text}" type="text" class="form-control"/>
+                    <label th:text="#{admin.date}"></label>
+                    <input th:field="*{date}" type="date" class="form-control"/>
+                    <label th:text="#{admin.sender}"></label>
+                    <input th:field="*{fkAccountSender}" type="number" class="form-control" />
+                    <label th:text="#{admin.receiver}"></label>
+                    <input th:field="*{fkAccountReceiver}" type="number" class="form-control"/>
+                    <input class="btn btn-default" type="submit" value="edit" name="edit"/>
+                </form>
+			</div>
+		</div>
+	</div>
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/scripts.js}"></script>
+  </body>
+</html>
