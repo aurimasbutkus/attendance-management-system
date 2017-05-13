@@ -37,28 +37,39 @@
                     <label th:text="#{admin.id}"></label>
                     <input th:field="*{id}" type="text" class="form-control" readonly="readonly"/>
                     <label th:text="#{admin.username}"></label>
+                    <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
                     <input th:field="*{username}" type="text" class="form-control"/>
                     <label th:text="#{admin.email}"></label>
+                    <p th:if="${#fields.hasErrors('emailAddress')}" th:errors="*{emailAddress}"></p>
                     <input th:field="*{emailAddress}" type="email" class="form-control"/>
                     <label th:text="#{admin.firstName}"></label>
+                    <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
                     <input th:field="*{firstName}" type="text" class="form-control" />
                     <label th:text="#{admin.lastName}"></label>
+                    <p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
                     <input th:field="*{lastName}" type="text" class="form-control"/>
                     <label th:text="#{admin.gender}"></label>
+                    <p th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}"></p>
                     <input th:field="*{gender}" type="number" class="form-control" />
                     <label th:text="#{admin.nationality}"></label>
+                    <p th:if="${#fields.hasErrors('nationality')}" th:errors="*{nationality}"></p>
                     <input th:field="*{nationality}" type="text" class="form-control"/>
                     <label th:text="#{admin.birthDay}"></label>
+                    <p th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}"></p>
                     <input th:field="*{dateOfBirth}" type="text" class="datepicker form-control"/>
                     <label th:text="#{admin.phoneNumber}"></label>
+                    <p th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></p>
                     <input th:field="*{phoneNumber}" type="text" class="form-control"/>
                     <label th:text="#{admin.workStatus}"></label>
+                    <p th:if="${#fields.hasErrors('workStatus')}" th:errors="*{workStatus}"></p>
                     <input th:field="*{workStatus}" type="number" class="form-control"/>
                     <label th:text="#{admin.enabled}"></label>
+                    <p th:if="${#fields.hasErrors('enabled')}" th:errors="*{enabled}"></p>
                     <input th:field="*{enabled}" type="number" class="form-control"/>
                     <label th:text="#{admin.team}"></label>
+                    <p th:if="${#fields.hasErrors('fkTeam')}" th:errors="*{fkTeam}"></p>
                     <input th:field="*{fkTeam}" type="number" class="form-control"/>
-                    <input class="btn btn-default" type="submit" th:text="#{button.edit}"/>
+                    <input class="btn btn-default" type="submit" th:value="#{button.edit}"/>
                 </form>
 			</div>
 		</div>

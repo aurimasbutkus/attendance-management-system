@@ -22,8 +22,8 @@ public class ProjectJDBC implements ProjectService {
     @Override
     public void create(Project project) {
         if(!projectExists(project)){
-            String SQL = "insert into project (name, description, start_date, deadline) values (?, ?, ?, ?)";
-            jdbcTemplateObject.update( SQL, project.getName(), project.getDescription(), project.getStartDate(), project.getDeadline());
+            String SQL = "insert into project (name, description, start_date, end_date, deadline) values (?, ?, ?, ?, ?)";
+            jdbcTemplateObject.update( SQL, project.getName(), project.getDescription(), project.getStartDate(), project.getEndDate(), project.getDeadline());
             System.out.println("Created Project = " +  project.getName());
         }
         else System.out.println("Project name already exists! = " + project.getName());

@@ -59,7 +59,11 @@
 							<td th:text="${user.enabled}"></td>
 							<td th:text="${user.fkTeam}"></td>
 							<td> <a th:href="@{/admin/user/{id}(id=${user.id})}" th:text="#{button.edit}" class="btn btn-info btn-xs"></a></td>
-							<td> <a th:href="@{/admin/user/{id}(id=${user.id})}" th:text="#{button.delete}" class="btn btn-danger btn-xs"></a></td>
+							<td>
+								<form id="deleteButton" th:action = "@{/admin/user/{id}/delete(id=${user.id})}" method="post" onsubmit="return confirm('Are you sure you want to delete this row?');">
+									<input type="submit" th:value="#{button.delete}" class="btn btn-danger btn-xs"/>
+								</form>
+							</td>
 						</tr>
 					</tbody>
 				</table>

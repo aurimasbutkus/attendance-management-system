@@ -33,7 +33,7 @@
 				</div>
 			</div>
 			<div class="col-md-10">
-				<a th:href="@{/admin/role/create}" th:text="#{button.new}" class="btn btn-success btn-sm"></a>
+				<a th:href="@{/admin/message/create}" th:text="#{button.new}" class="btn btn-success btn-sm"></a>
 				<table class="table table-striped table-hover">
 					<thead>
 						<tr>
@@ -54,7 +54,11 @@
 							<td th:text="${message.fkAccountSender}"></td>
 							<td th:text="${message.fkAccountReceiver}"></td>
 							<td> <a th:href="@{/admin/message/{id}(id=${message.id})}" th:text="#{button.edit}" class="btn btn-info btn-xs"></a></td>
-							<td> <a th:href="@{/admin/message/{id}(id=${message.id})}" th:text="#{button.delete}" class="btn btn-danger btn-xs"></a></td>
+							<td>
+								<form id="deleteButton" th:action = "@{/admin/message/{id}/delete(id=${message.id})}" method="post" onsubmit="return confirm('Are you sure you want to delete this row?');">
+									<input type="submit" th:value="#{button.delete}" class="btn btn-danger btn-xs"/>
+								</form>
+							</td>
 						</tr>
 					</tbody>
 				</table>

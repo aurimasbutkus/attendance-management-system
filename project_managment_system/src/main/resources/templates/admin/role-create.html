@@ -40,7 +40,7 @@
                     <label th:text="#{admin.role}"></label>
                     <p th:if="${#fields.hasErrors('role')}" th:errors="*{role}"></p>
                     <input th:field="*{role}" type="text" class="form-control"/>
-                    <input class="btn btn-default" type="submit"th:text="#{button.create}"/>
+                    <input class="btn btn-default" type="submit" th:value="#{button.create}"/>
                 </form>
 			</div>
 		</div>

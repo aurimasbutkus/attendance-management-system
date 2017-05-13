@@ -25,6 +25,11 @@ public class MessageJDBC implements MessageService{
         jdbcTemplateObject.update( SQL, text, date, sender_id, receiver_id);
     }
     @Override
+    public void create(Message message) {
+        String SQL = "insert into private_message (text, date, fk_account_sender, fk_account_receiver) values (?, ?, ?, ?)";
+        jdbcTemplateObject.update( SQL, message.getText(), message.getDate(), message.getFkAccountSender(), message.getFkAccountReceiver());
+    }
+    @Override
     public List<Message> listAllReceivedMessages(Integer userId) {
         String SQL = "select * from private_message where private_message.fk_account_receiver = ? order by private_message.id DESC";
         return jdbcTemplateObject.query(SQL, new MessageMapper(), userId);
@@ -69,5 +74,11 @@ public class MessageJDBC implements MessageService{
         jdbcTemplateObject.update(SQL, message.getText(), message.getDate(), message.getFkAccountSender(),
                 message.getFkAccountReceiver(), message.getId());
         System.out.println("Updated message info with id: " + message.getId() );
+    }
+    @Override
+    public void delete(int id) {
+        String SQL = "delete from private_message where id = ?";
+        jdbcTemplateObject.update(SQL, id);
+        System.out.println("Deleted message with id: " + id );
     }
 }

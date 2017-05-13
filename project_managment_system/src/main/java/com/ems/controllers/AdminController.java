@@ -12,7 +12,7 @@ import com.ems.userinfo.Role;
 import com.ems.userinfo.RoleService;
 import com.ems.userinfo.User;
 import com.ems.userinfo.UserService;
-import com.ems.validator.RoleValidator;
+import com.ems.validator.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,7 +33,13 @@ public class AdminController {
     @Autowired
     private RoleService roleService;
     @Autowired
+    private UserValidator userValidator;
+    @Autowired
     private RoleValidator roleValidator;
+    @Autowired
+    private ProjectValidator projectValidator;
+    @Autowired
+    private MessageValidator messageValidator;
 
     @RequestMapping(value="/admin", method = RequestMethod.GET)
     public String projects(Model model) {
@@ -52,15 +58,40 @@ public class AdminController {
         return "admin/user-edit";
     }
     @PostMapping(value = "/admin/user/{id}")
-    public String userEditPost(@ModelAttribute("userForm") User userForm )
+    public String userEditPost(@ModelAttribute("userForm") User userForm, BindingResult bindingResult)
     {
+        userValidator.validate(userForm, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return "admin/user-edit";
+        }
         userService.updateEverything(userForm);
         return "redirect:/admin/user";
-    }   
+    }
+    @PostMapping(value = "/admin/user/{id}/delete")
+    public String userDeletePost( @PathVariable("id") int id )
+    {
+        userService.delete(id);
+        return "redirect:/admin/user";
+    }
     @RequestMapping(value="/admin/project", method = RequestMethod.GET)
     public String project(Model model) {
         model.addAttribute("projects", projectService.listAllProjects());
         return "admin/project";
+    }
+    @GetMapping(value = "/admin/project/create")
+    public String projectCreateGet(Model model) {
+        model.addAttribute("projectForm", new Project());
+        return "admin/project-create";
+    }
+    @PostMapping(value = "/admin/project/create")
+    public String projectCreatePost(@ModelAttribute("projectForm") Project projectForm, BindingResult bindingResult)
+    {
+        projectValidator.validate(projectForm, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return "admin/project-create";
+        }
+        projectService.create(projectForm);
+        return "redirect:/admin/project";
     }
     @GetMapping(value = "/admin/project/{id}")
     public String projectEditGet(Model model, @PathVariable("id") int id )
@@ -68,16 +99,41 @@ public class AdminController {
         model.addAttribute("projectForm", projectService.getProject(id));
         return "admin/project-edit";
     }
-    @PostMapping(value = "/admin/message/{id}")
-    public String messageEditPost(@ModelAttribute("messageForm") Message messageForm )
+    @PostMapping(value = "/admin/project/{id}")
+    public String projectEditPost(@ModelAttribute("projectForm") Project projectForm, BindingResult bindingResult)
     {
-        messageService.updateEverything(messageForm);
-        return "redirect:/admin/message";
-    } 
+        projectValidator.validate(projectForm, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return "admin/project-edit";
+        }
+        projectService.updateEverything(projectForm);
+        return "redirect:/admin/project";
+    }
+    @PostMapping(value = "/admin/project/{id}/delete")
+    public String projectDeletePost( @PathVariable("id") int id )
+    {
+        projectService.delete(id);
+        return "redirect:/admin/project";
+    }
     @RequestMapping(value="/admin/message", method = RequestMethod.GET)
     public String message(Model model) {
         model.addAttribute("messages", messageService.listAllMessages());
         return "admin/message";
+    }
+    @GetMapping(value = "/admin/message/create")
+    public String messageCreateGet(Model model) {
+        model.addAttribute("messageForm", new Message());
+        return "admin/message-create";
+    }
+    @PostMapping(value = "/admin/message/create")
+    public String messageCreatePost(@ModelAttribute("messageForm") Message messageForm, BindingResult bindingResult)
+    {
+        messageValidator.validate(messageForm, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return "admin/message-create";
+        }
+        messageService.create(messageForm);
+        return "redirect:/admin/message";
     }
     @GetMapping(value = "/admin/message/{id}")
     public String messageEditGet(Model model, @PathVariable("id") int id )
@@ -85,12 +141,22 @@ public class AdminController {
         model.addAttribute("messageForm", messageService.getMessage(id));
         return "admin/message-edit";
     }
-    @PostMapping(value = "/admin/project/{id}")
-    public String projectEditPost(@ModelAttribute("projectForm") Project projectForm )
+    @PostMapping(value = "/admin/message/{id}")
+    public String messageEditPost(@ModelAttribute("messageForm") Message messageForm, BindingResult bindingResult)
     {
-        projectService.updateEverything(projectForm);
-        return "redirect:/admin/project";
-    }   
+        messageValidator.validate(messageForm, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return "admin/message-edit";
+        }
+        messageService.updateEverything(messageForm);
+        return "redirect:/admin/message";
+    }
+    @PostMapping(value = "/admin/message/{id}/delete")
+    public String messageDeletePost( @PathVariable("id") int id )
+    {
+        messageService.delete(id);
+        return "redirect:/admin/message";
+    }
     @RequestMapping(value = "/admin/role", method = RequestMethod.GET)
     public String role(Model model) {
         model.addAttribute("roles", roleService.listAllRoles());
@@ -125,6 +191,12 @@ public class AdminController {
             return "admin/role-edit";
         }
         roleService.updateEverything(roleForm);
+        return "redirect:/admin/role";
+    }
+    @PostMapping(value = "/admin/role/{id}/delete")
+    public String roleDeletePost( @PathVariable("id") int id )
+    {
+        roleService.delete(id);
         return "redirect:/admin/role";
     }
 }

@@ -49,7 +49,7 @@
                     <label th:text="#{admin.deadline}"></label>
                         <p th:if="${#fields.hasErrors('deadline')}" th:errors="*{deadline}"></p>
                     <input th:field="*{deadline}" type="text" class="form-control datepicker" />
-                    <input class="btn btn-default" type="submit" th:text="#{button.create}"/>
+                    <input class="btn btn-default" type="submit" th:value="#{button.create}"/>
                 </form>
 			</div>
 		</div>

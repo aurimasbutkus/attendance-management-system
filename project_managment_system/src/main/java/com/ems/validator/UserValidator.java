@@ -1,7 +1,8 @@
 package com.ems.validator;
 
+import com.ems.projectsinfo.Project;
+import com.ems.projectsinfo.ProjectService;
 import com.ems.userinfo.User;
-import com.ems.userinfo.UserJDBC;
 import com.ems.userinfo.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -9,14 +10,19 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
+
+/**
+ * Created by MARTYNAS on 17/05/13.
+ */
+
 @Component
-public class RegisterValidator implements Validator {
+public class UserValidator implements Validator {
     @Autowired
     private UserService sql;
 
     @Override
     public boolean supports(Class<?> aClass) {
-        return User.class.equals(aClass);
+        return Project.class.equals(aClass);
     }
 
     @Override
@@ -27,9 +33,6 @@ public class RegisterValidator implements Validator {
         if (user.getUsername().length() < 4 || user.getUsername().length() > 32) {
             errors.rejectValue("username", "userForm.username.size");
         }
-        if (sql.getUser(user.getUsername()) != null) {
-            errors.rejectValue("username", "userForm.username.duplicate");
-        }
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "NotEmpty");
         if (user.getFirstName().length() < 2 || user.getUsername().length() > 32) {
             errors.rejectValue("firstName", "userForm.name.size");
@@ -38,6 +41,9 @@ public class RegisterValidator implements Validator {
         if (user.getLastName().length() < 2 || user.getUsername().length() > 32) {
             errors.rejectValue("lastName", "userForm.name.size");
         }
+        if (sql.getUser(user.getUsername()) != null && sql.getUser(user.getId()) == null) {
+            errors.rejectValue("username", "userForm.username.duplicate");
+        }
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "emailAddress", "NotEmpty");
         if (user.getEmailAddress().length() < 6 || user.getEmailAddress().length() > 32) {
             errors.rejectValue("emailAddress", "userForm.emailAddress.size");
@@ -45,9 +51,6 @@ public class RegisterValidator implements Validator {
         if (!user.getEmailAddress().contains("@")) {
             errors.rejectValue("emailAddress", "userForm.emailAddress.invalid");
         }
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty");
-        if (user.getPassword().length() < 4 || user.getPassword().length() > 32) {
-            errors.rejectValue("password", "userForm.password.size");
-        }
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "dateOfBirth", "NotEmpty");
     }
 }

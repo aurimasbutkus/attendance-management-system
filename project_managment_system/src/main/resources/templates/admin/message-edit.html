@@ -48,7 +48,7 @@
                     <label th:text="#{admin.receiver}"></label>
                         <p th:if="${#fields.hasErrors('fkAccountReceiver')}" th:errors="*{fkAccountReceiver}"></p>
                     <input th:field="*{fkAccountReceiver}" type="number" class="form-control"/>
-                    <input class="btn btn-default" type="submit" th:text="#{button.edit}"/>
+                    <input class="btn btn-default" type="submit" th:value="#{button.edit}"/>
                 </form>
 			</div>
 		</div>
