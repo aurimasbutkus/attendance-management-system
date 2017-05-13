@@ -22,8 +22,8 @@ public class ProjectJDBC implements ProjectService {
     @Override
     public void create(Project project) {
         if(!projectExists(project)){
-            String SQL = "insert into project (name, description, start_date, end_date) values (?, ?, ?, ?)";
-            jdbcTemplateObject.update( SQL, project.getName(), project.getDescription(), project.getStartDate(), project.getEndDate());
+            String SQL = "insert into project (name, description, start_date, deadline) values (?, ?, ?, ?)";
+            jdbcTemplateObject.update( SQL, project.getName(), project.getDescription(), project.getStartDate(), project.getDeadline());
             System.out.println("Created Project = " +  project.getName());
         }
         else System.out.println("Project name already exists! = " + project.getName());
@@ -32,7 +32,7 @@ public class ProjectJDBC implements ProjectService {
     @Override
     public void create(String name, String description, Date start_date) {
         if(!projectExists(name)){
-            String SQL = "insert into project (name, description, start_date, end_date) values (?, ?, ?, ?)";
+            String SQL = "insert into project (name, description, start_date, deadline) values (?, ?, ?, ?)";
             jdbcTemplateObject.update( SQL, name, description, start_date, null);
             System.out.println("Created Project = " + name);
         }
@@ -40,10 +40,10 @@ public class ProjectJDBC implements ProjectService {
     }
 
     @Override
-    public void create(String name, String description, Date start_date, Date end_date) {
+    public void create(String name, String description, Date start_date, Date deadline) {
         if(!projectExists(name)){
-            String SQL = "insert into project (name, description, start_date, end_date) values (?, ?, ?, ?)";
-            jdbcTemplateObject.update( SQL, name, description, start_date, end_date);
+            String SQL = "insert into project (name, description, start_date, deadline) values (?, ?, ?, ?)";
+            jdbcTemplateObject.update( SQL, name, description, start_date, deadline);
             System.out.println("Created Project = " + name);
         }
         else System.out.println("Project name already exists! = " + name);

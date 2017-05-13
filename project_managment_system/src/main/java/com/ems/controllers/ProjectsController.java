@@ -7,9 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 
 /**
@@ -41,5 +39,23 @@ public class ProjectsController {
         model.addAttribute("tasks", projectService.listAllProjectTasks(id));
         model.addAttribute("subtasks", projectService.listAllSubtasks());
         return "project-core";
+    }
+
+    @GetMapping(value="projects/new")
+    public String projectCreation( Model model){
+        model.addAttribute("newProject", new Project());
+        return "project-creation";
+    }
+
+    @PostMapping(value="projects/new-submit")
+    public String createNewProject(@ModelAttribute("newProject") Project newProject, Model model, Authentication authentication){
+        if(newProject.getDeadline() == null)
+            projectService.create(newProject.getName(), newProject.getDescription(),
+                                    newProject.getStartDate());
+        else
+            projectService.create(newProject.getName(), newProject.getDescription(),
+                                    newProject.getStartDate(), newProject.getDeadline());
+
+        return projects(model, authentication);
     }
 }
