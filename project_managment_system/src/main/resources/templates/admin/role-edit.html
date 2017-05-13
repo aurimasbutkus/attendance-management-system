@@ -7,7 +7,7 @@
 	  <link href="../../static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet" />
   </head>
   <body>
-	<div>
+	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
 				<h1 th:inline="text">Hello, [[${#httpServletRequest.remoteUser}]]!</h1>
@@ -30,9 +30,9 @@
                 <form th:object="${roleForm}" th:action = "@{/admin/role/{id}(id=${roleForm.id})}" method="post">
                     <label th:text="#{admin.id}"></label>
                     <input th:field="*{id}" type="text" class="form-control" />
-                    <label th:text="#{admin.text}"></label>
+                    <label th:text="#{admin.username}"></label>
                     <input th:field="*{username}" type="text" class="form-control"/>
-                    <label th:text="#{admin.date}"></label>
+                    <label th:text="#{admin.role}"></label>
                     <input th:field="*{role}" type="text" class="form-control"/>
                     <input class="btn btn-default" type="submit" value="edit" name="edit"/>
                 </form>

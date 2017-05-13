@@ -7,7 +7,7 @@
 	  <link th:href="@{/css/style.css}" rel="stylesheet" />
   </head>
   <body>
-	<div>
+	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
 				<h1 th:inline="text">Hello, [[${#httpServletRequest.remoteUser}]]!</h1>
@@ -35,10 +35,6 @@
 							<th th:text="#{admin.email}"></th>
 							<th th:text="#{admin.firstName}"></th>
 							<th th:text="#{admin.lastName}"></th>
-							<th th:text="#{admin.gender}"></th>
-							<th th:text="#{admin.nationality}"></th>
-							<th th:text="#{admin.birthDay}"></th>
-							<th th:text="#{admin.phoneNumber}"></th>
 							<th th:text="#{admin.workStatus}"></th>
 							<th th:text="#{admin.enabled}"></th>
 							<th th:text="#{admin.team}"></th>
@@ -53,15 +49,11 @@
 							<td th:text="${user.emailAddress}"></td>
 							<td th:text="${user.firstName}"></td>
 							<td th:text="${user.lastName}"></td>
-							<td th:text="${user.gender}"></td>
-							<td th:text="${user.nationality}"></td>
-							<td th:text="${user.dateOfBirth}"></td>
-							<td th:text="${user.phoneNumber}"></td>
 							<td th:text="${user.workStatus}"></td>
 							<td th:text="${user.enabled}"></td>
 							<td th:text="${user.fkTeam}"></td>
-							<td> <a th:href="@{/admin/users/{id}(id=${user.id})}" th:text="#{admin.edit}" class="btn btn-info btn-xs"></a></td>
-							<td> <a th:href="@{/admin/users/{id}(id=${user.id})}" th:text="#{admin.delete}" class="btn btn-danger btn-xs"></a></td>
+							<td> <a th:href="@{/admin/user/{id}(id=${user.id})}" th:text="#{admin.edit}" class="btn btn-info btn-xs"></a></td>
+							<td> <a th:href="@{/admin/user/{id}(id=${user.id})}" th:text="#{admin.delete}" class="btn btn-danger btn-xs"></a></td>
 						</tr>
 					</tbody>
 				</table>

@@ -13,4 +13,5 @@ public interface RoleService {
 
     void delete(Integer id);
     void updateEverything(Role role);
+    void createRole(Role role);
 }

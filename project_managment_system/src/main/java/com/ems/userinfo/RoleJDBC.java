@@ -48,4 +48,10 @@ public class RoleJDBC implements RoleService {
         jdbcTemplateObject.update(SQL, role.getUsername(), role.getRole(), role.getId());
         System.out.println("Updated user info with id: " + role.getId() );
     }
+    @Override
+    public void createRole(Role role){
+        String SQL = "insert into roles (username, role) values (?, ?)";
+        jdbcTemplateObject.update( SQL, role.getUsername(),role.getRole());
+        System.out.println("Created role with id: " + role.getId() );
+    }
 }

@@ -85,10 +85,21 @@ public class AdminController {
         projectService.updateEverything(projectForm);
         return "redirect:/admin/project";
     }   
-    @RequestMapping(value="/admin/role", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/role", method = RequestMethod.GET)
     public String role(Model model) {
         model.addAttribute("roles", roleService.listAllRoles());
         return "admin/role";
+    }
+    @GetMapping(value = "/admin/role/create")
+    public String roleCreateGet(Model model) {
+        model.addAttribute("roleForm", new Role());
+        return "admin/role-create";
+    }
+    @PostMapping(value = "/admin/role/create")
+    public String roleCreatePost(@ModelAttribute("roleForm") Role roleForm )
+    {
+        roleService.createRole(roleForm);
+        return "redirect:/admin/role";
     }
     @GetMapping(value = "/admin/role/{id}")
     public String roleEditGet(Model model, @PathVariable("id") int id )

@@ -7,7 +7,7 @@
 	  <link th:href="@{/css/style.css}" rel="stylesheet" />
   </head>
   <body>
-	<div>
+	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
 				<h1 th:inline="text">Hello, [[${#httpServletRequest.remoteUser}]]!</h1>
@@ -27,6 +27,7 @@
 				</div>
 			</div>
 			<div class="col-md-10">
+				<a th:href="@{/admin/role/create}" th:text="#{admin.createRole}" class="btn btn-success btn-sm"></a>
 				<table class="table table-striped table-hover">
 					<thead>
 						<tr>
@@ -42,8 +43,8 @@
 							<td th:text="${role.id}"></td>
 							<td th:text="${role.username}"></td>
 							<td th:text="${role.role}"></td>
-							<td> <a th:href="@{/admin/role/{id}(id=${role.id})}" th:text="#{admin.edit}" class="btn btn-info btn-xs"></a></td>
-							<td> <a th:href="@{/admin/role/{id}(id=${role.id})}" th:text="#{admin.delete}" class="btn btn-danger btn-xs"></a></td>
+							<td> <a th:href="@{/admin/role/{id}(id=${role.id})}" th:text="#{admin.edit}" class="btn btn-info btn-sm"></a></td>
+							<td> <a th:href="@{/admin/role/{id}(id=${role.id})}" th:text="#{admin.delete}" class="btn btn-danger btn-sm"></a></td>
 						</tr>
 					</tbody>
 				</table>

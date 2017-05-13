@@ -2,6 +2,7 @@ package com.ems.validator;
 
 import com.ems.userinfo.User;
 import com.ems.userinfo.UserJDBC;
+import com.ems.userinfo.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -11,7 +12,7 @@ import org.springframework.validation.Validator;
 @Component
 public class RegisterValidator implements Validator {
     @Autowired
-    private UserJDBC sql;
+    private UserService sql;
 
     @Override
     public boolean supports(Class<?> aClass) {
@@ -24,24 +25,21 @@ public class RegisterValidator implements Validator {
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "NotEmpty");
         if (user.getUsername().length() < 4 || user.getUsername().length() > 32) {
-            errors.rejectValue("username", "Size.userForm.username");
+            errors.rejectValue("username", "userForm.username.size");
         }
         if (sql.getUser(user.getUsername()) != null) {
-            errors.rejectValue("username", "Duplicate.userForm.username");
+            errors.rejectValue("username", "userForm.username.duplicate");
         }
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email_address", "NotEmpty");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "emailAddress", "NotEmpty");
         if (user.getEmailAddress().length() < 6 || user.getEmailAddress().length() > 32) {
-            errors.rejectValue("email_address", "Size.userForm.email_address");
+            errors.rejectValue("emailAddress", "userForm.emailAddress.size");
         }
         if (!user.getEmailAddress().contains("@")) {
-            errors.rejectValue("email_address", "Invalid.userForm.email_address");
+            errors.rejectValue("emailAddress", "userForm.emailAddress.invalid");
         }
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty");
         if (user.getPassword().length() < 4 || user.getPassword().length() > 32) {
-            errors.rejectValue("password", "Size.userForm.password");
+            errors.rejectValue("password", "userForm.password.size");
         }
-//        if (!user.getPasswordConfirm().equals(user.getPassword())) {
-//            errors.rejectValue("passwordConfirm", "Diff.userForm.passwordConfirm");
-//        }
     }
 }
