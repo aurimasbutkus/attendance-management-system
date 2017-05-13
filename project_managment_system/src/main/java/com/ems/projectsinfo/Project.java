@@ -35,11 +35,11 @@ public class Project {
         this.endDate = null;
     }
 
-    public Project(String name, String description, Date startDate, Date endDate) {
+    public Project(String name, String description, Date startDate, Date deadline) {
         this.name = name;
         this.description = description;
         this.startDate = startDate;
-        this.endDate = endDate;
+        this.deadline = deadline;
     }
     public Project(String name, String description, Date startDate) {
         this.name = name;
