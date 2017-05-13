@@ -28,6 +28,7 @@ public class TeamController {
         Team team = teamService.getTeamByUser(user_id);
         model.addAttribute("members", teamService.getMembers(team.getId()));
         model.addAttribute("team_info", team);
+        model.addAttribute("team_projects", teamService.getProjects(team.getId()));
         return "team";
     }
 }

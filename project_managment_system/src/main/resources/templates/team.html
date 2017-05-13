@@ -36,6 +36,12 @@
                 <a href="#" th:text="${member.username}"></a>
             </li>
         </ul>
+        <h2>Team's projects</h2>
+        <ul>
+            <li th:each="project : ${team_projects}" href="#">
+                <a th:href="@{/project-core/{id}(id=${project.id})}" th:text="${project.name}"></a>
+            </li>
+        </ul>
     </div>
 </div> <!-- end main-container -->
 </body>
