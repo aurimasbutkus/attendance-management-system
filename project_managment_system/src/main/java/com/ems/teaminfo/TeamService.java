@@ -1,5 +1,6 @@
 package com.ems.teaminfo;
 
+import com.ems.projectsinfo.Project;
 import com.ems.userinfo.User;
 
 import java.util.List;
@@ -10,4 +11,7 @@ import java.util.List;
 public interface TeamService {
     List<User> getMembers(Integer id);
     Team getTeamByUser(Integer id);
+    List<Project> getProjects(Integer id);
+    Team getTeamById(Integer id);
+    void addMemberToTeam(Integer team_id, Integer member_id);
 }

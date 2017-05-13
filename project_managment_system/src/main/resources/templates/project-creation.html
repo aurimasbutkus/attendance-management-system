@@ -3,11 +3,14 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <title>EMS Home Page</title>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <link th:href="@{/css/index.css}" rel="stylesheet" />
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
     <link th:href="@{/css/bootstrap-theme.min.css}" rel="stylesheet" />
-    <link  th:href="@{/css/calendar.css}" rel="stylesheet" />
-    <script th:src="@{/js/calendar.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/scripts.js}"></script>
+    <link th:href="@{/css/index.css}" rel="stylesheet" />
 </head>
 <body>
 <div class="main-container">
@@ -35,8 +38,8 @@
         <p><input th:field="*{name}" name="name" type="text" placeholder="Project's name" required="required"/></p>
         <p><label	th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></label></p>
         <p><textarea th:field="*{description}" name="description" type="text" placeholder="Project's description" required="required"></textarea></p>
-        <p><input th:field="*{startDate}" name="startDate" type="date" placeholder="Project's start date"/></p>
-        <p><input th:field="*{deadline}" name="deadline" type="date" placeholder="Project's deadline date"/></p>
+        <p><input th:field="*{startDate}" name="startDate" type="text" class="datepicker" placeholder="Project's start date"/></p>
+        <p><input th:field="*{deadline}" name="deadline" type="text"  class="datepicker" placeholder="Project's deadline date"/></p>
         <p><input type="submit" value="Create"/></p>
         </form>
     </div>
