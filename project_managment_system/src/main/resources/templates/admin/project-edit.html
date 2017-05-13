@@ -2,9 +2,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
 	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
   <head>
-    <title>Bootstrap 3, from LayoutIt!</title>
-	  <link href="../../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
-	  <link href="../../static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet" />
+      <title>EMS Admin - Project</title>
+      <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+      <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.min.css" />
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+      <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+      <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+      <link th:href="@{/css/style.css}" rel="stylesheet" />
+      <script th:src="@{/js/bootstrap.min.js}"></script>
+      <script th:src="@{/js/scripts.js}"></script>
   </head>
   <body>
 	<div class="container">
@@ -29,24 +35,26 @@
 			<div class="col-md-10">
                 <form th:object="${projectForm}" th:action = "@{/admin/project/{id}(id=${projectForm.id})}" method="post">
                     <label th:text="#{admin.id}"></label>
-                    <input th:field="*{id}" type="text" class="form-control" />
+                    <input th:field="*{id}" type="text" class="form-control" readonly="readonly"/>
                     <label th:text="#{admin.name}"></label>
+                        <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
                     <input th:field="*{name}" type="text" class="form-control"/>
                     <label th:text="#{admin.description}"></label>
+                        <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
                     <input th:field="*{description}" type="text" class="form-control"/>
                     <label th:text="#{admin.startDate}"></label>
-                    <input th:field="*{startDate}" type="date" class="form-control" />
+                        <p th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}"></p>
+                    <input th:field="*{startDate}" type="text" class="form-control datepicker"/>
                     <label th:text="#{admin.endDate}"></label>
-                    <input th:field="*{endDate}" type="date" class="form-control"/>
+                        <p th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}" class=""></p>
+                    <input th:field="*{endDate}" type="text" class="form-control datepicker"/>
                     <label th:text="#{admin.deadline}"></label>
-                    <input th:field="*{deadline}" type="date" class="form-control" />
-                    <input class="btn btn-default" type="submit" value="edit" name="edit"/>
+                        <p th:if="${#fields.hasErrors('deadline')}" th:errors="*{deadline}"></p>
+                    <input th:field="*{deadline}" type="text" class="form-control datepicker" />
+                    <input class="btn btn-default" type="submit" th:text="#{button.edit}"/>
                 </form>
 			</div>
 		</div>
 	</div>
-    <script th:src="@{/js/jquery.min.js}"></script>
-    <script th:src="@{/js/bootstrap.min.js}"></script>
-    <script th:src="@{/js/scripts.js}"></script>
   </body>
 </html>

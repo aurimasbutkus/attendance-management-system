@@ -33,16 +33,14 @@
 				</div>
 			</div>
 			<div class="col-md-10">
-                <form th:object="${roleForm}" th:action = "@{/admin/role/{id}(id=${roleForm.id})}" method="post">
-                    <label th:text="#{admin.id}"></label>
-                    <input th:field="*{id}" type="text" class="form-control" readonly="readonly"/>
+                <form th:object="${roleForm}" th:action = "@{/admin/role/create}" method="post">
                     <label th:text="#{admin.username}"></label>
                     <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
                     <input th:field="*{username}" type="text" class="form-control"/>
                     <label th:text="#{admin.role}"></label>
                     <p th:if="${#fields.hasErrors('role')}" th:errors="*{role}"></p>
                     <input th:field="*{role}" type="text" class="form-control"/>
-                    <input class="btn btn-default" type="submit" th:text="#{button.edit}"/>
+                    <input class="btn btn-default" type="submit"th:text="#{button.create}"/>
                 </form>
 			</div>
 		</div>

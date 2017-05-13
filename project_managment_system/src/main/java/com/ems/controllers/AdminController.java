@@ -12,10 +12,14 @@ import com.ems.userinfo.Role;
 import com.ems.userinfo.RoleService;
 import com.ems.userinfo.User;
 import com.ems.userinfo.UserService;
+import com.ems.validator.RoleValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.concurrent.locks.StampedLock;
 
 @Controller
 public class AdminController {
@@ -28,6 +32,8 @@ public class AdminController {
     private MessageService messageService;   
     @Autowired
     private RoleService roleService;
+    @Autowired
+    private RoleValidator roleValidator;
 
     @RequestMapping(value="/admin", method = RequestMethod.GET)
     public String projects(Model model) {
@@ -96,8 +102,12 @@ public class AdminController {
         return "admin/role-create";
     }
     @PostMapping(value = "/admin/role/create")
-    public String roleCreatePost(@ModelAttribute("roleForm") Role roleForm )
+    public String roleCreatePost(@ModelAttribute("roleForm") Role roleForm, BindingResult bindingResult)
     {
+        roleValidator.validate(roleForm, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return "admin/role-create";
+        }
         roleService.createRole(roleForm);
         return "redirect:/admin/role";
     }
@@ -108,8 +118,12 @@ public class AdminController {
         return "admin/role-edit";
     }
     @PostMapping(value = "/admin/role/{id}")
-    public String roleEditPost(@ModelAttribute("roleForm") Role roleForm )
+    public String roleEditPost(@ModelAttribute("roleForm") Role roleForm, BindingResult bindingResult)
     {
+        roleValidator.validate(roleForm, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return "admin/role-edit";
+        }
         roleService.updateEverything(roleForm);
         return "redirect:/admin/role";
     }

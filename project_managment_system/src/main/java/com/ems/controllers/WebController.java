@@ -42,11 +42,11 @@ public class WebController {
         model.addAttribute("tasks", projectService.listAllTasks());
         return "index";
     }
-
     @RequestMapping("/")
     public String home() {
         return "index";
     }
+
     @GetMapping(value = "/login")
     public String getLogin(Model model) {
         model.addAttribute("userForm", new User());
@@ -56,7 +56,6 @@ public class WebController {
     public String postLogin(@ModelAttribute("userForm") User userForm, BindingResult bindingResult) {
         loginValidator.validate(userForm, bindingResult);
         if (bindingResult.hasErrors()) {
-            printErrors(bindingResult);
             return "login";
         }
         else return "redirect:/index";
@@ -70,21 +69,20 @@ public class WebController {
     public String postRegister(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model) {
         registerValidator.validate(userForm, bindingResult);
         if (bindingResult.hasErrors()) {
-            printErrors(bindingResult);
             return "register";
         }
         sql.create(userForm);
         model.addAttribute("username", userForm.getUsername());
         return "result";
     }
-    private void printErrors(BindingResult bindingResult)
-    {
-        for (Object object : bindingResult.getAllErrors()) {
-            if(object instanceof FieldError) {
-                FieldError fieldError = (FieldError) object;
-                String message = fieldError.getField() + " " + messageSource.getMessage(fieldError, null);
-                System.out.println(message);
-            }
-        }
-    }
+//    private void printErrors(BindingResult bindingResult)
+//    {
+//        for (Object object : bindingResult.getAllErrors()) {
+//            if(object instanceof FieldError) {
+//                FieldError fieldError = (FieldError) object;
+//                String message = fieldError.getField() + " " + messageSource.getMessage(fieldError, null);
+//                System.out.println(message);
+//            }
+//        }
+//    }
 }

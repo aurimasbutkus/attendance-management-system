@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
 	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
   <head>
-      <title>EMS Admin - Role</title>
+      <title>EMS Admin - Message</title>
       <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
       <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.min.css" />
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
@@ -33,16 +33,20 @@
 				</div>
 			</div>
 			<div class="col-md-10">
-                <form th:object="${roleForm}" th:action = "@{/admin/role/{id}(id=${roleForm.id})}" method="post">
-                    <label th:text="#{admin.id}"></label>
-                    <input th:field="*{id}" type="text" class="form-control" readonly="readonly"/>
-                    <label th:text="#{admin.username}"></label>
-                    <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
-                    <input th:field="*{username}" type="text" class="form-control"/>
-                    <label th:text="#{admin.role}"></label>
-                    <p th:if="${#fields.hasErrors('role')}" th:errors="*{role}"></p>
-                    <input th:field="*{role}" type="text" class="form-control"/>
-                    <input class="btn btn-default" type="submit" th:text="#{button.edit}"/>
+                <form th:object="${messageForm}" th:action = "@{/admin/message/create}" method="post">
+                    <label th:text="#{admin.text}"></label>
+                        <p th:if="${#fields.hasErrors('text')}" th:errors="*{text}"></p>
+                    <input th:field="*{text}" type="text" class="form-control"/>
+                    <label th:text="#{admin.date}"></label>
+                        <p th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></p>
+                    <input th:field="*{date}" type="text" class="form-control datepicker"/>
+                    <label th:text="#{admin.sender}"></label>
+                        <p th:if="${#fields.hasErrors('fkAccountSender')}" th:errors="*{fkAccountSender}"></p>
+                    <input th:field="*{fkAccountSender}" type="number" class="form-control" />
+                    <label th:text="#{admin.receiver}"></label>
+                        <p th:if="${#fields.hasErrors('fkAccountReceiver')}" th:errors="*{fkAccountReceiver}"></p>
+                    <input th:field="*{fkAccountReceiver}" type="number" class="form-control"/>
+                    <input class="btn btn-default" type="submit" th:text="#{button.create}"/>
                 </form>
 			</div>
 		</div>
