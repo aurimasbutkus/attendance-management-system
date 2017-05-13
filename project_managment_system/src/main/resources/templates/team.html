@@ -34,6 +34,7 @@
         <ul>
             <li th:each="member : ${members}" href="#">
                 <a href="#" th:text="${member.username}"></a>
+                <a th:href = "@{/team/removeMember/{id} (id=${member.id})}"><span>Remove</span></a>
             </li>
         </ul>
         <form th:action = "@{/team/addMember/{id} (id=${team_info.id})}" th:object="${newMember}" method="post">

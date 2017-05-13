@@ -9,10 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by Martynas on 5/7/2017.
@@ -52,5 +49,12 @@ public class TeamController {
         teamService.addMemberToTeam(team_id, user.getId());
         model.addAttribute("members", teamService.getMembers(team.getId()));
         return "team";
+    }
+
+    @RequestMapping(value="team/removeMember/{id}", method = RequestMethod.GET)
+    public String removeMemberFromTeam(@PathVariable("id") Integer user_id)
+    {
+        teamService.removeMemberFromTeam(user_id);
+        return "redirect:/team";
     }
 }
