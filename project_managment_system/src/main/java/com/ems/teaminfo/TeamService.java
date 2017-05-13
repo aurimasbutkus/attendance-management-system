@@ -12,4 +12,6 @@ public interface TeamService {
     List<User> getMembers(Integer id);
     Team getTeamByUser(Integer id);
     List<Project> getProjects(Integer id);
+    Team getTeamById(Integer id);
+    void addMemberToTeam(Integer team_id, Integer member_id);
 }

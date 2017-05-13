@@ -36,6 +36,10 @@
                 <a href="#" th:text="${member.username}"></a>
             </li>
         </ul>
+        <form th:action = "@{/team/addMember/{id} (id=${team_info.id})}" th:object="${newMember}" method="post">
+            <input th:field="*{username}" type="text" placeholder="Member's username"/>
+            <input type="submit" value="Add"/>
+        </form>
         <h2>Team's projects</h2>
         <ul>
             <li th:each="project : ${team_projects}" href="#">
