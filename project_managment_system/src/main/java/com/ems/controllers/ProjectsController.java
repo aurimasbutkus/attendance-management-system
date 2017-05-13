@@ -4,9 +4,11 @@ import com.ems.projectsinfo.Project;
 import com.ems.projectsinfo.ProjectService;
 import com.ems.userinfo.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -21,6 +23,9 @@ public class ProjectsController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private MessageSource messageSource;
 
     @RequestMapping(value="projects", method = RequestMethod.GET)
     public String projects( Model model, Authentication authentication){
@@ -48,7 +53,7 @@ public class ProjectsController {
     }
 
     @PostMapping(value="projects/new-submit")
-    public String createNewProject(@ModelAttribute("newProject") Project newProject, Model model, Authentication authentication){
+    public String createNewProject(@ModelAttribute("newProject") Project newProject, BindingResult bindingResult){
         if(newProject.getDeadline() == null)
             projectService.create(newProject.getName(), newProject.getDescription(),
                                     newProject.getStartDate());
@@ -56,6 +61,7 @@ public class ProjectsController {
             projectService.create(newProject.getName(), newProject.getDescription(),
                                     newProject.getStartDate(), newProject.getDeadline());
 
-        return projects(model, authentication);
+        return "projects";
     }
+
 }

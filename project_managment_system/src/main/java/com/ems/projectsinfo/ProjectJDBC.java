@@ -32,6 +32,7 @@ public class ProjectJDBC implements ProjectService {
     @Override
     public void create(String name, String description, Date start_date) {
         if(!projectExists(name)){
+            if(start_date == null) start_date = new Date(System.currentTimeMillis());
             String SQL = "insert into project (name, description, start_date, deadline) values (?, ?, ?, ?)";
             jdbcTemplateObject.update( SQL, name, description, start_date, null);
             System.out.println("Created Project = " + name);
@@ -42,6 +43,7 @@ public class ProjectJDBC implements ProjectService {
     @Override
     public void create(String name, String description, Date start_date, Date deadline) {
         if(!projectExists(name)){
+            if(start_date == null) start_date = new Date(System.currentTimeMillis());
             String SQL = "insert into project (name, description, start_date, deadline) values (?, ?, ?, ?)";
             jdbcTemplateObject.update( SQL, name, description, start_date, deadline);
             System.out.println("Created Project = " + name);
