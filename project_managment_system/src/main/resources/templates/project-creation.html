@@ -30,12 +30,14 @@
     </header>
     <div align="center">
         <h2>New project's creation</h2>
-        <form th:action = "@{/projects/new-submit}" th:object="${newProject}" method="post" >
-        <input th:field="*{name}" name="name" type="text" placeholder="Project's name" required="required"/>
-        <input th:field="*{description}" name="description" type="text" placeholder="Project's description" required="required"/>
-        <input th:field="*{startDate}" name="startDate" type="date" placeholder="Project's start date"/>
-        <input th:field="*{deadline}" name="deadline" type="date" placeholder="Project's deadline date"/>
-        <input type="submit" value="Create"/>
+        <form th:action = "@{/projects/new-submit}" th:object="${newProject}" method="post">
+        <p><label	th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></label></p>
+        <p><input th:field="*{name}" name="name" type="text" placeholder="Project's name" required="required"/></p>
+        <p><label	th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></label></p>
+        <p><textarea th:field="*{description}" name="description" type="text" placeholder="Project's description" required="required"></textarea></p>
+        <p><input th:field="*{startDate}" name="startDate" type="date" placeholder="Project's start date"/></p>
+        <p><input th:field="*{deadline}" name="deadline" type="date" placeholder="Project's deadline date"/></p>
+        <p><input type="submit" value="Create"/></p>
         </form>
     </div>
 </div> <!-- end main-container -->

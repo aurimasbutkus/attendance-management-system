@@ -1,11 +1,12 @@
 package com.ems.projectsinfo;
 
 import com.sun.istack.internal.Nullable;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.sql.Date;
-//import java.util.Date;
+//import java.sql.Date;
+import java.util.Date;
 
 /**
  * Created by Martynas on 5/5/2017.
@@ -21,10 +22,16 @@ public class Project {
     private String name;
     @NotNull
     private String description;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull
     private Date startDate;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Nullable
     private Date endDate;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Nullable
     private Date deadline;
 
@@ -35,13 +42,13 @@ public class Project {
         this.endDate = null;
     }
 
-    public Project(String name, String description, Date startDate, Date deadline) {
+    public Project(String name, String description, @DateTimeFormat(pattern = "yyyy-MM-dd")Date startDate, @DateTimeFormat(pattern = "yyyy-MM-dd") Date deadline) {
         this.name = name;
         this.description = description;
         this.startDate = startDate;
         this.deadline = deadline;
     }
-    public Project(String name, String description, Date startDate) {
+    public Project(String name, String description,@DateTimeFormat(pattern = "yyyy-MM-dd")Date startDate) {
         this.name = name;
         this.description = description;
         this.startDate = startDate;
@@ -77,7 +84,7 @@ public class Project {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(@DateTimeFormat(pattern = "yyyy-MM-dd")Date startDate) {
         this.startDate = startDate;
     }
 
@@ -85,7 +92,7 @@ public class Project {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(@DateTimeFormat(pattern = "yyyy-MM-dd")Date endDate) {
         this.endDate = endDate;
     }
 
@@ -93,7 +100,7 @@ public class Project {
         return deadline;
     }
 
-    public void setDeadline(Date deadline) {
+    public void setDeadline(@DateTimeFormat(pattern = "yyyy-MM-dd")Date deadline) {
         this.deadline = deadline;
     }
 }
