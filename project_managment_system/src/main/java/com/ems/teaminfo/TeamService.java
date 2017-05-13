@@ -14,4 +14,5 @@ public interface TeamService {
     List<Project> getProjects(Integer id);
     Team getTeamById(Integer id);
     void addMemberToTeam(Integer team_id, Integer member_id);
+    void removeMemberFromTeam(Integer member_id);
 }

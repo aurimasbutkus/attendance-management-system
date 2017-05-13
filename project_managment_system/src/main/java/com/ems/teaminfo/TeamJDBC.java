@@ -40,6 +40,14 @@ public class TeamJDBC implements TeamService {
     }
 
     @Override
+    public void removeMemberFromTeam(Integer member_id)
+    {
+        String SQL = "update account set account.fk_Team = null where account.id = ?";
+        jdbcTemplateObject.update(SQL, member_id);
+        System.out.println("Removed user with id " + member_id + " from team ");
+    }
+
+    @Override
     public Team getTeamById(Integer id) {
         String SQL = "select team.* from team where team.id = ?";
         return jdbcTemplateObject.queryForObject(SQL, new Object[]{id}, new TeamMapper());
