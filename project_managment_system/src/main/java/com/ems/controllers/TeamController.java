@@ -43,14 +43,14 @@ public class TeamController {
                                   Model model, Authentication authentication)
     {
         Team team = teamService.getTeamById(team_id);
-        User user = userService.getUser(newMember.getUsername());
-        teamService.addMemberToTeam(team_id, user.getId());
-        String username = authentication.getName();
-        Integer user_id = userService.getUser(username).getId();
         model.addAttribute("members", teamService.getMembers(team.getId()));
         model.addAttribute("newMember", new User());
         model.addAttribute("team_info", team);
         model.addAttribute("team_projects", teamService.getProjects(team.getId()));
+        User user = userService.getUser(newMember.getUsername());
+        if(user == null) return team(model, authentication);
+        teamService.addMemberToTeam(team_id, user.getId());
+        model.addAttribute("members", teamService.getMembers(team.getId()));
         return "team";
     }
 }
