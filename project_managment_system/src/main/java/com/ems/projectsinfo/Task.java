@@ -1,10 +1,11 @@
 package com.ems.projectsinfo;
 
 import com.sun.istack.internal.Nullable;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.sql.Date;
+import java.util.Date;
 
 /**
  * Created by Martynas on 5/6/2017.
@@ -17,8 +18,11 @@ public class Task {
     private Integer id;
     @NotNull
     private String description;
+
     @NotNull
     private Date creationDate;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Nullable
     private Date deadline;
     @Nullable
@@ -30,7 +34,7 @@ public class Task {
 
     }
 
-    public Task(String description, Date creationDate, Date deadline, Date completionDate, Integer fkProject) {
+    public Task(String description, Date creationDate, @DateTimeFormat(pattern = "yyyy-MM-dd")Date deadline, Date completionDate, Integer fkProject) {
         this.description = description;
         this.creationDate = creationDate;
         this.deadline = deadline;
@@ -38,7 +42,7 @@ public class Task {
         this.fkProject = fkProject;
     }
 
-    public Task(String description, Date creationDate, Date deadline, Integer fkProject) {
+    public Task(String description, Date creationDate, @DateTimeFormat(pattern = "yyyy-MM-dd")Date deadline, Integer fkProject) {
         this.description = description;
         this.creationDate = creationDate;
         this.deadline = deadline;
@@ -73,7 +77,7 @@ public class Task {
         return deadline;
     }
 
-    public void setDeadline(Date deadline) {
+    public void setDeadline(@DateTimeFormat(pattern = "yyyy-MM-dd")Date deadline) {
         this.deadline = deadline;
     }
 
