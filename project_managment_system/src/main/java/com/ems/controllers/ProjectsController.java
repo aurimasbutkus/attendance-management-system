@@ -2,6 +2,7 @@ package com.ems.controllers;
 
 import com.ems.projectsinfo.Project;
 import com.ems.projectsinfo.ProjectService;
+import com.ems.projectsinfo.Task;
 import com.ems.userinfo.UserService;
 import com.ems.validator.ProjectValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Date;
 
 
 /**
@@ -46,7 +49,25 @@ public class ProjectsController {
         model.addAttribute("project", projectService.getProject(id));
         model.addAttribute("tasks", projectService.listAllProjectTasks(id));
         model.addAttribute("subtasks", projectService.listAllSubtasks());
+        model.addAttribute("newTask",new Task());
         return "project-core";
+    }
+
+    @PostMapping(value="project-core/{id}/add-task")
+    public String addTask(@ModelAttribute("newTask") Task newTask, BindingResult bindingResult,
+                          @PathVariable("id") Integer id, Model model, Authentication authentication){
+        newTask.setFkProject(id);
+        newTask.setCreationDate(new Date(System.currentTimeMillis()));
+        projectService.createTask(newTask);
+        return "redirect:/project-core/{id}";
+    }
+
+    @RequestMapping(value="project-core/{project_id}/remove-task/{task_id}", method = RequestMethod.GET)
+    public String removeTask(@PathVariable("project_id") Integer project_id,
+                             @PathVariable("task_id") Integer task_id, Model model,
+                             Authentication authentication){
+        projectService.removeTask(task_id);
+        return "redirect:/project-core/{project_id}";
     }
 
     @GetMapping(value="projects/new")

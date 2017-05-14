@@ -53,7 +53,7 @@ public class ProjectTests extends AbstractTransactionalJUnit4SpringContextTests 
     }
 
     @Test
-    public void createProject_withProject_WithEndDate(){
+    public void createProject_withProject_WithDeadline(){
         sqlProject.create("PP","D",new Date(System.currentTimeMillis()), new Date(System.currentTimeMillis()));
         Assert.assertTrue(sqlProject.projectExists("PP"));
     }

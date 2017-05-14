@@ -38,7 +38,8 @@
         <p><input th:field="*{name}" name="name" type="text" placeholder="Project's name" required="required"/></p>
         <p><label	th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></label></p>
         <p><textarea th:field="*{description}" name="description" type="text" placeholder="Project's description" required="required"></textarea></p>
-        <p><input th:field="*{startDate}" name="startDate" type="text" class="datepicker" placeholder="Project's start date"/></p>
+        <p><label	th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}"></label></p>
+        <p><input th:field="*{startDate}" name="startDate" type="text" class="datepicker" placeholder="Project's start date" required="required"/></p>
         <p><input th:field="*{deadline}" name="deadline" type="text"  class="datepicker" placeholder="Project's deadline date"/></p>
         <p><input type="submit" value="Create"/></p>
         </form>
