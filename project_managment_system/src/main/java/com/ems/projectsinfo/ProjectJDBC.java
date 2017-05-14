@@ -50,22 +50,6 @@ public class ProjectJDBC implements ProjectService {
         }
         else System.out.println("Project name already exists! = " + name);
     }
-
-    @Override
-    public void createTask(Task task)
-    {
-        String SQL = "insert into task (description, creation_date, deadline, completion_date, fk_Project) values (?, ?, ?, ?, ?)";
-        jdbcTemplateObject.update(SQL, task.getDescription(), task.getCreationDate(), task.getDeadline(), task.getCompletionDate(), task.getFkProject());
-    }
-
-    @Override
-    public void removeTask(Integer id)
-    {
-        String SQL = "delete from task where task.id = ?";
-        jdbcTemplateObject.update(SQL, id);
-        System.out.println("Deleted task with id = " + id );
-    }
-
     @Override
     public boolean projectExists(Integer id) {
         String SQL = "select * from project where id = ?";

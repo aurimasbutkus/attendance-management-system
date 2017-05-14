@@ -12,8 +12,6 @@ public interface ProjectService {
     void create(String name, String description, Date start_date);
     void create(Project project);
 
-
-
     void create(Task task);
     void create(Subtask subtask);
     Project getProject(Integer id);
@@ -30,9 +28,6 @@ public interface ProjectService {
     void deleteTask(Integer id);
     void deleteSubtask(Integer id);
     void delete(String username);
-
-    void createTask(Task task);
-    void removeTask(Integer id);
 
     boolean projectExists(Integer id);
     boolean projectExists(String name);
