@@ -59,11 +59,26 @@ public class ProjectJDBC implements ProjectService {
     }
 
     @Override
+    public void createSubtask(Subtask subtask)
+    {
+        String SQL = "insert into subtask (description, status, fk_Task) values (?, ?, ?)";
+        jdbcTemplateObject.update(SQL, subtask.getDescription(), subtask.getStatus(), subtask.getFkTask());
+    }
+
+    @Override
     public void removeTask(Integer id)
     {
         String SQL = "delete from task where task.id = ?";
         jdbcTemplateObject.update(SQL, id);
         System.out.println("Deleted task with id = " + id );
+    }
+
+    @Override
+    public void removeSubtask(Integer id)
+    {
+        String SQL = "delete from subtask where subtask.id = ?";
+        jdbcTemplateObject.update(SQL, id);
+        System.out.println("Deleted subtask with id = " + id );
     }
 
     @Override

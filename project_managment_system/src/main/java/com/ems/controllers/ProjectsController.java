@@ -2,6 +2,7 @@ package com.ems.controllers;
 
 import com.ems.projectsinfo.Project;
 import com.ems.projectsinfo.ProjectService;
+import com.ems.projectsinfo.Subtask;
 import com.ems.projectsinfo.Task;
 import com.ems.userinfo.UserService;
 import com.ems.validator.ProjectValidator;
@@ -50,6 +51,7 @@ public class ProjectsController {
         model.addAttribute("tasks", projectService.listAllProjectTasks(id));
         model.addAttribute("subtasks", projectService.listAllSubtasks());
         model.addAttribute("newTask",new Task());
+        model.addAttribute("newSubtask",new Subtask());
         return "project-core";
     }
 
@@ -62,11 +64,30 @@ public class ProjectsController {
         return "redirect:/project-core/{id}";
     }
 
+    @PostMapping(value="project-core/{project_id}/add-subtask/{task_id}")
+    public String addTask(@ModelAttribute("newSubtask") Subtask newSubtask, BindingResult bindingResult,
+                          @PathVariable("project_id") Integer project_id,
+                          @PathVariable("task_id") Integer task_id, Model model,
+                          Authentication authentication){
+        newSubtask.setFkTask(task_id);
+        newSubtask.setStatus(2);
+        projectService.createSubtask(newSubtask);
+        return "redirect:/project-core/{project_id}";
+    }
+
     @RequestMapping(value="project-core/{project_id}/remove-task/{task_id}", method = RequestMethod.GET)
     public String removeTask(@PathVariable("project_id") Integer project_id,
                              @PathVariable("task_id") Integer task_id, Model model,
                              Authentication authentication){
         projectService.removeTask(task_id);
+        return "redirect:/project-core/{project_id}";
+    }
+
+    @RequestMapping(value="project-core/{project_id}/remove-subtask/{subtask_id}", method = RequestMethod.GET)
+    public String removeSubtask(@PathVariable("project_id") Integer project_id,
+                                @PathVariable("subtask_id") Integer subtask_id,Model model,
+                                Authentication authentication){
+        projectService.removeSubtask(subtask_id);
         return "redirect:/project-core/{project_id}";
     }
 

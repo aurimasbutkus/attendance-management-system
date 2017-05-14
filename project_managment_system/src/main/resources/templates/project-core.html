@@ -49,6 +49,13 @@
                         <a th:case="1" th:if="${subtask.fkTask} == ${task.id}" href="#" th:text="${subtask.description + '| Status: In progress'}"></a>
                         <a th:case="2" th:if="${subtask.fkTask} == ${task.id}" href="#" th:text="${subtask.description + '| Status: On hold'}"></a>
                         <a th:case="3" th:if="${subtask.fkTask} == ${task.id}" href="#" th:text="${subtask.description + '| Status: Finished'}"></a>
+                        <a th:if="${subtask.fkTask} == ${task.id}" class="btn btn-warning" th:href = "@{/project-core/{project_id}/remove-subtask/{subtask_id} (subtask_id=${subtask.id},project_id=${project.id})}"><span>Remove</span></a>
+                    </li>
+                    <li>
+                        <form th:action = "@{/project-core/{project_id}/add-subtask/{task_id} (project_id=${project.id}, task_id=${task.id})}" th:object="${newSubtask}" method="post">
+                            <input th:field="*{description}" name="description" type="text" placeholder="New task's description" required="required"/>
+                            <input type="submit" value="Add subtask"/>
+                        </form>
                     </li>
                 </ul>
             </div>

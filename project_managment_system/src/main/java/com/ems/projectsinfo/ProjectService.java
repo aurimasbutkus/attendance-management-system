@@ -23,7 +23,9 @@ public interface ProjectService {
     void delete(String username);
 
     void createTask(Task task);
+    void createSubtask(Subtask subtask);
     void removeTask(Integer id);
+    void removeSubtask(Integer id);
 
     boolean projectExists(Integer id);
     boolean projectExists(String name);
