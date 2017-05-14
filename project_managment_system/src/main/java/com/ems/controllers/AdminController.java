@@ -8,6 +8,7 @@ import com.ems.messaging.Message;
 import com.ems.messaging.MessageService;
 import com.ems.projectsinfo.Project;
 import com.ems.projectsinfo.ProjectService;
+import com.ems.projectsinfo.Subtask;
 import com.ems.projectsinfo.Task;
 import com.ems.userinfo.Role;
 import com.ems.userinfo.RoleService;
@@ -19,8 +20,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.concurrent.locks.StampedLock;
 
 @Controller
 public class AdminController {
@@ -39,6 +38,10 @@ public class AdminController {
     private RoleValidator roleValidator;
     @Autowired
     private ProjectValidator projectValidator;
+    @Autowired
+    private TaskValidator taskValidator;
+    @Autowired
+    private SubtaskValidator subtaskValidator;
     @Autowired
     private MessageValidator messageValidator;
 
@@ -115,6 +118,90 @@ public class AdminController {
     {
         projectService.delete(id);
         return "redirect:/admin/project";
+    }
+    @RequestMapping(value="/admin/task", method = RequestMethod.GET)
+    public String task(Model model) {
+        model.addAttribute("tasks", projectService.listAllTasks());
+        return "admin/task";
+    }
+    @GetMapping(value = "/admin/task/create")
+    public String taskCreateGet(Model model) {
+        model.addAttribute("taskForm", new Task());
+        return "admin/task-create";
+    }
+    @PostMapping(value = "/admin/task/create")
+    public String taskCreatePost(@ModelAttribute("taskForm") Task taskForm, BindingResult bindingResult)
+    {
+        taskValidator.validate(taskForm, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return "admin/task-create";
+        }
+        projectService.create(taskForm);
+        return "redirect:/admin/task";
+    }
+    @GetMapping(value = "/admin/task/{id}")
+    public String taskEditGet(Model model, @PathVariable("id") int id )
+    {
+        model.addAttribute("taskForm", projectService.getTask(id));
+        return "admin/task-edit";
+    }
+    @PostMapping(value = "/admin/task/{id}")
+    public String taskEditPost(@ModelAttribute("taskForm") Task taskForm, BindingResult bindingResult)
+    {
+        taskValidator.validate(taskForm, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return "admin/task-edit";
+        }
+        projectService.updateEverything(taskForm);
+        return "redirect:/admin/task";
+    }
+    @PostMapping(value = "/admin/task/{id}/delete")
+    public String taskDeletePost( @PathVariable("id") int id )
+    {
+        projectService.deleteTask(id);
+        return "redirect:/admin/task";
+    }
+    @RequestMapping(value="/admin/subtask", method = RequestMethod.GET)
+    public String subtask(Model model) {
+        model.addAttribute("subtasks", projectService.listAllSubtasks());
+        return "admin/subtask";
+    }
+    @GetMapping(value = "/admin/subtask/create")
+    public String subtaskCreateGet(Model model) {
+        model.addAttribute("subtaskForm", new Subtask());
+        return "admin/subtask-create";
+    }
+    @PostMapping(value = "/admin/subtask/create")
+    public String subtaskCreatePost(@ModelAttribute("subtaskForm") Subtask subtaskForm, BindingResult bindingResult)
+    {
+        subtaskValidator.validate(subtaskForm, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return "admin/subtask-create";
+        }
+        projectService.create(subtaskForm);
+        return "redirect:/admin/subtask";
+    }
+    @GetMapping(value = "/admin/subtask/{id}")
+    public String subtaskEditGet(Model model, @PathVariable("id") int id )
+    {
+        model.addAttribute("subtaskForm", projectService.getSubtask(id));
+        return "admin/subtask-edit";
+    }
+    @PostMapping(value = "/admin/subtask/{id}")
+    public String subtaskEditPost(@ModelAttribute("subtaskForm") Subtask subtaskForm, BindingResult bindingResult)
+    {
+        subtaskValidator.validate(subtaskForm, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return "admin/subtask-edit";
+        }
+        projectService.updateEverything(subtaskForm);
+        return "redirect:/admin/subtask";
+    }
+    @PostMapping(value = "/admin/subtask/{id}/delete")
+    public String subtaskDeletePost( @PathVariable("id") int id )
+    {
+        projectService.deleteSubtask(id);
+        return "redirect:/admin/subtask";
     }
     @RequestMapping(value="/admin/message", method = RequestMethod.GET)
     public String message(Model model) {

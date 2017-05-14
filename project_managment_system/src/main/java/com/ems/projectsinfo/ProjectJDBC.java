@@ -156,5 +156,60 @@ public class ProjectJDBC implements ProjectService {
         project.getEndDate(), project.getDeadline(), project.getId());
         System.out.println("Updated project info with id: " + project.getId() );
     }
+    @Override
+    public void updateEverything(Task task){
+        String SQL = "update task set description = ?, creation_date = ?," +
+            " completion_date = ?, deadline = ?, fk_Project = ? where id = ?";
+        jdbcTemplateObject.update(SQL, task.getDescription(), task.getCreationDate(),
+                task.getCompletionDate(), task.getDeadline(), task.getFkProject(), task.getId());
+        System.out.println("Updated task info with id: " + task.getId() );
+    }
+    @Override
+    public void updateEverything(Subtask subtask){
+        String SQL = "update subtask set description = ?, status = ?, fk_Task = ? where id = ?";
+        jdbcTemplateObject.update(SQL, subtask.getDescription(), subtask.getStatus(), subtask.getFkTask(), subtask.getId());
+        System.out.println("Updated subtask info with id: " + subtask.getId() );
+    }
+    @Override
+    public Task getTask(Integer id) {
+        String SQL = "select * from task where id = ?";
+        try {
+            return jdbcTemplateObject.queryForObject(SQL, new Object[]{id}, new TaskMapper());
+        }
+        catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
+
+    @Override
+    public Subtask getSubtask(Integer id) {
+        String SQL = "select * from subtask where id = ?";
+        try {
+            return jdbcTemplateObject.queryForObject(SQL, new Object[]{id}, new SubtaskMapper());
+        }
+        catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
+    @Override
+    public void create(Task task){
+        String SQL = "insert into task (description, creation_date, completion_date, deadline, fk_Project) values (?, ?, ?, ?, ?)";
+        jdbcTemplateObject.update( SQL, task.getDescription(), task.getCreationDate(), task.getCompletionDate(), task.getDeadline(), task.getFkProject());
+    }
+    @Override
+    public void create(Subtask subtask){
+        String SQL = "insert into subtask (description, status, fk_Task) values (?, ?, ?)";
+        jdbcTemplateObject.update( SQL, subtask.getDescription(), subtask.getStatus(), subtask.getFkTask());
+    }
+    @Override
+    public void deleteTask(Integer id){
+        String SQL = "delete from task where id = ?";
+        jdbcTemplateObject.update(SQL, id);
+    }
+    @Override
+    public void deleteSubtask(Integer id){
+        String SQL = "delete from subtask where id = ?";
+        jdbcTemplateObject.update(SQL, id);
+    }
 
 }
