@@ -1,68 +1,104 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <title>EMS Projects Page</title>
-    <link th:href="@{/css/project.css}" rel="stylesheet" />
     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
     <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.min.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
-    <link th:href="@{/css/bootstrap-theme.min.css}" rel="stylesheet" />
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+    <link th:href="@{/css/style.css}" rel="stylesheet" />
     <script th:src="@{/js/bootstrap.min.js}"></script>
     <script th:src="@{/js/scripts.js}"></script>
 </head>
 <body>
-<div class="main-container">
-
-    <!-- HEADER -->
-    <header class="block">
-        <ul class="header-menu horizontal-list">
-            <li><a class="header-menu-tab" th:href="@{/index}">Home</a></li>
-            <li><a class="header-menu-tab" th:href="@{/projects}">Projects</a> </li>
-            <li><a class="header-menu-tab" th:href="@{/messages}">Messages</a> </li>
-            <li><a class="header-menu-tab" th:href="@{/team}">Team</a></li>
-            <li sec:authorize="hasAuthority('ADMIN')"><a class="header-menu-tab" th:href="@{/admin}">Admin</a></li>
-            <li><a class="header-menu-tab" href="#">Options</a></li>
-            <li>
-                <form th:action="@{/logout}" class="header-menu-tab" method="post">
-                    <input type="submit" value="Sign Out"/>
-                </form>
-            </li>
-        </ul>
-    </header>
-    <div>
-        <h2>About the project</h2>
-            <p th:text="${'Project name: ' + project.name}"></p>
-            <p th:text="${'Project description: ' + project.description}"></p>
-            <p th:text="${'Project start date: ' + project.startDate}"></p>
-            <p th:text="${'Project end date: ' + (project.endDate != null? project.endDate : 'Undetermined')}"></p>
-        <h2>Project's tasks</h2>
-        <nav>
-            <div th:each="task : ${tasks}" class="menu-item">
-                <h4>
-                    <a href="#" th:text="${task.description}"></a>
-                    <a class="btn btn-warning" th:href = "@{/project-core/{project_id}/remove-task/{task_id} (task_id=${task.id}, project_id=${project.id})}"><span>Remove</span></a>
-                </h4>
-                <ul>
-                    <li th:switch="${subtask.status}" th:each="subtask : ${subtasks}">
-                        <a th:case="1" th:if="${subtask.fkTask} == ${task.id}" href="#" th:text="${subtask.description + ' | Status: In progress'}"></a>
-                        <a th:case="2" th:if="${subtask.fkTask} == ${task.id}" href="#" th:text="${subtask.description + ' | Status: On hold'}"></a>
-                        <a th:case="3" th:if="${subtask.fkTask} == ${task.id}" href="#" th:text="${subtask.description + ' | Status: Finished'}"></a>
-                    </li>
-                </ul>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <nav class="navbar navbar-default" role="navigation">
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            <li><a th:href="@{/index}" th:text="#{admin.home}"></a></li>
+                            <li class="active"><a th:href="@{/projects}" th:text="#{admin.project}"></a></li>
+                            <li><a th:href="@{/messages}" th:text="#{admin.message}"></a></li>
+                            <li><a th:href="@{/team}" th:text="#{admin.team}"></a></li>
+                            <li sec:authorize="hasAuthority('ADMIN')"><a class="header-menu-tab" th:href="@{/admin}">Admin</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Options<strong class="caret"></strong></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Settings</a></li>
+                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#">Something else here</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li>
+                                <form th:action="@{/logout}"  method="post">
+                                    <input type="submit" value="Sign Out"/>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
             </div>
-            <div class="menu-item">
-                <h4>
-                    <form th:action = "@{/project-core/{id}/add-task (id=${project.id})}" th:object="${newTask}" method="post">
-                        <input th:field="*{description}" name="description" type="text" placeholder="New task's description" required="required"/>
-                        <input th:field="*{deadline}" name="deadline" type="text" class="datepicker" placeholder="New task's deadline"/>
-                        <input type="submit" value="Add task"/>
-                    </form>
-                </h4>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <h2>About the project</h2>
+                <p th:text="${'Project name: ' + project.name}"></p>
+                <p th:text="${'Project description: ' + project.description}"></p>
+                <p th:text="${'Project start date: ' + project.startDate}"></p>
+                <p th:text="${'Project end date: ' + (project.endDate != null? project.endDate : 'Undetermined')}"></p>
+                <div sec:authorize="hasAnyAuthority('ADMIN', 'MANAGER')" class="panel-group">
+                    <div>
+                        <a class="panel-title" data-toggle="collapse" href="#panel-element-add" th:text="#{project.addNewTask}"></a>
+                    </div>
+                    <div id="panel-element-add" class="panel-collapse collapse">
+                        <div class="form-group">
+                            <form th:action = "@{/project-core/{id}/add-task (id=${project.id})}" th:object="${newTask}" method="post">
+                                <label th:text="#{admin.description}"></label>
+                                <input th:field="*{description}" class="form-control" name="description" type="text" placeholder="New task's description" required="required"/>
+                                <label th:text="#{admin.deadline}"></label>
+                                <input th:field="*{deadline}" class="form-control datepicker" name="deadline" type="text" placeholder="New task's deadline"/>
+                                <input type="submit" class="btn btn-success" th:value="#{button.create}"/>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </nav>
+            <div class="col-md-5">
+                <div class="panel-group" id="panel-1">
+                    <div th:each="task : ${tasks}">
+                        <div class="panel panel-default">
+                            <div class="panel-heading form-inline">
+                                <a class="panel-title" data-toggle="collapse" data-parent="#panel-1" th:href="'#panel-element-'+${task.id}" th:text="${task.description}"></a>
+                                <form sec:authorize="hasAnyAuthority('ADMIN', 'MANAGER')" class="form-group pull-right" id="deleteButton" th:action = "@{/project-core/{project_id}/remove-task/{task_id} (task_id=${task.id}, project_id=${project.id})}" method="post" onsubmit="return confirm('Are you sure you want to delete this row?');">
+                                    <input type="submit" th:value="#{button.delete}" class="btn btn-danger btn-xs"/>
+                                </form>
+                            </div>
+                        </div>
+                        <div th:id="'panel-element-'+${task.id}" class="col-md-offset-1 panel-collapse collapse">
+                            <div th:switch="${subtask.status}" th:each="subtask : ${subtasks}" th:if="${subtask.fkTask} == ${task.id}" class="panel panel-default panel-body">
+                                <a th:case="1" href="#" th:text="${subtask.description + ' - In progress'}"></a>
+                                <a th:case="2" href="#" th:text="${subtask.description + ' - On hold'}"></a>
+                                <a th:case="3" href="#" th:text="${subtask.description + ' - Finished'}"></a>
+                            </div>
+                            <div class="panel panel-default panel-body">
+                                <form class="pull-right" th:action = "@{/project-core/{project_id}/add-subtask/{task_id} (project_id=${project.id}, task_id=${task.id})}" th:object="${newSubtask}" method="post">
+                                    <input th:field="*{description}" name="description" type="text" placeholder="New task's description" required="required"/>
+                                    <input type="submit" th:value="#{button.create}" class="btn btn-success btn-xs"/>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+            </div>
+        </div>
     </div>
-</div> <!-- end main-container -->
 </body>
 </html>

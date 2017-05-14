@@ -50,6 +50,7 @@ public class ProjectJDBC implements ProjectService {
         }
         else System.out.println("Project name already exists! = " + name);
     }
+
     @Override
     public boolean projectExists(Integer id) {
         String SQL = "select * from project where id = ?";
