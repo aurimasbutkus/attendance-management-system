@@ -1,3 +1,27 @@
 ﻿.deadline-day {
     background-color: red;
+    cursor: pointer;
+}
+.calendar-table {
+    background-color: #ffffff;
+    width: 400px;
+    height: 300px;
+    border-collapse: collapse;
+    text-align: center;
+    vertical-align: center;
+}
+.calendar-table td, th, table{
+    border: 2px solid black;
+}
+.leftArr, .rightArr{
+    cursor: pointer;
+    color: #000000;
+}
+
+.leftArr{
+    float: left;
+}
+
+.rightArr{
+    float: right;
 }
