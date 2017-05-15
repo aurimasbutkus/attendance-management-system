@@ -7,10 +7,12 @@ package com.ems.controllers;
 import com.ems.projectsinfo.ProjectService;
 import com.ems.userinfo.User;
 import com.ems.userinfo.UserJDBC;
+import com.ems.userinfo.UserService;
 import com.ems.validator.LoginValidator;
 import com.ems.validator.RegisterValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,20 +33,26 @@ public class WebController {
     private MessageSource messageSource;
     @Autowired
     private ProjectService projectService;
+    @Autowired
+    private UserService userService;
 
     @RequestMapping("/access-denied")
     public String access() {
         return "access-denied";
     }
 
-    @RequestMapping("/index")
-    public String index(Model model) {
+    @RequestMapping(value = "/index", method = RequestMethod.GET)
+    public String getIndex(Model model, Authentication authentication){
+        String username = authentication.getName();
+        Integer user_id = userService.getUser(username).getId();
+        model.addAttribute("projects", projectService.listAllUserProjects(user_id));
         model.addAttribute("tasks", projectService.listAllTasks());
+        model.addAttribute("currentUserName", authentication.getName());
         return "index";
     }
     @RequestMapping("/")
     public String home() {
-        return "index";
+        return "redirect:/index";
     }
 
     @GetMapping(value = "/login")
@@ -75,14 +83,4 @@ public class WebController {
         model.addAttribute("username", userForm.getUsername());
         return "result";
     }
-//    private void printErrors(BindingResult bindingResult)
-//    {
-//        for (Object object : bindingResult.getAllErrors()) {
-//            if(object instanceof FieldError) {
-//                FieldError fieldError = (FieldError) object;
-//                String message = fieldError.getField() + " " + messageSource.getMessage(fieldError, null);
-//                System.out.println(message);
-//            }
-//        }
-//    }
 }

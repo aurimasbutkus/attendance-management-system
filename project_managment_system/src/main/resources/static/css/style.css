@@ -43,6 +43,14 @@ body{
   margin-bottom: 10px;
   padding:5px;
 }
+.right-box{
+    background: white;
+    border-radius: 3px;
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-bottom: 15px;
+    padding:5px;
+}
 .add-task{
   margin-left: 15px;
   margin-bottom: 15px;
