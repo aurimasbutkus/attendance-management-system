@@ -47,6 +47,7 @@ public class ProjectsController {
 
     @RequestMapping(value="project-core/{id}", method = RequestMethod.GET)
     public String getProject(@PathVariable("id") int id, Model model, Authentication authentication){
+        model.addAttribute("currentUserName", authentication.getName());
         model.addAttribute("project", projectService.getProject(id));
         model.addAttribute("tasks", projectService.listAllProjectTasks(id));
         model.addAttribute("subtasks", projectService.listAllSubtasks());

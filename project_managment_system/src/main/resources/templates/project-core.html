@@ -16,14 +16,14 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <nav class="navbar navbar-default" role="navigation">
+                <nav class="navbar navbar-default align-middle" role="navigation">
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav">
                             <li><a th:href="@{/index}" th:text="#{admin.home}"></a></li>
                             <li class="active"><a th:href="@{/projects}" th:text="#{admin.project}"></a></li>
                             <li><a th:href="@{/messages}" th:text="#{admin.message}"></a></li>
                             <li><a th:href="@{/team}" th:text="#{admin.team}"></a></li>
-                            <li sec:authorize="hasAuthority('ADMIN')"><a class="header-menu-tab" th:href="@{/admin}">Admin</a>
+                            <li sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/admin}">Admin</a>
                             </li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Options<strong class="caret"></strong></a>
@@ -36,8 +36,11 @@
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <li>
+                                <p class="navbar-text navbar-right margin-15">Signed in as <a href="#" class="navbar-link" th:text="${currentUserName}">_______</a></p>
+                            </li>
+                            <li>
                                 <form th:action="@{/logout}"  method="post">
-                                    <input type="submit" value="Sign Out"/>
+                                    <input class="navbar-btn btn btn-secondary margin-15" type="submit" value="Sign Out"/>
                                 </form>
                             </li>
                         </ul>
@@ -46,31 +49,33 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-3">
-                <h2>About the project</h2>
-                <p th:text="${'Project name: ' + project.name}"></p>
-                <p th:text="${'Project description: ' + project.description}"></p>
-                <p th:text="${'Project start date: ' + project.startDate}"></p>
-                <p th:text="${'Project end date: ' + (project.endDate != null? project.endDate : 'Undetermined')}"></p>
-                <div sec:authorize="hasAnyAuthority('ADMIN', 'MANAGER')" class="panel-group">
-                    <div>
-                        <a class="panel-title" data-toggle="collapse" href="#panel-element-add" th:text="#{project.addNewTask}"></a>
-                    </div>
-                    <div id="panel-element-add" class="panel-collapse collapse">
-                        <div class="form-group">
-                            <form th:action = "@{/project-core/{id}/add-task (id=${project.id})}" th:object="${newTask}" method="post">
-                                <label th:text="#{admin.description}"></label>
-                                <input th:field="*{description}" class="form-control" name="description" type="text" placeholder="New task's description" required="required"/>
-                                <label th:text="#{admin.deadline}"></label>
-                                <input th:field="*{deadline}" class="form-control datepicker" name="deadline" type="text" placeholder="New task's deadline"/>
-                                <input type="submit" class="btn btn-success" th:value="#{button.create}"/>
-                            </form>
+            <div class="col-md-3 left-box">
+                <div class="margin-15">
+                    <h2>About the project</h2>
+                    <p th:text="${'Project name: ' + project.name}"></p>
+                    <p th:text="${'Project description: ' + project.description}"></p>
+                    <p th:text="${'Project start date: ' + project.startDate}"></p>
+                    <p th:text="${'Project end date: ' + (project.endDate != null? project.endDate : 'Undetermined')}"></p>
+                    <div sec:authorize="hasAnyAuthority('ADMIN', 'MANAGER')" class="panel-group">
+                        <div>
+                            <a class="panel-title" data-toggle="collapse" href="#panel-element-add" th:text="#{project.addNewTask}"></a>
+                        </div>
+                        <div id="panel-element-add" class="panel-collapse collapse">
+                            <div class="form-group">
+                                <form th:action = "@{/project-core/{id}/add-task (id=${project.id})}" th:object="${newTask}" method="post">
+                                    <label th:text="#{admin.description}"></label>
+                                    <input th:field="*{description}" class="form-control" name="description" type="text" placeholder="New task's description" required="required"/>
+                                    <label th:text="#{admin.deadline}"></label>
+                                    <input th:field="*{deadline}" class="form-control datepicker" name="deadline" type="text" placeholder="New task's deadline"/>
+                                    <input type="submit" class="btn btn-success" th:value="#{button.create}"/>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-5">
-                <div class="panel-group" id="panel-1">
+            <div class="col-md-6">
+                <div class="panel-group margin-10" id="panel-1">
                     <div th:each="task : ${tasks}">
                         <div class="panel panel-default">
                             <div class="panel-heading form-inline">
@@ -80,23 +85,30 @@
                                 </form>
                             </div>
                         </div>
-                        <div th:id="'panel-element-'+${task.id}" class="col-md-offset-1 panel-collapse collapse">
-                            <div th:switch="${subtask.status}" th:each="subtask : ${subtasks}" th:if="${subtask.fkTask} == ${task.id}" class="panel panel-default panel-body">
-                                <a th:case="1" href="#" th:text="${subtask.description + ' - In progress'}"></a>
-                                <a th:case="2" href="#" th:text="${subtask.description + ' - On hold'}"></a>
-                                <a th:case="3" href="#" th:text="${subtask.description + ' - Finished'}"></a>
-                            </div>
-                            <div class="panel panel-default panel-body">
-                                <form class="pull-right" th:action = "@{/project-core/{project_id}/add-subtask/{task_id} (project_id=${project.id}, task_id=${task.id})}" th:object="${newSubtask}" method="post">
-                                    <input th:field="*{description}" name="description" type="text" placeholder="New task's description" required="required"/>
-                                    <input type="submit" th:value="#{button.create}" class="btn btn-success btn-xs"/>
-                                </form>
+                        <div th:id="'panel-element-'+${task.id}" class="panel-collapse collapse">
+                            <div class="middle-box">
+                                <div th:switch="${subtask.status}" th:each="subtask : ${subtasks}" th:if="${subtask.fkTask} == ${task.id}" class="list-group-item">
+                                    <a th:case="1" href="#" th:text="${subtask.description + ' - In progress'}"></a>
+                                    <a th:case="2" href="#" th:text="${subtask.description + ' - On hold'}"></a>
+                                    <a th:case="3" href="#" th:text="${subtask.description + ' - Finished'}"></a>
+                                </div>
+                                <div class="add-task">
+                                    <div>
+                                        <a class="panel-title" data-toggle="collapse" th:href="'#panel-subelement-add-'+${task.id}" th:text="#{project.addNewSubTask}"></a>
+                                    </div>
+                                    <div th:id="'panel-subelement-add-'+${task.id}" class="panel-collapse collapse">
+                                        <form th:action = "@{/project-core/{project_id}/add-subtask/{task_id} (project_id=${project.id}, task_id=${task.id})}" th:object="${newSubtask}" method="post">
+                                            <input th:field="*{description}" name="description" type="text" placeholder="New task's description" required="required"/>
+                                            <input type="submit" th:value="#{button.create}" class="btn btn-success btn-xs"/>
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3 right-box">
             </div>
         </div>
     </div>

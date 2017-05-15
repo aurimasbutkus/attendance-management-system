@@ -13,7 +13,7 @@
 	  <script th:src="@{/js/scripts.js}"></script>
   </head>
   <body>
-	<div class="container">
+	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-12">
 				<h1 th:inline="text">Hello, [[${#httpServletRequest.remoteUser}]]!</h1>
@@ -23,7 +23,7 @@
 			<div class="col-md-2">
 				<div class="list-group">
 					<a th:href="@{/index}" class="list-group-item" th:text="#{admin.home}"></a>
-					<a th:href="@{/admin}" class="list-group-item" th:text="#{admin.admin}"></a>
+					<a th:href="@{/admin}" class="list-group-item active" th:text="#{admin.admin}"></a>
 					<a th:href="@{/admin/user}" class="list-group-item" th:text="#{admin.user}"></a>
 					<a th:href="@{/admin/role}" class="list-group-item" th:text="#{admin.role}"></a>
 					<a th:href="@{/admin/message}" class="list-group-item" th:text="#{admin.message}"></a>
@@ -32,7 +32,7 @@
 					<a th:href="@{/admin/subtask}" class="list-group-item" th:text="#{admin.subtask}"></a>
 				</div>
 			</div>
-			<div class="col-md-10">
+			<div class="col-md-8 left-box">
 			</div>
 		</div>
 	</div>
