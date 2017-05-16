@@ -36,4 +36,6 @@ public interface ProjectService {
     void updateEverything(Project project);
     void updateEverything(Task task);
     void updateEverything(Subtask subtask);
+
+    void updateSubtask(Subtask subtask);
 }

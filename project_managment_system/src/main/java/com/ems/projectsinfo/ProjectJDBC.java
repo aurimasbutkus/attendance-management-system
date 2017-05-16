@@ -170,6 +170,15 @@ public class ProjectJDBC implements ProjectService {
         jdbcTemplateObject.update(SQL, subtask.getDescription(), subtask.getStatus(), subtask.getFkTask(), subtask.getId());
         System.out.println("Updated subtask info with id: " + subtask.getId() );
     }
+
+    @Override
+    public void updateSubtask(Subtask subtask){
+        String SQL = "update subtask set description = ? where id = ?";
+        jdbcTemplateObject.update(SQL, subtask.getDescription(), subtask.getId());
+        System.out.println("Updated subtask info with id: " + subtask.getId() );
+    }
+
+
     @Override
     public Task getTask(Integer id) {
         String SQL = "select * from task where id = ?";

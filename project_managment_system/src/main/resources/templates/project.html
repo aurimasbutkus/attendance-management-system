@@ -2,6 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <title>EMS Projects Page</title>
     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
     <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.min.css" />
@@ -12,6 +14,64 @@
     <link th:href="@{/css/style.css}" rel="stylesheet" />
     <script th:src="@{/js/bootstrap.min.js}"></script>
     <script th:src="@{/js/scripts.js}"></script>
+    <script type="text/javascript" th:inline="javascript">
+        /*<![CDATA[*/
+        $(document).ready(function () {
+            $(".edit-button").click(function () {
+                if($(this).hasClass("edit-button")) {
+                    var a = $(this).parent().children().first();
+                    var parts = a.html();
+                    var txt = '<input type="text" value="' + parts + '" />';
+                    var input = $(txt);
+                    $(this).parent().prepend(input);
+                    a.hide();
+                    $(this).removeClass("edit-button");
+                    $(this).html("Done");
+                    var button = $(this);
+                    setTimeout(function () {
+                        $(button).addClass("edit-done");
+                    }, 100);
+                }
+            });
+
+            $('button').click(function() {
+                if($(this).hasClass("edit-done")) {
+                    var a = $(this).parent().find('a').first();
+                    var id = $(a).data("id");
+                    var text = $(this).parent().find('input[type=text]').val();
+                    var subtask = {
+                        "id": id,
+                        "description": text,
+                        "status": "1",
+                        "fkTask": "1"
+                    }
+
+                    var token = $("meta[name='_csrf']").attr("content");
+                    var header = $("meta[name='_csrf_header']").attr("content");
+                    $.ajax({
+                        type: 'POST',
+                        url: 'edit-subtask',
+                        dataType: 'text',
+                        beforeSend: function (request) {
+                            request.setRequestHeader(header, token);
+                        },
+                        data: JSON.stringify(subtask),
+                        contentType: 'application/json; charset=UTF-8',
+                        async: false,
+                        success: function (result) {
+                            if(result=="true"){
+                                location.reload();
+                            }
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            console.log(errorThrown);
+                        }
+                    });
+                }
+            });
+        });
+        /*]]>*/
+    </script>
 </head>
 <body>
     <div class="container-fluid">
@@ -97,9 +157,12 @@
                         <div th:id="'panel-element-'+${task.id}" class="panel-collapse collapse">
                             <div class="middle-box">
                                 <div th:switch="${subtask.status}" th:each="subtask : ${subtasks}" th:if="${subtask.fkTask} == ${task.id}" class="list-group-item">
-                                    <a th:case="1" href="#" th:text="${subtask.description + ' - In progress'}"></a>
-                                    <a th:case="2" href="#" th:text="${subtask.description + ' - On hold'}"></a>
-                                    <a th:case="3" href="#" th:text="${subtask.description + ' - Finished'}"></a>
+                                    <a class="description-field" href="#" th:text="${subtask.description}" th:attr="data-id=${subtask.id}"></a>
+                                    <a th:case="1" href="#" th:text="${' - In progress'}"></a>
+                                    <a th:case="2" href="#" th:text="${' - On hold'}"></a>
+                                    <a th:case="3" href="#" th:text="${' - Finished'}"></a>
+
+                                    <button type="button" class="btn btn-primary btn-md edit-button">Edit</button>
                                 </div>
                                 <div class="add-task">
                                     <div>

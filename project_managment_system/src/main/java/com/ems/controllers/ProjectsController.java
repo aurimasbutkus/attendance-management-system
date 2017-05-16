@@ -9,14 +9,20 @@ import com.ems.validator.ProjectValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.util.Date;
+import java.util.stream.Collectors;
 
 
 /**
@@ -59,6 +65,14 @@ public class ProjectsController {
         projectService.create(newTask);
         return "redirect:/project/{id}";
     }
+
+    @RequestMapping(value="project/edit-subtask", method=RequestMethod.POST)
+    public @ResponseBody boolean editSubtask(@RequestBody Subtask subtask, HttpServletRequest request, HttpServletResponse response)
+    {
+        projectService.updateSubtask(subtask);
+        return true;
+    }
+
     @RequestMapping(value="/project/{project_id}/remove-task/{task_id}", method = RequestMethod.POST)
     public String removeTask(@PathVariable("project_id") Integer project_id, @PathVariable("task_id") Integer task_id) {
         projectService.deleteTask(task_id);
