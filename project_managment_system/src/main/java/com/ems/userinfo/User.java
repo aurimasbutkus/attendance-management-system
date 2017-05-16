@@ -4,8 +4,10 @@ import com.sun.istack.internal.Nullable;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.sql.Date;
 
 /**
@@ -35,6 +37,7 @@ public class User {
     private Integer gender;
     @Nullable
     private String nationality;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Nullable
     private Date dateOfBirth;
     @Nullable
@@ -130,7 +133,7 @@ public class User {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(@DateTimeFormat(pattern = "yyyy-MM-dd")Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 

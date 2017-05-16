@@ -2,6 +2,7 @@ package com.ems.messaging;
 
 import com.ems.userinfo.UserService;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -25,6 +26,7 @@ public class Message {
     private Integer id;
     @NotEmpty(message = "Your message can't be empty")
     private String text;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull
     private Date date;
 
@@ -88,7 +90,7 @@ public class Message {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(@DateTimeFormat(pattern = "yyyy-MM-dd")Date date) {
         this.date = date;
     }
 

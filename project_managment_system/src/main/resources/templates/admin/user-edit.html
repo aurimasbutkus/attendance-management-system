@@ -1,78 +1,74 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
-  <head>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns="http://www.w3.org/1999/xhtml">
+<head>
     <title>EMS Admin - User</title>
-      <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-      <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.min.css" />
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-      <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
-	  <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
-	  <link th:href="@{/css/style.css}" rel="stylesheet" />
-      <script th:src="@{/js/bootstrap.min.js}"></script>
-      <script th:src="@{/js/scripts.js}"></script>
-  </head>
-  <body>
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-md-12">
-				<h1 th:inline="text">Hello, [[${#httpServletRequest.remoteUser}]]!</h1>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-2">
-				<div class="list-group">
-                    <a th:href="@{/index}" class="list-group-item" th:text="#{admin.home}"></a>
-                    <a th:href="@{/admin}" class="list-group-item" th:text="#{admin.admin}"></a>
-                    <a th:href="@{/admin/user}" class="list-group-item active" th:text="#{admin.user}"></a>
-                    <a th:href="@{/admin/role}" class="list-group-item" th:text="#{admin.role}"></a>
-                    <a th:href="@{/admin/message}" class="list-group-item" th:text="#{admin.message}"></a>
-                    <a th:href="@{/admin/project}" class="list-group-item" th:text="#{admin.project}"></a>
-                    <a th:href="@{/admin/task}" class="list-group-item" th:text="#{admin.task}"></a>
-                    <a th:href="@{/admin/subtask}" class="list-group-item" th:text="#{admin.subtask}"></a>
-				</div>
-			</div>
-			<div class="col-md-8 left-box">
-                <form th:object="${userForm}" th:action = "@{/admin/user/{id}(id=${userForm.id})}" method="post">
-                    <label th:text="#{admin.id}"></label>
-                    <input th:field="*{id}" type="text" class="form-control" readonly="readonly"/>
-                    <label th:text="#{admin.username}"></label>
-                    <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
-                    <input th:field="*{username}" type="text" class="form-control"/>
-                    <label th:text="#{admin.email}"></label>
-                    <p th:if="${#fields.hasErrors('emailAddress')}" th:errors="*{emailAddress}"></p>
-                    <input th:field="*{emailAddress}" type="email" class="form-control"/>
-                    <label th:text="#{admin.firstName}"></label>
-                    <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
-                    <input th:field="*{firstName}" type="text" class="form-control" />
-                    <label th:text="#{admin.lastName}"></label>
-                    <p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
-                    <input th:field="*{lastName}" type="text" class="form-control"/>
-                    <label th:text="#{admin.gender}"></label>
-                    <p th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}"></p>
-                    <input th:field="*{gender}" type="number" class="form-control" />
-                    <label th:text="#{admin.nationality}"></label>
-                    <p th:if="${#fields.hasErrors('nationality')}" th:errors="*{nationality}"></p>
-                    <input th:field="*{nationality}" type="text" class="form-control"/>
-                    <label th:text="#{admin.birthDay}"></label>
-                    <p th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}"></p>
-                    <input th:field="*{dateOfBirth}" type="text" class="datepicker form-control"/>
-                    <label th:text="#{admin.phoneNumber}"></label>
-                    <p th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></p>
-                    <input th:field="*{phoneNumber}" type="text" class="form-control"/>
-                    <label th:text="#{admin.workStatus}"></label>
-                    <p th:if="${#fields.hasErrors('workStatus')}" th:errors="*{workStatus}"></p>
-                    <input th:field="*{workStatus}" type="number" class="form-control"/>
-                    <label th:text="#{admin.enabled}"></label>
-                    <p th:if="${#fields.hasErrors('enabled')}" th:errors="*{enabled}"></p>
-                    <input th:field="*{enabled}" type="number" class="form-control"/>
-                    <label th:text="#{admin.team}"></label>
-                    <p th:if="${#fields.hasErrors('fkTeam')}" th:errors="*{fkTeam}"></p>
-                    <input th:field="*{fkTeam}" type="number" class="form-control"/>
-                    <input class="btn btn-default" type="submit" th:value="#{button.edit}"/>
-                </form>
-			</div>
-		</div>
-	</div>
-  </body>
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <link rel="stylesheet"
+          href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/scripts.js}"></script>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row admin">
+        <div class="col-md-2">
+            <div class="list-group">
+                <a th:href="@{/index}" class="list-group-item" th:text="#{admin.home}"></a>
+                <a th:href="@{/admin}" class="list-group-item" th:text="#{admin.admin}"></a>
+                <a th:href="@{/admin/user}" class="list-group-item active" th:text="#{admin.user}"></a>
+                <a th:href="@{/admin/role}" class="list-group-item" th:text="#{admin.role}"></a>
+                <a th:href="@{/admin/message}" class="list-group-item" th:text="#{admin.message}"></a>
+                <a th:href="@{/admin/project}" class="list-group-item" th:text="#{admin.project}"></a>
+                <a th:href="@{/admin/task}" class="list-group-item" th:text="#{admin.task}"></a>
+                <a th:href="@{/admin/subtask}" class="list-group-item" th:text="#{admin.subtask}"></a>
+            </div>
+        </div>
+        <div class="col-md-8 left-box">
+            <form th:object="${userForm}" th:action="@{/admin/user/{id}(id=${userForm.id})}" method="post">
+                <label th:text="#{admin.id}"></label>
+                <input th:field="*{id}" type="text" class="form-control" readonly="readonly"/>
+                <label th:text="#{admin.username}"></label>
+                <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
+                <input th:field="*{username}" type="text" class="form-control"/>
+                <label th:text="#{admin.email}"></label>
+                <p th:if="${#fields.hasErrors('emailAddress')}" th:errors="*{emailAddress}"></p>
+                <input th:field="*{emailAddress}" type="email" class="form-control"/>
+                <label th:text="#{admin.firstName}"></label>
+                <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
+                <input th:field="*{firstName}" type="text" class="form-control"/>
+                <label th:text="#{admin.lastName}"></label>
+                <p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
+                <input th:field="*{lastName}" type="text" class="form-control"/>
+                <label th:text="#{admin.gender}"></label>
+                <p th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}"></p>
+                <input th:field="*{gender}" type="number" class="form-control"/>
+                <label th:text="#{admin.nationality}"></label>
+                <p th:if="${#fields.hasErrors('nationality')}" th:errors="*{nationality}"></p>
+                <input th:field="*{nationality}" type="text" class="form-control"/>
+                <label th:text="#{admin.birthDay}"></label>
+                <p th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}"></p>
+                <input th:field="*{dateOfBirth}" type="text" class="datepicker form-control"/>
+                <label th:text="#{admin.phoneNumber}"></label>
+                <p th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></p>
+                <input th:field="*{phoneNumber}" type="text" class="form-control"/>
+                <label th:text="#{admin.workStatus}"></label>
+                <p th:if="${#fields.hasErrors('workStatus')}" th:errors="*{workStatus}"></p>
+                <input th:field="*{workStatus}" type="number" class="form-control"/>
+                <label th:text="#{admin.enabled}"></label>
+                <p th:if="${#fields.hasErrors('enabled')}" th:errors="*{enabled}"></p>
+                <input th:field="*{enabled}" type="number" class="form-control"/>
+                <label th:text="#{admin.team}"></label>
+                <p th:if="${#fields.hasErrors('fkTeam')}" th:errors="*{fkTeam}"></p>
+                <input th:field="*{fkTeam}" type="number" class="form-control"/>
+                <input class="btn btn-default" type="submit" th:value="#{button.edit}"/>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
 </html>

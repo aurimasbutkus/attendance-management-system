@@ -1,74 +1,72 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
-  <head>
-	  <title>EMS Admin - User</title>
-	  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-	  <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.min.css" />
-	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-	  <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
-	  <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
-	  <link th:href="@{/css/style.css}" rel="stylesheet" />
-	  <script th:src="@{/js/bootstrap.min.js}"></script>
-	  <script th:src="@{/js/scripts.js}"></script>
-  </head>
-  <body>
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-md-12">
-				<h1 th:inline="text">Hello, [[${#httpServletRequest.remoteUser}]]!</h1>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-2">
-				<div class="list-group">
-					<a th:href="@{/index}" class="list-group-item" th:text="#{admin.home}"></a>
-					<a th:href="@{/admin}" class="list-group-item" th:text="#{admin.admin}"></a>
-					<a th:href="@{/admin/user}" class="list-group-item  active" th:text="#{admin.user}"></a>
-					<a th:href="@{/admin/role}" class="list-group-item" th:text="#{admin.role}"></a>
-					<a th:href="@{/admin/message}" class="list-group-item" th:text="#{admin.message}"></a>
-					<a th:href="@{/admin/project}" class="list-group-item" th:text="#{admin.project}"></a>
-					<a th:href="@{/admin/task}" class="list-group-item" th:text="#{admin.task}"></a>
-					<a th:href="@{/admin/subtask}" class="list-group-item" th:text="#{admin.subtask}"></a>
-				</div>
-			</div>
-			<div class="col-md-8 left-box">
-				<table class="table table-striped table-hover">
-					<thead>
-						<tr>
-							<th th:text="#{admin.id}"></th>
-							<th th:text="#{admin.username}"></th>
-							<th th:text="#{admin.email}"></th>
-							<th th:text="#{admin.firstName}"></th>
-							<th th:text="#{admin.lastName}"></th>
-							<th th:text="#{admin.workStatus}"></th>
-							<th th:text="#{admin.enabled}"></th>
-							<th th:text="#{admin.team}"></th>
-							<th></th>
-							<th></th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr th:each="user : ${users}">
-							<td th:text="${user.id}"></td>
-							<td th:text="${user.username}"></td>
-							<td th:text="${user.emailAddress}"></td>
-							<td th:text="${user.firstName}"></td>
-							<td th:text="${user.lastName}"></td>
-							<td th:text="${user.workStatus}"></td>
-							<td th:text="${user.enabled}"></td>
-							<td th:text="${user.fkTeam}"></td>
-							<td> <a th:href="@{/admin/user/{id}(id=${user.id})}" th:text="#{button.edit}" class="btn btn-info btn-xs"></a></td>
-							<td>
-								<form id="deleteButton" th:action = "@{/admin/user/{id}/delete(id=${user.id})}" method="post" onsubmit="return confirm('Are you sure you want to delete this row?');">
-									<input type="submit" th:value="#{button.delete}" class="btn btn-danger btn-xs"/>
-								</form>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		</div>
-	</div>
-  </body>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>EMS Admin - User</title>
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <link rel="stylesheet"
+          href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/scripts.js}"></script>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row admin">
+        <div class="col-md-2">
+            <div class="list-group">
+                <a th:href="@{/index}" class="list-group-item" th:text="#{admin.home}"></a>
+                <a th:href="@{/admin}" class="list-group-item" th:text="#{admin.admin}"></a>
+                <a th:href="@{/admin/user}" class="list-group-item  active" th:text="#{admin.user}"></a>
+                <a th:href="@{/admin/role}" class="list-group-item" th:text="#{admin.role}"></a>
+                <a th:href="@{/admin/message}" class="list-group-item" th:text="#{admin.message}"></a>
+                <a th:href="@{/admin/project}" class="list-group-item" th:text="#{admin.project}"></a>
+                <a th:href="@{/admin/task}" class="list-group-item" th:text="#{admin.task}"></a>
+                <a th:href="@{/admin/subtask}" class="list-group-item" th:text="#{admin.subtask}"></a>
+            </div>
+        </div>
+        <div class="col-md-8 left-box">
+            <table class="table table-striped table-hover">
+                <thead>
+                <tr>
+                    <th th:text="#{admin.id}"></th>
+                    <th th:text="#{admin.username}"></th>
+                    <th th:text="#{admin.email}"></th>
+                    <th th:text="#{admin.firstName}"></th>
+                    <th th:text="#{admin.lastName}"></th>
+                    <th th:text="#{admin.workStatus}"></th>
+                    <th th:text="#{admin.enabled}"></th>
+                    <th th:text="#{admin.team}"></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="user : ${users}">
+                    <td th:text="${user.id}"></td>
+                    <td th:text="${user.username}"></td>
+                    <td th:text="${user.emailAddress}"></td>
+                    <td th:text="${user.firstName}"></td>
+                    <td th:text="${user.lastName}"></td>
+                    <td th:text="${user.workStatus}"></td>
+                    <td th:text="${user.enabled}"></td>
+                    <td th:text="${user.fkTeam}"></td>
+                    <td><a th:href="@{/admin/user/{id}(id=${user.id})}" th:text="#{button.edit}"
+                           class="btn btn-info btn-xs"></a></td>
+                    <td>
+                        <form id="deleteButton" th:action="@{/admin/user/{id}/delete(id=${user.id})}" method="post"
+                              onsubmit="return confirm('Are you sure you want to delete this row?');">
+                            <input type="submit" th:value="#{button.delete}" class="btn btn-danger btn-xs"/>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
 </html>

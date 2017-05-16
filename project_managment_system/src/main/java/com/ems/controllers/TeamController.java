@@ -1,5 +1,6 @@
 package com.ems.controllers;
 
+import com.ems.projectsinfo.ProjectService;
 import com.ems.teaminfo.Team;
 import com.ems.teaminfo.TeamService;
 import com.ems.userinfo.User;
@@ -23,11 +24,16 @@ public class TeamController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private ProjectService projectService;
+
     @RequestMapping(value="team")
     public String team(Model model, Authentication authentication){
         String username = authentication.getName();
         Integer user_id = userService.getUser(username).getId();
         Team team = teamService.getTeamByUser(user_id);
+        model.addAttribute("currentUserName", username);
+        model.addAttribute("projects", projectService.listAllUserProjects(user_id));
         model.addAttribute("members", teamService.getMembers(team.getId()));
         model.addAttribute("newMember", new User());
         model.addAttribute("team_info", team);
@@ -51,7 +57,7 @@ public class TeamController {
         return "team";
     }
 
-    @RequestMapping(value="team/removeMember/{id}", method = RequestMethod.GET)
+    @RequestMapping(value="team/removeMember/{id}", method = RequestMethod.POST)
     public String removeMemberFromTeam(@PathVariable("id") Integer user_id)
     {
         teamService.removeMemberFromTeam(user_id);

@@ -18,13 +18,13 @@ public class Task {
     private Integer id;
     @NotNull
     private String description;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull
     private Date creationDate;
-
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Nullable
     private Date deadline;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Nullable
     private Date completionDate;
     @NotNull
@@ -69,7 +69,7 @@ public class Task {
         return creationDate;
     }
 
-    public void setCreationDate(Date creationDate) {
+    public void setCreationDate(@DateTimeFormat(pattern = "yyyy-MM-dd")Date creationDate) {
         this.creationDate = creationDate;
     }
 
@@ -85,7 +85,7 @@ public class Task {
         return completionDate;
     }
 
-    public void setCompletionDate(Date completionDate) {
+    public void setCompletionDate(@DateTimeFormat(pattern = "yyyy-MM-dd")Date completionDate) {
         this.completionDate = completionDate;
     }
 

@@ -1,49 +1,45 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
-  <head>
-      <title>EMS Admin - Role</title>
-      <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-      <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.min.css" />
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-      <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
-      <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
-      <link th:href="@{/css/style.css}" rel="stylesheet" />
-      <script th:src="@{/js/bootstrap.min.js}"></script>
-      <script th:src="@{/js/scripts.js}"></script>
-  </head>
-  <body>
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-md-12">
-				<h1 th:inline="text">Hello, [[${#httpServletRequest.remoteUser}]]!</h1>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-2">
-				<div class="list-group">
-                    <a th:href="@{/index}" class="list-group-item" th:text="#{admin.home}"></a>
-                    <a th:href="@{/admin}" class="list-group-item" th:text="#{admin.admin}"></a>
-                    <a th:href="@{/admin/user}" class="list-group-item" th:text="#{admin.user}"></a>
-                    <a th:href="@{/admin/role}" class="list-group-item active" th:text="#{admin.role}"></a>
-                    <a th:href="@{/admin/message}" class="list-group-item" th:text="#{admin.message}"></a>
-                    <a th:href="@{/admin/project}" class="list-group-item" th:text="#{admin.project}"></a>
-                    <a th:href="@{/admin/task}" class="list-group-item" th:text="#{admin.task}"></a>
-                    <a th:href="@{/admin/subtask}" class="list-group-item" th:text="#{admin.subtask}"></a>
-				</div>
-			</div>
-			<div class="col-md-8 left-box">
-                <form th:object="${roleForm}" th:action = "@{/admin/role/create}" method="post">
-                    <label th:text="#{admin.username}"></label>
-                    <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
-                    <input th:field="*{username}" type="text" class="form-control"/>
-                    <label th:text="#{admin.role}"></label>
-                    <p th:if="${#fields.hasErrors('role')}" th:errors="*{role}"></p>
-                    <input th:field="*{role}" type="text" class="form-control"/>
-                    <input class="btn btn-default" type="submit" th:value="#{button.create}"/>
-                </form>
-			</div>
-		</div>
-	</div>
-  </body>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>EMS Admin - Role</title>
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <link rel="stylesheet"
+          href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/scripts.js}"></script>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row admin">
+        <div class="col-md-2">
+            <div class="list-group">
+                <a th:href="@{/index}" class="list-group-item" th:text="#{admin.home}"></a>
+                <a th:href="@{/admin}" class="list-group-item" th:text="#{admin.admin}"></a>
+                <a th:href="@{/admin/user}" class="list-group-item" th:text="#{admin.user}"></a>
+                <a th:href="@{/admin/role}" class="list-group-item active" th:text="#{admin.role}"></a>
+                <a th:href="@{/admin/message}" class="list-group-item" th:text="#{admin.message}"></a>
+                <a th:href="@{/admin/project}" class="list-group-item" th:text="#{admin.project}"></a>
+                <a th:href="@{/admin/task}" class="list-group-item" th:text="#{admin.task}"></a>
+                <a th:href="@{/admin/subtask}" class="list-group-item" th:text="#{admin.subtask}"></a>
+            </div>
+        </div>
+        <div class="col-md-8 left-box">
+            <form th:object="${roleForm}" th:action="@{/admin/role/create}" method="post">
+                <label th:text="#{admin.username}"></label>
+                <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
+                <input th:field="*{username}" type="text" class="form-control"/>
+                <label th:text="#{admin.role}"></label>
+                <p th:if="${#fields.hasErrors('role')}" th:errors="*{role}"></p>
+                <input th:field="*{role}" type="text" class="form-control"/>
+                <input class="btn btn-default" type="submit" th:value="#{button.create}"/>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
 </html>
