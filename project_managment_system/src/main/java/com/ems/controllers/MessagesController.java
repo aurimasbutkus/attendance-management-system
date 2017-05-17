@@ -3,6 +3,7 @@ package com.ems.controllers;
 import com.ems.messaging.Message;
 import com.ems.messaging.MessageService;
 import com.ems.messaging.TeamMessage;
+import com.ems.projectsinfo.ProjectService;
 import com.ems.teaminfo.TeamService;
 import com.ems.userinfo.User;
 import com.ems.userinfo.UserService;
@@ -27,6 +28,8 @@ public class MessagesController {
     private UserService userService;
     @Autowired
     private TeamService teamService;
+    @Autowired
+    private ProjectService projectService;
 
     @RequestMapping(value="/messages", method = RequestMethod.GET)
     public String messages(Model model, Authentication authentication){
@@ -35,6 +38,10 @@ public class MessagesController {
         List<User> users = messageService.listAllInteractedUsers(userId);
         model.addAttribute("users", users);
         model.addAttribute("userTeamId", teamId);
+        model.addAttribute("newUserMessage", new Message());
+        model.addAttribute("currentUserName", authentication.getName());
+        model.addAttribute("tasks", projectService.listAllTasks());
+        model.addAttribute("projects", projectService.listAllUserProjects(userId));
         return "messages";
     }
 
@@ -47,8 +54,12 @@ public class MessagesController {
     @PostMapping(value="messages/new")
     public String postNewMessage(@ModelAttribute("newMessage") Message newMessage, Model model, Authentication authentication){
         newMessage.setDate(new Date(System.currentTimeMillis()));
-        messageService.create(newMessage.getText(), newMessage.getDate(), userService.getIdByUsername(authentication.getName()), userService.getIdByUsername(newMessage.getReceiverUsername()));
-        return messages(model, authentication);
+        if(userService.userExists(newMessage.getReceiverUsername())){
+            int id = userService.getIdByUsername(newMessage.getReceiverUsername());
+            messageService.create(newMessage.getText(), newMessage.getDate(), userService.getIdByUsername(authentication.getName()), userService.getIdByUsername(newMessage.getReceiverUsername()));
+            return showChat(model, id, authentication);
+        }
+        else return messages(model, authentication);
     }
 
     @GetMapping(value="messages/chat/{id}")
@@ -58,9 +69,17 @@ public class MessagesController {
         for(Message message : messages){
             message.getFormattedText(userService);
         }
+        int teamId = userService.getUser(userId).getFkTeam();
+        List<User> users = messageService.listAllInteractedUsers(userId);
+        model.addAttribute("users", users);
+        model.addAttribute("userTeamId", teamId);
         model.addAttribute("messages", messages);
         model.addAttribute("receiver", id);
         model.addAttribute("newMessage", new Message());
+        model.addAttribute("newUserMessage", new Message());
+        model.addAttribute("currentUserName", authentication.getName());
+        model.addAttribute("tasks", projectService.listAllTasks());
+        model.addAttribute("projects", projectService.listAllUserProjects(userId));
         return "/messages/chat";
     }
 
@@ -79,8 +98,12 @@ public class MessagesController {
             message.getFormattedText(userService, teamService);
         }
         model.addAttribute("messages", messages);
+        model.addAttribute("currentUserName", authentication.getName());
         model.addAttribute("receiver", id);
         model.addAttribute("newMessage", new TeamMessage());
+        model.addAttribute("newUserMessage", new Message());
+        model.addAttribute("tasks", projectService.listAllTasks());
+        model.addAttribute("projects", projectService.listAllUserProjects(userId));
         return "/messages/team";
     }
 

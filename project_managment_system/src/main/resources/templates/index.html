@@ -111,6 +111,22 @@
                         </div>
                     </div>
                 </div>
+                <div sec:authorize="hasAnyAuthority('ADMIN', 'MANAGER')" class="panel-group">
+                    <div>
+                        <a class="panel-title" data-toggle="collapse" href="#panel-element-addc"><i class="fa fa-plus" aria-hidden="true"></i><span th:text="#{project.addNewTeam}"></span></a>
+                    </div>
+                    <div id="panel-element-addc" class="panel-collapse collapse">
+                        <div class="form-group">
+                            <form th:action = "@{/index/new-team-submit}" th:object="${newTeam}" method="post">
+                                <p><label	th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></label></p>
+                                <p><input th:field="*{name}" name="name" type="text" placeholder="Team's name" required="required"/></p>
+                                <p><label	th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></label></p>
+                                <p><textarea th:field="*{description}" name="description" type="text" placeholder="Team's description" required="required"></textarea></p>
+                                <button class="btn btn-success btn-xs" type="submit"><i class="fa fa-plus-square-o" aria-hidden="true"></i><span th:text="#{button.create}"></span></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
 
         </div>

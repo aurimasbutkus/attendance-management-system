@@ -38,9 +38,9 @@ public class MessageValidator implements Validator {
         if (userService.getUser(message.getFkAccountSender()) == null) {
             errors.rejectValue("fkAccountSender", "message.receiver.notExist");
         }
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "fkAccountReceiver", "NotEmpty");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "receiverUsername", "NotEmpty");
         if (userService.getUser(message.getFkAccountReceiver()) == null) {
-            errors.rejectValue("fkAccountReceiver", "message.sender.notExist");
+            errors.rejectValue("receiverUsername", "message.sender.notExist");
         }
     }
 }

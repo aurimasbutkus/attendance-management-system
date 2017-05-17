@@ -80,29 +80,4 @@ public class TeamController {
         return "team-creation";
     }
 
-    @PostMapping(value="team/new-submit")
-    public String createNewTeam(@ModelAttribute("newTeam") Team newTeam, BindingResult bindingResult,
-                                Model model, Authentication authentication){
-        teamValidator.validate(newTeam, bindingResult);
-        if (bindingResult.hasErrors()) {
-            printErrors(bindingResult);
-            return "team-creation";
-        }
-        teamService.createNewTeam(newTeam);
-        String username = authentication.getName();
-        Integer user_id = userService.getUser(username).getId();
-        teamService.addMemberToTeam(teamService.getTeamByName(newTeam.getName()).getId(), user_id);
-        return "redirect:/index";
-    }
-
-    private void printErrors(BindingResult bindingResult)
-    {
-        for (Object object : bindingResult.getAllErrors()) {
-            if(object instanceof FieldError) {
-                FieldError fieldError = (FieldError) object;
-                String message = fieldError.getField() + " " + messageSource.getMessage(fieldError, null);
-                System.out.println(message);
-            }
-        }
-    }
 }

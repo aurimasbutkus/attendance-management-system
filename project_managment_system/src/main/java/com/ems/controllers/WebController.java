@@ -6,12 +6,15 @@ package com.ems.controllers;
 
 import com.ems.projectsinfo.Project;
 import com.ems.projectsinfo.ProjectService;
+import com.ems.teaminfo.Team;
+import com.ems.teaminfo.TeamService;
 import com.ems.userinfo.User;
 import com.ems.userinfo.UserJDBC;
 import com.ems.userinfo.UserService;
 import com.ems.validator.LoginValidator;
 import com.ems.validator.ProjectValidator;
 import com.ems.validator.RegisterValidator;
+import com.ems.validator.TeamValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.security.core.Authentication;
@@ -39,6 +42,11 @@ public class WebController {
     private UserService userService;
     @Autowired
     private ProjectValidator projectValidator;
+    @Autowired
+    private TeamValidator teamValidator;
+
+    @Autowired
+    private TeamService teamService;
 
     @RequestMapping("/access-denied")
     public String access() {
@@ -54,6 +62,7 @@ public class WebController {
         model.addAttribute("tasks", projectService.listAllTasks());
         model.addAttribute("currentUserName", authentication.getName());
         model.addAttribute("newProject", new Project());
+        model.addAttribute("newTeam", new Team());
         return "index";
     }
     @PostMapping(value="/index/new-project-submit")
@@ -72,6 +81,19 @@ public class WebController {
         String username = authentication.getName();
         Integer user_id = userService.getUser(username).getId();
         model.addAttribute("projects", projectService.listAllUserProjects(user_id));
+        return "redirect:/index";
+    }
+    @PostMapping(value="/index/new-team-submit")
+    public String createNewTeam(@ModelAttribute("newTeam") Team newTeam, BindingResult bindingResult,
+                                Model model, Authentication authentication){
+        teamValidator.validate(newTeam, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return "team-creation";
+        }
+        teamService.createNewTeam(newTeam);
+        String username = authentication.getName();
+        Integer user_id = userService.getUser(username).getId();
+        teamService.addMemberToTeam(teamService.getTeamByName(newTeam.getName()).getId(), user_id);
         return "redirect:/index";
     }
     @RequestMapping("/")
