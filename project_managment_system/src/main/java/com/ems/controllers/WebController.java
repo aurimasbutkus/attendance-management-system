@@ -4,11 +4,13 @@ package com.ems.controllers;
  * Created by Marius on 2017-04-07.
  */
 
+import com.ems.projectsinfo.Project;
 import com.ems.projectsinfo.ProjectService;
 import com.ems.userinfo.User;
 import com.ems.userinfo.UserJDBC;
 import com.ems.userinfo.UserService;
 import com.ems.validator.LoginValidator;
+import com.ems.validator.ProjectValidator;
 import com.ems.validator.RegisterValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -35,6 +37,8 @@ public class WebController {
     private ProjectService projectService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private ProjectValidator projectValidator;
 
     @RequestMapping("/access-denied")
     public String access() {
@@ -46,9 +50,29 @@ public class WebController {
         String username = authentication.getName();
         Integer user_id = userService.getUser(username).getId();
         model.addAttribute("projects", projectService.listAllUserProjects(user_id));
+        model.addAttribute("userForm", userService.getUser(user_id));
         model.addAttribute("tasks", projectService.listAllTasks());
         model.addAttribute("currentUserName", authentication.getName());
+        model.addAttribute("newProject", new Project());
         return "index";
+    }
+    @PostMapping(value="/index/new-project-submit")
+    public String createNewProject(@ModelAttribute("newProject") Project newProject, BindingResult bindingResult,
+                                   Model model, Authentication authentication){
+        projectValidator.validate(newProject, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return "index";
+        }
+        if(newProject.getDeadline() == null)
+            projectService.create(newProject.getName(), newProject.getDescription(),
+                    newProject.getStartDate());
+        else
+            projectService.create(newProject.getName(), newProject.getDescription(),
+                    newProject.getStartDate(), newProject.getDeadline());
+        String username = authentication.getName();
+        Integer user_id = userService.getUser(username).getId();
+        model.addAttribute("projects", projectService.listAllUserProjects(user_id));
+        return "redirect:/index";
     }
     @RequestMapping("/")
     public String home() {

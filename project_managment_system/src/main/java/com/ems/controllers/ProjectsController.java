@@ -37,8 +37,6 @@ public class ProjectsController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private ProjectValidator projectValidator;
 
     @Autowired
     private MessageSource messageSource;
@@ -103,25 +101,7 @@ public class ProjectsController {
         return "project-creation";
     }
 
-    @PostMapping(value="projects/new-submit")
-    public String createNewProject(@ModelAttribute("newProject") Project newProject, BindingResult bindingResult,
-                                   Model model, Authentication authentication){
-        projectValidator.validate(newProject, bindingResult);
-        if (bindingResult.hasErrors()) {
-            printErrors(bindingResult);
-            return "project-creation";
-        }
-        if(newProject.getDeadline() == null)
-            projectService.create(newProject.getName(), newProject.getDescription(),
-                                    newProject.getStartDate());
-        else
-            projectService.create(newProject.getName(), newProject.getDescription(),
-                                    newProject.getStartDate(), newProject.getDeadline());
-        String username = authentication.getName();
-        Integer user_id = userService.getUser(username).getId();
-        model.addAttribute("projects", projectService.listAllUserProjects(user_id));
-        return "projects";
-    }
+
 
     private void printErrors(BindingResult bindingResult)
     {

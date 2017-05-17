@@ -60,15 +60,49 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-3 left-box">
-            <div class="margin-15">
-                <p>to be implemented: user info</p>
+        <div class="col-md-6 left-box">
+            <div class="padding-15">
+                <i class="fa fa-address-card-o fa-5x margin-0" ></i>
+                <p class="h1">User info</p>
+                <form class="padding-15" th:object="${userForm}">
+                    <div class="inline-class">
+                        <label class="h3" th:text="#{admin.username}+': '"></label>
+                        <p th:text="*{username}" type="text" class="h3"></p>
+                    </div>
+                    <div class="inline-class">
+                    <label class="h3" th:text="#{admin.email}+': '"></label>
+                    <p th:text="*{emailAddress}" type="text" class="h3"></p>
+                    </div>
+                    <div class="inline-class">
+                    <label class="h3" th:text="#{admin.firstName}+': '"></label>
+                    <p th:text="*{firstName}" type="text" class="h3"></p>
+                    </div>
+                    <div class="inline-class">
+                    <label class="h3" th:text="#{admin.lastName}+': '"></label>
+                    <p th:text="*{lastName}" type="text" class="h3"></p>
+                    </div>
+                </form>
+                <div sec:authorize="hasAnyAuthority('ADMIN', 'MANAGER')" class="panel-group">
+                    <div>
+                        <a class="panel-title" data-toggle="collapse" href="#panel-element-add"><i class="fa fa-plus" aria-hidden="true"></i><span th:text="#{project.addNewProject}"></span></a>
+                    </div>
+                    <div id="panel-element-add" class="panel-collapse collapse">
+                        <div class="form-group">
+                            <form th:action = "@{/index/new-project-submit}" th:object="${newProject}" method="post">
+                                <p><label	th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></label></p>
+                                <p><input th:field="*{name}" name="name" type="text" class="form-control" placeholder="Project's name" required="required"/></p>
+                                <p><label	th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></label></p>
+                                <p><textarea th:field="*{description}" class="form-control" name="description" type="text" placeholder="Project's description" required="required"></textarea></p>
+                                <p><label th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}"></label></p>
+                                <p><input th:field="*{startDate}" name="startDate" type="text" class="datepicker form-control" placeholder="Project's start date" required="required"/></p>
+                                <p><input th:field="*{deadline}" name="deadline" type="text"  class="datepicker form-control" placeholder="Project's deadline date"/></p>
+                                <button class="btn btn-success btn-xs" type="submit"><i class="fa fa-plus-square-o" aria-hidden="true"></i><span th:text="#{button.create}"></span></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="col-md-3 middle-box">
-            <div class="margin-15">
-            <p>New project/new team/new other stuff</p>
-            </div>
+
         </div>
         <div class="col-md-3 right-box pull-right">
             <div align="center" id="calendar"></div>
