@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <title>EMS - Team Chat</title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <link th:href="@{/css/index.css}" rel="stylesheet" />
+</head>
+<body>
+<h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
+<!-- HEADER -->
+<header class="block">
+    <ul class="header-menu horizontal-list">
+        <li><a class="header-menu-tab" th:href="@{/index}">Home</a></li>
+        <li><a class="header-menu-tab" th:href="@{/projects}">Projects</a> </li>
+        <li><a class="header-menu-tab" th:href="@{/messages}">Messages</a> </li>
+        <li><a class="header-menu-tab" th:href="@{/team}">Team</a></li>
+        <li sec:authorize="hasAuthority('ADMIN')"><a class="header-menu-tab" th:href="@{/admin}">Admin</a></li>
+        <li><a class="header-menu-tab" href="#">Options</a></li>
+        <li>
+            <form th:action="@{/logout}" class="header-menu-tab" method="post">
+                <input type="submit" value="Sign Out"/>
+            </form>
+        </li>
+    </ul>
+</header>
+
+<div>
+    <form th:action = "@{/messages/team/{id}(id=${receiver})}" th:object="${newMessage}" method="post" class="new-message-form" style = "display: block">
+        <input th:field="*{text}" type="text" placeholder="Message"/>
+        <input type="submit" value="Send"/>
+    </form>
+</div>
+
+<div>
+    <ul>
+        <li th:each="message : ${messages}">
+            <a th:text="${message.formattedText}"></a>
+        </li>
+    </ul>
+</div>
+</body>
+</html>

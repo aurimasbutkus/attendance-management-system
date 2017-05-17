@@ -2,6 +2,8 @@ package com.ems.controllers;
 
 import com.ems.messaging.Message;
 import com.ems.messaging.MessageService;
+import com.ems.messaging.TeamMessage;
+import com.ems.teaminfo.TeamService;
 import com.ems.userinfo.User;
 import com.ems.userinfo.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,12 +25,16 @@ public class MessagesController {
     private MessageService messageService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private TeamService teamService;
 
     @RequestMapping(value="/messages", method = RequestMethod.GET)
     public String messages(Model model, Authentication authentication){
         int userId = userService.getIdByUsername(authentication.getName());
+        int teamId = userService.getUser(userId).getFkTeam();
         List<User> users = messageService.listAllInteractedUsers(userId);
         model.addAttribute("users", users);
+        model.addAttribute("userTeamId", teamId);
         return "messages";
     }
 
@@ -63,5 +69,25 @@ public class MessagesController {
         newMessage.setDate(new Date(System.currentTimeMillis()));
         messageService.create(newMessage.getText(), newMessage.getDate(), userService.getIdByUsername(authentication.getName()), id);
         return showChat(model, id, authentication);
+    }
+
+    @GetMapping(value="messages/team/{id}")
+    public String showTeamChat(Model model, @PathVariable("id") int id, Authentication authentication){
+        int userId = userService.getIdByUsername(authentication.getName());
+        List<TeamMessage> messages = messageService.listAllTeamMessages(userService.getUser(userId).getFkTeam());
+        for(TeamMessage message : messages){
+            message.getFormattedText(userService, teamService);
+        }
+        model.addAttribute("messages", messages);
+        model.addAttribute("receiver", id);
+        model.addAttribute("newMessage", new TeamMessage());
+        return "/messages/team";
+    }
+
+    @PostMapping(value = "/messages/team/{id}")
+    public String postTeamChat(@ModelAttribute("newMessage") TeamMessage newMessage, @PathVariable("id") int id, Model model, Authentication authentication){
+        newMessage.setDate(new Date(System.currentTimeMillis()));
+        messageService.createTeamMessage(newMessage.getText(), newMessage.getDate(), userService.getIdByUsername(authentication.getName()), id);
+        return showTeamChat(model, id, authentication);
     }
 }
