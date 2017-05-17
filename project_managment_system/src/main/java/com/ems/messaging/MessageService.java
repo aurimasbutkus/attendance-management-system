@@ -11,6 +11,7 @@ import java.util.List;
 public interface MessageService {
 
     void create(String text, Date date, Integer sender_id, Integer receiver_id);
+    void createTeamMessage(String text, Date date, Integer sender_id, Integer receiving_team_id);
     void create(Message message);
     List<Message> listAllReceivedMessages(Integer userId);
     List<Message> listAllSentMessages(Integer userId);
@@ -20,4 +21,5 @@ public interface MessageService {
     Message getMessage(Integer id);
     void updateEverything(Message message);
     void delete(int id);
+    List<TeamMessage> listAllTeamMessages(Integer fkTeam);
 }
