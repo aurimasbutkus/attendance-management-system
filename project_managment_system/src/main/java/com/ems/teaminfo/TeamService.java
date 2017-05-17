@@ -11,8 +11,10 @@ import java.util.List;
 public interface TeamService {
     List<User> getMembers(Integer id);
     Team getTeamByUser(Integer id);
+    Team getTeamByName(String name);
     List<Project> getProjects(Integer id);
     Team getTeamById(Integer id);
     void addMemberToTeam(Integer team_id, Integer member_id);
     void removeMemberFromTeam(Integer member_id);
+    void createNewTeam(Team team);
 }

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
-    <title>EMS Home Page</title>
+    <title>EMS Team Creation</title>
     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
     <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.min.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
@@ -42,15 +42,12 @@
     </header>
     <div align="center">
         <h2>New project's creation</h2>
-        <form th:action = "@{/projects/new-submit}" th:object="${newProject}" method="post">
-        <p><label	th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></label></p>
-        <p><input th:field="*{name}" name="name" type="text" placeholder="Project's name" required="required"/></p>
-        <p><label	th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></label></p>
-        <p><textarea th:field="*{description}" name="description" type="text" placeholder="Project's description" required="required"></textarea></p>
-        <p><label	th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}"></label></p>
-        <p><input th:field="*{startDate}" name="startDate" type="text" class="datepicker" placeholder="Project's start date" required="required"/></p>
-        <p><input th:field="*{deadline}" name="deadline" type="text"  class="datepicker" placeholder="Project's deadline date"/></p>
-        <p><input type="submit" value="Create"/></p>
+        <form th:action = "@{/team/new-submit}" th:object="${newTeam}" method="post">
+            <p><label	th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></label></p>
+            <p><input th:field="*{name}" name="name" type="text" placeholder="Team's name" required="required"/></p>
+            <p><label	th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></label></p>
+            <p><textarea th:field="*{description}" name="description" type="text" placeholder="Team's description" required="required"></textarea></p>
+            <p><input type="submit" value="Create"/></p>
         </form>
     </div>
 </div> <!-- end main-container -->

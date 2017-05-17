@@ -5,11 +5,14 @@ import com.ems.teaminfo.Team;
 import com.ems.teaminfo.TeamService;
 import com.ems.userinfo.User;
 import com.ems.userinfo.UserService;
+import com.ems.validator.TeamValidator;
+import org.codehaus.groovy.tools.shell.util.MessageSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -26,6 +29,12 @@ public class TeamController {
 
     @Autowired
     private ProjectService projectService;
+
+    @Autowired
+    private TeamValidator teamValidator;
+
+    @Autowired
+    private org.springframework.context.MessageSource messageSource;
 
     @RequestMapping(value="team")
     public String team(Model model, Authentication authentication){
@@ -63,5 +72,37 @@ public class TeamController {
     {
         teamService.removeMemberFromTeam(user_id);
         return "redirect:/team";
+    }
+
+    @GetMapping(value="team/new")
+    public String teamCreation( Model model){
+        model.addAttribute("newTeam", new Team());
+        return "team-creation";
+    }
+
+    @PostMapping(value="team/new-submit")
+    public String createNewTeam(@ModelAttribute("newTeam") Team newTeam, BindingResult bindingResult,
+                                Model model, Authentication authentication){
+        teamValidator.validate(newTeam, bindingResult);
+        if (bindingResult.hasErrors()) {
+            printErrors(bindingResult);
+            return "team-creation";
+        }
+        teamService.createNewTeam(newTeam);
+        String username = authentication.getName();
+        Integer user_id = userService.getUser(username).getId();
+        teamService.addMemberToTeam(teamService.getTeamByName(newTeam.getName()).getId(), user_id);
+        return "redirect:/index";
+    }
+
+    private void printErrors(BindingResult bindingResult)
+    {
+        for (Object object : bindingResult.getAllErrors()) {
+            if(object instanceof FieldError) {
+                FieldError fieldError = (FieldError) object;
+                String message = fieldError.getField() + " " + messageSource.getMessage(fieldError, null);
+                System.out.println(message);
+            }
+        }
     }
 }

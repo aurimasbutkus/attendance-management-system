@@ -32,6 +32,12 @@ public class TeamJDBC implements TeamService {
     }
 
     @Override
+    public Team getTeamByName(String name) {
+        String SQL = "select * from team where team.name = ?";
+        return jdbcTemplateObject.queryForObject(SQL, new Object[]{name}, new TeamMapper());
+    }
+
+    @Override
     public void addMemberToTeam(Integer team_id, Integer member_id)
     {
         String SQL = "update account set account.fk_Team = ? where account.id = ?";
@@ -58,4 +64,13 @@ public class TeamJDBC implements TeamService {
         String SQL = "select project.* from team, project, project_teams where team.id = ? and project_teams.fk_Team = team.id and project_teams.fk_Project = project.id";
         return jdbcTemplateObject.query(SQL, new Object[]{id}, new ProjectMapper());
     }
+
+    @Override
+    public void createNewTeam(Team team)
+    {
+        String SQL = "insert into team (name, description) VALUES( ?, ?)";
+        jdbcTemplateObject.update(SQL, team.getName(), team.getDescription());
+        System.out.println("Added new team: " + team.getName()+ " : " + team.getDescription());
+    }
+
 }
