@@ -1,21 +1,32 @@
 ﻿.deadline-day {
-    background-color: red;
+    background-color: rgba(255, 71, 14, 0.75);
     cursor: pointer;
+    border-radius:5px;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+}
+.deadline-day:hover{
+    background-color: rgba(255, 76, 0, 0.85);
 }
 .calendar-table {
-    background-color: #ffffff;
-    width: 400px;
-    height: 300px;
-    border-collapse: collapse;
+    width: 300px;
+    height: 200px;
     text-align: center;
     vertical-align: center;
+    background: rgba(145, 238, 73, 0.5);
+    border-radius:5px;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
 }
-.calendar-table td, th, table{
-    border: 2px solid black;
+.calendar-table table, td, th{
+    border-radius:5px;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
 }
 .leftArr, .rightArr{
     cursor: pointer;
     color: #000000;
+    padding: 5px;
 }
 
 .leftArr{
@@ -24,4 +35,17 @@
 
 .rightArr{
     float: right;
+}
+.month{
+    background-color: rgba(147, 206, 25, 0.56);
+}
+.days:hover{
+    border-radius:5px;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    background: rgba(144, 238, 38, 0.62);
+    cursor: default;
+}
+.otherMonthDays{
+    color: rgba(30, 30, 30, 0.64);
 }

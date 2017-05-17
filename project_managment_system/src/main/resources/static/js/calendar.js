@@ -11,9 +11,9 @@ $(document).ready(function () {
 function RenderCalendar(year, month) {
     month = checkMonth(month);
     $(calendar).html('');
-    $(calendar).append("<table id='calendar-table' class='calendar-table'></table>");
-    $("#calendar-table").append("<tr><td colspan='7'><span class='leftArr' align='left' onclick='GetPreviousMonth();findDeadlines()'><b><</b></span><b>"+ months[month-1] +"</b><span class='rightArr' onclick='GetNextMonth();findDeadlines()'><b>></b></span></td></tr>");
-    $("#calendar-table").append("<tr><td>P</td><td>A</td><td>T</td><td>K</td><td>P</td><td>S</td><td>S</td></tr>");
+    $(calendar).append("<table id='calendar-table' class='calendar-table' valign='center'></table>");
+    $("#calendar-table").append("<tr><td colspan='7' class='month'><span class='leftArr' align='left' onclick='GetPreviousMonth();findDeadlines()'><b>  <</b></span><b>"+ year + " " + months[month-1] +"</b><span class='rightArr' onclick='GetNextMonth();findDeadlines()'><b>>  </b></span></td></tr>");
+    $("#calendar-table").append("<tr style='font-weight:bold'><td>P</td><td>A</td><td>T</td><td>K</td><td>P</td><td>S</td><td>S</td></tr>");
     var daysCount = 0;
     var endReached = false;
     for (var a = 1; a <= 6; a++) {
@@ -25,9 +25,9 @@ function RenderCalendar(year, month) {
             var column = "calendar-column-" + b;
             if (firstDay == a * b || daysCount > 0 || endReached === true) {
                 daysCount++;
-                var bold = endReached === false ? "<b>" + daysCount + "</b>" : daysCount;
+                var bold = endReached === false ? "<p class='monthDays'><b>" + daysCount + "</b></p>" : "<p class='otherMonthDays'>" + daysCount + "</p>";
                 var data = endReached === false ? "data-day='" + year + "-" + (month < 10 ? "0" + month : month) + "-" + daysCount + "'" : "";
-                $("#" + row).append("<td "+ data +">" + bold + "</td>");
+                $("#" + row).append("<td class='days'"+ data +">" + bold + "</td>");
                 if (daysCount == GetLastDayOfMonth(year, month)) {
                     daysCount = 0;
                     endReached = true;
@@ -36,7 +36,7 @@ function RenderCalendar(year, month) {
             else {
                 var daysTillStart = firstDay - b;
                 var day = GetLastDayOfMonth(year, month-1) - daysTillStart + 1;
-                $("#" + row).append("<td>"+ day +"</td>");
+                $("#" + row).append("<td class='otherMonthDays'>"+ day +"</td>");
             }
         }
     }

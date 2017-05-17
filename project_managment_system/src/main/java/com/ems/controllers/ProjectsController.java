@@ -52,6 +52,7 @@ public class ProjectsController {
         model.addAttribute("subtasks", projectService.listAllSubtasks());
         model.addAttribute("newTask",new Task());
         model.addAttribute("newSubtask",new Subtask());
+        //model.addAttribute("tasks", projectService.listAllTasks());
         return "project";
     }
 

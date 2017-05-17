@@ -12,6 +12,8 @@
     <link th:href="@{/css/style.css}" rel="stylesheet" />
     <script th:src="@{/js/bootstrap.min.js}"></script>
     <script th:src="@{/js/scripts.js}"></script>
+    <link  th:href="@{/css/calendar.css}" rel="stylesheet" />
+    <script th:src="@{/js/calendar.js}"></script>
 </head>
 <body>
 <div class="container-fluid">
@@ -97,11 +99,43 @@
             </div>
         </div>
         <div class="col-md-3 right-box pull-right padding-15">
-            <div class="margin-15">
-                <p>Cia bus calendar ir update</p>
+            <div align="center" id="calendar"></div>
+            <div align="center">
+                <p id="task-description"></p>
             </div>
         </div>
     </div>
 </div>
+<script th:inline="javascript">
+
+    function findDeadlines() {
+        //<![CDATA[
+        var tasks = [[${tasks}]];
+        for (var i = 0; i < tasks.length; i++) {
+            var fullDate = new Date(tasks[i].deadline);
+            var month = parseInt(fullDate.getMonth()) + 1;
+            var date = fullDate.getFullYear() + "-" + (month < 10 ? "0" + month : month) + "-" + fullDate.getDate();
+            $("td[data-day='" + date + "']").addClass("deadline-day");
+
+        }
+        $("td.deadline-day").click(function () {
+            for (var i = 0; i < tasks.length; i++) {
+                var fullDate = new Date(tasks[i].deadline);
+                var month = parseInt(fullDate.getMonth()) + 1;
+                var date = fullDate.getFullYear() + "-" + (month < 10 ? "0" + month : month) + "-" + fullDate.getDate();
+                if(date == $(this).data("day")) {
+                    $("#task-description").html(tasks[i].description);
+                }
+
+            }
+        });
+        //]]>
+    }
+
+    $(document).ready(function (){
+        findDeadlines();
+    });
+
+</script>
 </body>
 </html>

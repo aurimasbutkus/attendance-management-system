@@ -38,6 +38,7 @@ public class TeamController {
         model.addAttribute("newMember", new User());
         model.addAttribute("team_info", team);
         model.addAttribute("team_projects", teamService.getProjects(team.getId()));
+        model.addAttribute("tasks", projectService.listAllTasks());
         return "team";
     }
 
