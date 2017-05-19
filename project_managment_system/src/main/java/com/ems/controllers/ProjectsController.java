@@ -97,8 +97,11 @@ public class ProjectsController {
     }
 
     @GetMapping(value="projects/new")
-    public String projectCreation( Model model){
+    public String projectCreation( Model model, Authentication authentication){
         model.addAttribute("newProject", new Project());
+        String username = authentication.getName();
+        Integer userId = userService.getUser(username).getId();
+        model.addAttribute("projects", projectService.listAllUserProjects(userId));
         return "project-creation";
     }
 
