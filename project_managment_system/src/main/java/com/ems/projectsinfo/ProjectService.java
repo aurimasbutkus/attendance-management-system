@@ -1,5 +1,7 @@
 package com.ems.projectsinfo;
 
+import com.ems.teaminfo.Team;
+
 import java.util.Date;
 import java.util.List;
 
@@ -29,7 +31,9 @@ public interface ProjectService {
     void deleteTask(Integer id);
     void deleteSubtask(Integer id);
     void delete(String username);
-
+    void assignTeamToProject(Integer teamId, Integer projectId);
+    void removeTeamFromProject(Integer teamId, Integer projectId);
+    List<Team> listProjectTeams(Integer projectId);
     boolean projectExists(Integer id);
     boolean projectExists(String name);
     boolean projectExists(Project project);

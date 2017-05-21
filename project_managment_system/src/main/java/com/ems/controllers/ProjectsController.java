@@ -4,6 +4,8 @@ import com.ems.projectsinfo.Project;
 import com.ems.projectsinfo.ProjectService;
 import com.ems.projectsinfo.Subtask;
 import com.ems.projectsinfo.Task;
+import com.ems.teaminfo.Team;
+import com.ems.teaminfo.TeamService;
 import com.ems.userinfo.UserService;
 import com.ems.validator.ProjectValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +39,9 @@ public class ProjectsController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private TeamService teamService;
+
 
     @Autowired
     private MessageSource messageSource;
@@ -51,8 +56,10 @@ public class ProjectsController {
         model.addAttribute("tasks", projectService.listAllProjectTasks(id));
         model.addAttribute("subtasks", projectService.listAllSubtasks());
         model.addAttribute("newTask",new Task());
+        model.addAttribute("newTeam",new Team());
         model.addAttribute("newSubtask",new Subtask());
         //model.addAttribute("tasks", projectService.listAllTasks());
+        model.addAttribute("project_teams",projectService.listProjectTeams(id));
         return "project";
     }
 
@@ -88,11 +95,32 @@ public class ProjectsController {
         return "redirect:/project/{project_id}";
     }
 
+    @PostMapping(value="project/{project_id}/add-team")
+    public String addTeam(@ModelAttribute("newTeam") Team team, BindingResult bindingResult,
+                          @PathVariable("project_id") Integer project_id, Model model, Authentication authentication){
+        try {
+            Integer team_id = teamService.getTeamByName(team.getName()).getId();
+            projectService.assignTeamToProject(team_id, project_id);
+        } catch (NullPointerException e) {
+            return "redirect:/project/{project_id}";
+        }
+
+        return "redirect:/project/{project_id}";
+    }
+
     @RequestMapping(value="project/{project_id}/remove-subtask/{subtask_id}", method = RequestMethod.GET)
     public String removeSubtask(@PathVariable("project_id") Integer project_id,
                                 @PathVariable("subtask_id") Integer subtask_id,Model model,
                                 Authentication authentication){
         projectService.deleteSubtask(subtask_id);
+        return "redirect:/project/{project_id}";
+    }
+
+    @RequestMapping(value="project/{project_id}/remove-team/{team_id}", method = RequestMethod.POST)
+    public String unnasignTeam(@PathVariable("project_id") Integer project_id,
+                                @PathVariable("team_id") Integer team_id,Model model,
+                                Authentication authentication){
+        projectService.removeTeamFromProject(team_id,project_id);
         return "redirect:/project/{project_id}";
     }
 

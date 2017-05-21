@@ -151,10 +151,18 @@
                                 </form>
                             </div>
                         </div>
+
+                                <form th:action = "@{/project/{id}/add-team (id=${project.id})}" th:object="${newTeam}" method="post">
+                                    <label th:text="#{admin.teamName}"></label>
+                                    <input th:field="*{name}" class="form-control" name="name" type="text" placeholder="Teams's name" required="required"/>
+                                    <button class="btn btn-success btn-xs" type="submit"><i class="fa fa-plus-square-o" aria-hidden="true"></i><span th:text="#{button.create}"></span></button>
+                                </form>
+
                     </div>
                 </div>
             </div>
             <div class="col-md-5">
+                <h2>Project's tasks</h2>
                 <div class="panel-group margin-10" id="panel-1">
                     <div th:each="task : ${tasks}">
                         <div class="panel panel-default">
@@ -191,6 +199,23 @@
                     </div>
                 </div>
             </div>
+
+            <div class="col-md-5">
+                <h2>Project's teams</h2>
+                <div class="panel-group margin-10">
+                    <div th:each="team : ${project_teams}">
+                        <div class="panel panel-default">
+                            <div class="panel-heading form-inline">
+                                <a class="panel-title" th:href="'#panel-element-'+${team.id}" th:text="${team.name}"></a>
+                                <form sec:authorize="hasAnyAuthority('ADMIN', 'MANAGER')" class="form-group pull-right" id="deleteButton" th:action = "@{/project/{project_id}/remove-team/{team_id} (team_id=${team.id}, project_id=${project.id})}" method="post" onsubmit="return confirm('Are you sure you want to delete this team from the project?');">
+                                    <button class="btn btn-danger btn-xs" type="submit"><i class="fa fa-trash" aria-hidden="true"></i><span th:text="#{button.delete}"></span></button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="col-md-3 right-box pull-right">
                 <div align="center" id="calendar"></div>
                 <div align="center">

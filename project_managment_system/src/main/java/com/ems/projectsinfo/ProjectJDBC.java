@@ -5,6 +5,8 @@ package com.ems.projectsinfo;
  */
 
 
+import com.ems.teaminfo.Team;
+import com.ems.teaminfo.TeamMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -230,6 +232,32 @@ public class ProjectJDBC implements ProjectService {
     public void deleteSubtask(Integer id){
         String SQL = "delete from subtask where id = ?";
         jdbcTemplateObject.update(SQL, id);
+    }
+
+    @Override
+    public void assignTeamToProject(Integer teamId, Integer projectId)
+    {
+        String SQL = "insert into project_teams (fk_Team, fk_Project) values(?, ?)";
+        jdbcTemplateObject.update( SQL, teamId, projectId);
+    }
+
+    @Override
+    public void removeTeamFromProject(Integer teamId, Integer projectId)
+    {
+        String SQL = "delete from project_teams where project_teams.fk_Team = ? and project_teams.fk_Project = ?";
+        jdbcTemplateObject.update( SQL, teamId, projectId);
+    }
+
+    @Override
+    public List<Team> listProjectTeams(Integer projectId)
+    {
+        try {
+            String SQL = "select team.* from project_teams, team, project where project_teams.fk_Team = team.id and project_teams.fk_Project = ? group by team.id";
+            return jdbcTemplateObject.query(SQL, new Object[]{projectId}, new TeamMapper());
+        }
+        catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
 }
