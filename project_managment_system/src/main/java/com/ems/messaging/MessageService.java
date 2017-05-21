@@ -22,4 +22,6 @@ public interface MessageService {
     void updateEverything(Message message);
     void delete(int id);
     List<TeamMessage> listAllTeamMessages(Integer fkTeam);
+    boolean messageExists(Integer id);
+    boolean messageExists(String text);
 }
