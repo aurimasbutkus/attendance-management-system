@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <title>EMS Error</title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <link th:href="@{/css/login.css}" rel="stylesheet" />
+</head>
+<body>
+    <div class="login-page">
+        <div th:action="@{/error}" class="form">
+            <h1>Oops. Something went wrong</h1>
+            <span th:text="${status}">status-code</span>
+            <span th:text="${error}">error-code</span>
+            <h2><a th:href="@{/index}" style="text-decoration: none">Go back to index</a></h2>
+        </div>
+    </div>
+</body>>
+</html>

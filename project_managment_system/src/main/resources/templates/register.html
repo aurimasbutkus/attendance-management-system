@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <title>EMS Register Page</title>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <link href="../static/css/login.css" th:href="@{css/login.css}" rel="stylesheet" />
+    <link th:href="@{/css/login.css}" rel="stylesheet" />
 </head>
 <body>
     <div class="login-page">
         <div class="form">
             <form th:action = "@{/register}" th:object="${userForm}" method="post" class="register-form" style = "display: block">
-                <label	th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></label>
+                <label th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></label>
                 <input th:field="*{username}" type="text" placeholder="username"/>
-                <label	th:if="${#fields.hasErrors('first_name')}" th:errors="*{first_name}"></label>
-                <input th:field="*{first_name}" type="text" placeholder="first name"/>
-                <label	th:if="${#fields.hasErrors('last_name')}" th:errors="*{last_name}"></label>
-                <input th:field="*{last_name}" type="text" placeholder="last name"/>
-                <label	th:if="${#fields.hasErrors('email_address')}" th:errors="*{email_address}"></label>
-                <input th:field="*{email_address}" type="text" placeholder="email address"/>
-                <label	th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></label>
+                <label th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></label>
+                <input th:field="*{firstName}" type="text" placeholder="first name"/>
+                <label th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></label>
+                <input th:field="*{lastName}" type="text" placeholder="last name"/>
+                <label th:if="${#fields.hasErrors('emailAddress')}" th:errors="*{emailAddress}"></label>
+                <input th:field="*{emailAddress}" type="text" placeholder="email address"/>
+                <label th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></label>
                 <input th:field="*{password}" type="password" placeholder="password"/>
                 <input type="submit" value="create"/>
                 <p class="message">Already registered? <a th:href="@{/login}">Sign In</a></p>

@@ -3,27 +3,171 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <title>EMS Home Page</title>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <link href="../static/css/index.css" th:href="@{css/index.css}" rel="stylesheet" />
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+    <link th:href="@{/css/font-awesome.css}" rel="stylesheet" />
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+    <link th:href="@{/css/style.css}" rel="stylesheet" />
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/scripts.js}"></script>
+    <link  th:href="@{/css/calendar.css}" rel="stylesheet" />
+    <script th:src="@{/js/calendar.js}"></script>
 </head>
-  <body>
-      <div class="main-container">
-          <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
-          <!-- HEADER -->
-          <header class="block">
-              <ul class="header-menu horizontal-list">
-                  <li><a class="header-menu-tab" href="#">Home</a></li>
-                  <li><a class="header-menu-tab" href="#">Projects</a> </li>
-                  <li><a class="header-menu-tab" href="#">Messages</a> </li>
-                  <li><a class="header-menu-tab" href="#">Team</a></li>
-                  <li><a class="header-menu-tab" href="#">Options</a></li>
-                  <li>
-                      <form th:action="@{/logout}" class="header-menu-tab" method="post">
-                        <input type="submit" value="Sign Out"/>
-                      </form>
-                  </li>
-              </ul>
-          </header>
-      </div> <!-- end main-container -->
-  </body>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <nav class="navbar navbar-default align-middle" role="navigation">
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li><a th:href="@{/index}"><i class="fa fa-home" aria-hidden="true"></i><span th:text="#{admin.home}"></span></a></li>
+                        <li><a th:href="@{/messages}"><i class="fa fa-inbox" aria-hidden="true"></i><span th:text="#{admin.messages}"></span></a></li>
+                        <!--<li><a th:href="@{/team}"><i class="fa fa-users" aria-hidden="true"></i><span th:text="#{admin.team}"></span></a></li>-->
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-users" aria-hidden="true"></i><span th:text="#{admin.team}"></span><strong class="caret"></strong></a>
+                            <ul class="dropdown-menu">
+                                <li >
+                                    <a th:href="@{/team}"><i class="fa fa-users" aria-hidden="true"></i><span th:text="#{admin.team}"></span></a>
+                                </li>
+                                <li class="divider"></li>
+                                <li><a th:href="@{/team/new}"><i class="fa fa-plus" aria-hidden="true"></i><span th:text="#{admin.newteam}"></span></a></li>
+                            </ul>
+                        </li>
+                        <li sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/admin}"><i class="fa fa-unlock-alt" aria-hidden="true"></i><span th:text="#{admin.admin}"></span></a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-folder" aria-hidden="true"></i><span th:text="#{admin.project}"></span><strong class="caret"></strong></a>
+                            <ul class="dropdown-menu">
+                                <li th:each="project : ${projects}">
+                                    <a th:href="@{/project/{id}(id=${project.id})}"><span th:text="${project.name}"></span></a>
+                                </li>
+                                <li class="divider"></li>
+                                <li><a th:href="@{/projects/new}"><i class="fa fa-plus" aria-hidden="true"></i><span th:text="#{admin.newproject}"></span></a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cog" aria-hidden="true"></i><span th:text="#{admin.options}"></span><strong class="caret"></strong></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Settings</a></li>
+                                <li><a href="#">Another action</a></li>
+                                <li><a href="#">Something else here</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <p class="navbar-text navbar-right margin-15">Signed in as <a href="#" class="navbar-link" th:text="${currentUserName}">_______</a></p>
+                        </li>
+                        <li>
+                            <form th:action="@{/logout}"  method="post">
+                                <button class="navbar-btn btn btn-secondary margin-15" type="submit"><i class="fa fa-sign-out" aria-hidden="true"></i><span th:text="#{admin.signOut}"></span></button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 left-box">
+            <div class="padding-15">
+                <i class="fa fa-address-card-o fa-5x margin-0" ></i>
+                <p class="h1">User info</p>
+                <form class="padding-15" th:object="${userForm}">
+                    <div class="inline-class">
+                        <label class="h3" th:text="#{admin.username}+': '"></label>
+                        <p th:text="*{username}" type="text" class="h3"></p>
+                    </div>
+                    <div class="inline-class">
+                    <label class="h3" th:text="#{admin.email}+': '"></label>
+                    <p th:text="*{emailAddress}" type="text" class="h3"></p>
+                    </div>
+                    <div class="inline-class">
+                    <label class="h3" th:text="#{admin.firstName}+': '"></label>
+                    <p th:text="*{firstName}" type="text" class="h3"></p>
+                    </div>
+                    <div class="inline-class">
+                    <label class="h3" th:text="#{admin.lastName}+': '"></label>
+                    <p th:text="*{lastName}" type="text" class="h3"></p>
+                    </div>
+                </form>
+                <div sec:authorize="hasAnyAuthority('ADMIN', 'MANAGER')" class="panel-group">
+                    <div>
+                        <a class="panel-title" data-toggle="collapse" href="#panel-element-add"><i class="fa fa-plus" aria-hidden="true"></i><span th:text="#{project.addNewProject}"></span></a>
+                    </div>
+                    <div id="panel-element-add" class="panel-collapse collapse">
+                        <div class="form-group">
+                            <form th:action = "@{/index/new-project-submit}" th:object="${newProject}" method="post">
+                                <p><label	th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></label></p>
+                                <p><input th:field="*{name}" name="name" type="text" class="form-control" placeholder="Project's name" required="required"/></p>
+                                <p><label	th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></label></p>
+                                <p><textarea th:field="*{description}" class="form-control" name="description" type="text" placeholder="Project's description" required="required"></textarea></p>
+                                <p><label th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}"></label></p>
+                                <p><input th:field="*{startDate}" name="startDate" type="text" class="datepicker form-control" placeholder="Project's start date" required="required"/></p>
+                                <p><input th:field="*{deadline}" name="deadline" type="text"  class="datepicker form-control" placeholder="Project's deadline date"/></p>
+                                <button class="btn btn-success btn-xs" type="submit"><i class="fa fa-plus-square-o" aria-hidden="true"></i><span th:text="#{button.create}"></span></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div sec:authorize="hasAnyAuthority('ADMIN', 'MANAGER')" class="panel-group">
+                    <div>
+                        <a class="panel-title" data-toggle="collapse" href="#panel-element-addc"><i class="fa fa-plus" aria-hidden="true"></i><span th:text="#{project.addNewTeam}"></span></a>
+                    </div>
+                    <div id="panel-element-addc" class="panel-collapse collapse">
+                        <div class="form-group">
+                            <form th:action = "@{/index/new-team-submit}" th:object="${newTeam}" method="post">
+                                <p><label	th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></label></p>
+                                <p><input th:field="*{name}" name="name" type="text" placeholder="Team's name" required="required"/></p>
+                                <p><label	th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></label></p>
+                                <p><textarea th:field="*{description}" name="description" type="text" placeholder="Team's description" required="required"></textarea></p>
+                                <button class="btn btn-success btn-xs" type="submit"><i class="fa fa-plus-square-o" aria-hidden="true"></i><span th:text="#{button.create}"></span></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-3 right-box pull-right">
+            <div align="center" id="calendar"></div>
+            <div align="center">
+                <p id="task-description"></p>
+            </div>
+        </div>
+    </div>
+</div>
+<script th:inline="javascript">
+
+    function findDeadlines() {
+        //<![CDATA[
+        var tasks = [[${tasks}]];
+        for (var i = 0; i < tasks.length; i++) {
+            var fullDate = new Date(tasks[i].deadline);
+            var month = parseInt(fullDate.getMonth()) + 1;
+            var date = fullDate.getFullYear() + "-" + (month < 10 ? "0" + month : month) + "-" + fullDate.getDate();
+            $("td[data-day='" + date + "']").addClass("deadline-day");
+
+        }
+        $("td.deadline-day").click(function () {
+            for (var i = 0; i < tasks.length; i++) {
+                var fullDate = new Date(tasks[i].deadline);
+                var month = parseInt(fullDate.getMonth()) + 1;
+                var date = fullDate.getFullYear() + "-" + (month < 10 ? "0" + month : month) + "-" + fullDate.getDate();
+                if(date == $(this).data("day")) {
+                    $("#task-description").html(tasks[i].description);
+                }
+
+            }
+        });
+        //]]>
+    }
+
+    $(document).ready(function (){
+        findDeadlines();
+    });
+
+</script>
+</body>
 </html>

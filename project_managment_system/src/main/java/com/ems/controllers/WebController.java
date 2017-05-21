@@ -4,12 +4,20 @@ package com.ems.controllers;
  * Created by Marius on 2017-04-07.
  */
 
+import com.ems.projectsinfo.Project;
+import com.ems.projectsinfo.ProjectService;
+import com.ems.teaminfo.Team;
+import com.ems.teaminfo.TeamService;
 import com.ems.userinfo.User;
 import com.ems.userinfo.UserJDBC;
+import com.ems.userinfo.UserService;
 import com.ems.validator.LoginValidator;
+import com.ems.validator.ProjectValidator;
 import com.ems.validator.RegisterValidator;
+import com.ems.validator.TeamValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -28,18 +36,71 @@ public class WebController {
     private LoginValidator loginValidator;
     @Autowired
     private MessageSource messageSource;
+    @Autowired
+    private ProjectService projectService;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private ProjectValidator projectValidator;
+    @Autowired
+    private TeamValidator teamValidator;
 
+    @Autowired
+    private TeamService teamService;
 
+    @RequestMapping("/access-denied")
+    public String access() {
+        return "access-denied";
+    }
 
-    @RequestMapping("/index")
-    public String index() {
+    @RequestMapping(value = "/index", method = RequestMethod.GET)
+    public String getIndex(Model model, Authentication authentication){
+        String username = authentication.getName();
+        Integer user_id = userService.getUser(username).getId();
+        model.addAttribute("projects", projectService.listAllUserProjects(user_id));
+        model.addAttribute("userForm", userService.getUser(user_id));
+        model.addAttribute("tasks", projectService.listAllTasks());
+        model.addAttribute("currentUserName", authentication.getName());
+        model.addAttribute("newProject", new Project());
+        model.addAttribute("newTeam", new Team());
         return "index";
     }
-
-    @RequestMapping("/")
-    public String login() {
-        return "redirect:/login";
+    @PostMapping(value="/index/new-project-submit")
+    public String createNewProject(@ModelAttribute("newProject") Project newProject, BindingResult bindingResult,
+                                   Model model, Authentication authentication){
+        projectValidator.validate(newProject, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return "index";
+        }
+        if(newProject.getDeadline() == null)
+            projectService.create(newProject.getName(), newProject.getDescription(),
+                    newProject.getStartDate());
+        else
+            projectService.create(newProject.getName(), newProject.getDescription(),
+                    newProject.getStartDate(), newProject.getDeadline());
+        String username = authentication.getName();
+        Integer user_id = userService.getUser(username).getId();
+        model.addAttribute("projects", projectService.listAllUserProjects(user_id));
+        return "redirect:/index";
     }
+    @PostMapping(value="/index/new-team-submit")
+    public String createNewTeam(@ModelAttribute("newTeam") Team newTeam, BindingResult bindingResult,
+                                Model model, Authentication authentication){
+        teamValidator.validate(newTeam, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return "team-creation";
+        }
+        teamService.createNewTeam(newTeam);
+        String username = authentication.getName();
+        Integer user_id = userService.getUser(username).getId();
+        teamService.addMemberToTeam(teamService.getTeamByName(newTeam.getName()).getId(), user_id);
+        return "redirect:/index";
+    }
+    @RequestMapping("/")
+    public String home() {
+        return "redirect:/index";
+    }
+
     @GetMapping(value = "/login")
     public String getLogin(Model model) {
         model.addAttribute("userForm", new User());
@@ -47,15 +108,11 @@ public class WebController {
     }
     @PostMapping(value = "/login")
     public String postLogin(@ModelAttribute("userForm") User userForm, BindingResult bindingResult) {
-        User loginUser = sql.getUser(userForm);
         loginValidator.validate(userForm, bindingResult);
         if (bindingResult.hasErrors()) {
-            printErrors(bindingResult);
             return "login";
         }
-        else if(loginUser.getPassword().equals(userForm.getPassword()))
-            return "redirect:/index";
-        else return "login";
+        else return "redirect:/index";
     }
     @GetMapping(value = "/register")
     public String getRegister(Model model) {
@@ -66,21 +123,10 @@ public class WebController {
     public String postRegister(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model) {
         registerValidator.validate(userForm, bindingResult);
         if (bindingResult.hasErrors()) {
-            printErrors(bindingResult);
             return "register";
         }
         sql.create(userForm);
         model.addAttribute("username", userForm.getUsername());
         return "result";
-    }
-    private void printErrors(BindingResult bindingResult)
-    {
-        for (Object object : bindingResult.getAllErrors()) {
-            if(object instanceof FieldError) {
-                FieldError fieldError = (FieldError) object;
-                String message = fieldError.getField() + " " + messageSource.getMessage(fieldError, null);
-                System.out.println(message);
-            }
-        }
     }
 }

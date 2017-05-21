@@ -4,11 +4,11 @@ import com.sun.istack.internal.Nullable;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Set;
+import java.sql.Date;
 
 /**
  * Created by Marius on 2017-04-08.
@@ -28,39 +28,40 @@ public class User {
     private String password;
     @Email(message = "*Please provide a valid Email")
     @NotEmpty(message = "*Please provide an email")
-    private String email_address;
+    private String emailAddress;
     @NotEmpty(message = "*Please provide your first name")
-    private String first_name;
+    private String firstName;
     @NotEmpty(message = "*Please provide your last name")
-    private String last_name;
+    private String lastName;
     @Nullable
-    private String gender;
+    private Integer gender;
     @Nullable
     private String nationality;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Nullable
-    private String date_of_birth;
+    private Date dateOfBirth;
     @Nullable
-    private String phone_number;
+    private String phoneNumber;
     @Nullable
-    private String work_status;
+    private Integer workStatus;
     @Column(name = "enabled")
-    private int enabled;
+    private Integer enabled;
     @Nullable
-    private Integer fk_Team;
+    private Integer fkTeam;
 
     public User() {
     }
 
-    public User(String username, String email, String password, String first_name, String last_name) {
+    public User(String username, String email, String password, String firstName, String lastName) {
         this.username = username;
-        this.email_address = email;
+        this.emailAddress = email;
         this.password = password;
-        this.first_name = first_name;;
-        this.last_name = last_name;
+        this.firstName = firstName;;
+        this.lastName = lastName;
     }
     public User(String username, String email, String password) {
         this.username = username;
-        this.email_address = email;
+        this.emailAddress = email;
         this.password = password;
     }
 
@@ -88,35 +89,35 @@ public class User {
         this.password = password;
     }
 
-    public String getEmail_address() {
-        return email_address;
+    public String getEmailAddress() {
+        return emailAddress;
     }
 
-    public void setEmail_address(String email_address) {
-        this.email_address = email_address;
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
     }
 
-    public String getFirst_name() {
-        return first_name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFirst_name(String first_name) {
-        this.first_name = first_name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getLast_name() {
-        return last_name;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
-    public String getGender() {
+    public Integer getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(Integer gender) {
         this.gender = gender;
     }
 
@@ -128,31 +129,31 @@ public class User {
         this.nationality = nationality;
     }
 
-    public String getDate_of_birth() {
-        return date_of_birth;
+    public Date getDateOfBirth() {
+        return dateOfBirth;
     }
 
-    public void setDate_of_birth(String date_of_birth) {
-        this.date_of_birth = date_of_birth;
+    public void setDateOfBirth(@DateTimeFormat(pattern = "yyyy-MM-dd")Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 
-    public String getPhone_number() {
-        return phone_number;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhone_number(String phone_number) {
-        this.phone_number = phone_number;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
-    public String getWork_status() {
-        return work_status;
+    public Integer getWorkStatus() {
+        return workStatus;
     }
 
-    public void setWork_status(String work_status) {
-        this.work_status = work_status;
+    public void setWorkStatus(Integer workStatus) {
+        this.workStatus = workStatus;
     }
 
-    public int getEnabled() {
+    public Integer getEnabled() {
         return enabled;
     }
 
@@ -160,12 +161,12 @@ public class User {
         this.enabled = enabled;
     }
 
-    public Integer getFk_Team() {
-        return fk_Team;
+    public Integer getFkTeam() {
+        return fkTeam;
     }
 
-    public void setFk_Team(Integer fk_Team) {
-        this.fk_Team = fk_Team;
+    public void setFkTeam(Integer fkTeam) {
+        this.fkTeam = fkTeam;
     }
 
     @Override
@@ -173,7 +174,7 @@ public class User {
         return "User{" +
                 "user_id=" + id +
                 ", username='" + username + '\'' +
-                ", email_address='" + email_address + '\'' +
+                ", emailAddress='" + emailAddress + '\'' +
                 ", password='" + password + '\'' +
                 '}';
     }

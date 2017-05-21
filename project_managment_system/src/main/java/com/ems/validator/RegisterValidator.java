@@ -2,6 +2,7 @@ package com.ems.validator;
 
 import com.ems.userinfo.User;
 import com.ems.userinfo.UserJDBC;
+import com.ems.userinfo.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -11,7 +12,7 @@ import org.springframework.validation.Validator;
 @Component
 public class RegisterValidator implements Validator {
     @Autowired
-    private UserJDBC sql;
+    private UserService sql;
 
     @Override
     public boolean supports(Class<?> aClass) {
@@ -23,25 +24,30 @@ public class RegisterValidator implements Validator {
         User user = (User) o;
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "NotEmpty");
-        if (user.getUsername().length() < 6 || user.getUsername().length() > 32) {
-            errors.rejectValue("username", "Size.userForm.username");
+        if (user.getUsername().length() < 4 || user.getUsername().length() > 32) {
+            errors.rejectValue("username", "userForm.username.size");
         }
         if (sql.getUser(user.getUsername()) != null) {
-            errors.rejectValue("username", "Duplicate.userForm.username");
+            errors.rejectValue("username", "userForm.username.duplicate");
         }
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email_address", "NotEmpty");
-        if (user.getEmail_address().length() < 6 || user.getEmail_address().length() > 32) {
-            errors.rejectValue("email_address", "Size.userForm.email_address");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "NotEmpty");
+        if (user.getFirstName().length() < 2 || user.getUsername().length() > 32) {
+            errors.rejectValue("firstName", "userForm.name.size");
         }
-        if (!user.getEmail_address().contains("@")) {
-            errors.rejectValue("email_address", "Invalid.userForm.email_address");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", "NotEmpty");
+        if (user.getLastName().length() < 2 || user.getUsername().length() > 32) {
+            errors.rejectValue("lastName", "userForm.name.size");
+        }
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "emailAddress", "NotEmpty");
+        if (user.getEmailAddress().length() < 6 || user.getEmailAddress().length() > 32) {
+            errors.rejectValue("emailAddress", "userForm.emailAddress.size");
+        }
+        if (!user.getEmailAddress().contains("@")) {
+            errors.rejectValue("emailAddress", "userForm.emailAddress.invalid");
         }
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty");
-        if (user.getPassword().length() < 6 || user.getPassword().length() > 32) {
-            errors.rejectValue("password", "Size.userForm.password");
+        if (user.getPassword().length() < 4 || user.getPassword().length() > 32) {
+            errors.rejectValue("password", "userForm.password.size");
         }
-//        if (!user.getPasswordConfirm().equals(user.getPassword())) {
-//            errors.rejectValue("passwordConfirm", "Diff.userForm.passwordConfirm");
-//        }
     }
 }
