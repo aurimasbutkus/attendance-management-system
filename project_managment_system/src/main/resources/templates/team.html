@@ -32,8 +32,6 @@
                                 <li th:each="project : ${projects}">
                                     <a th:href="@{/project/{id}(id=${project.id})}"><span th:text="${project.name}"></span></a>
                                 </li>
-                                <li class="divider"></li>
-                                <li><a th:href="@{/projects/new}"><i class="fa fa-plus" aria-hidden="true"></i><span th:text="#{admin.newproject}"></span></a></li>
                             </ul>
                         </li>
                         <li class="dropdown">
@@ -65,24 +63,12 @@
                 <p class="h1" th:text="#{team.teamInfo}"></p>
                 <p th:text="#{team.teamName}+': '+${team_info.name}"></p>
                 <p th:text="#{team.teamDescription}+': '+${team_info.description}"></p>
-                <p class="h1">Team's projects</p>
+                <p th:text="#{team.teamProjects}" class="h1"></p>
                 <ul>
                     <li th:each="project : ${team_projects}" href="#">
-                        <a th:href="@{/project-core/{id}(id=${project.id})}" th:text="${project.name}"></a>
+                        <a th:href="@{/project/{id}(id=${project.id})}" th:text="${project.name}"></a>
                     </li>
                 </ul>
-                <div sec:authorize="hasAnyAuthority('ADMIN', 'MANAGER')" class="add-task margin-0">
-                    <div>
-                        <a class="panel-title" data-toggle="collapse" th:href="'#panel-subelement-add-'+${team_info.id}"><i class="fa fa-plus" aria-hidden="true"></i><span th:text="#{team.addNewUser}"></span></a>
-                    </div>
-                    <div th:id="'panel-subelement-add-'+${team_info.id}" class="panel-collapse collapse">
-                        <form th:action = "@{/project/{id}/add-team (id=${project.id})}" th:object="${newTeam}" method="post">
-                            <label th:text="#{admin.teamName}"></label>
-                            <input th:field="*{name}" class="form-control" name="name" type="text" placeholder="Teams's name" required="required"/>
-                            <button class="btn btn-success btn-xs" type="submit"><i class="fa fa-plus-square-o" aria-hidden="true"></i><span th:text="#{button.create}"></span></button>
-                        </form>
-                    </div>
-                </div>
             </div>
         </div>
         <div class="col-md-4 left-box padding-15">

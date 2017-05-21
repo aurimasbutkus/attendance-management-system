@@ -93,8 +93,6 @@
                                 <li th:each="project : ${projects}">
                                     <a th:href="@{/project/{id}(id=${project.id})}"><span th:text="${project.name}"></span></a>
                                 </li>
-                                <li class="divider"></li>
-                                <li><a th:href="@{/projects/new}"><i class="fa fa-plus" aria-hidden="true"></i><span th:text="#{admin.newproject}"></span></a></li>
                             </ul>
                         </li>
                         <li class="dropdown">
@@ -122,28 +120,24 @@
     </div>
     <div class="row">
         <div class="col-md-3 left-box">
-            <div class="margin-15">
+            <div class="padding-15">
                 <div class="panel-group margin-10" id="panel-1">
-                    <div>
-                        <ul>
-                            <div class="panel-group">
-                                <div>
-                                    <a class="h3" data-toggle="collapse" href="#panel-element-add"><i class="fa fa-plus" aria-hidden="true"></i><span th:text="#{project.newMessage}"></span></a>
-                                </div>
-                                <div id="panel-element-add" class="panel-collapse collapse">
-                                    <div class="form-group">
-                                        <form th:action = "@{/messages/new}" th:object="${newUserMessage}" method="post" class="new-message-form" style = "display: block">
-                                            <label	th:if="${#fields.hasErrors('receiverUsername')}" th:errors="*{receiverUsername}"></label>
-                                            <input th:field="*{receiverUsername}" type="text" placeholder="Receiver's username"/>
-                                            <input th:field="*{text}" type="text" placeholder="Message"/>
-                                            <input type="submit" value="Send"/>
-                                        </form>
-                                    </div>
-                                </div>
+                    <div class="panel-group">
+                        <div>
+                            <a class="h3" data-toggle="collapse" href="#panel-element-add"><i class="fa fa-plus" aria-hidden="true"></i><span th:text="#{project.newMessage}"></span></a>
+                        </div>
+                        <div id="panel-element-add" class="panel-collapse collapse">
+                            <div class="form-group">
+                                <form th:action = "@{/messages/new}" th:object="${newUserMessage}" method="post" class="new-message-form" style = "display: block">
+                                    <label	th:if="${#fields.hasErrors('receiverUsername')}" th:errors="*{receiverUsername}"></label>
+                                    <input th:field="*{receiverUsername}" type="text" placeholder="Receiver's username"/>
+                                    <input th:field="*{text}" type="text" placeholder="Message"/>
+                                    <input type="submit" value="Send"/>
+                                </form>
                             </div>
-                            <a class="h3" th:href="@{/messages/team/{id}(id=${userTeamId})}">Team Chat</a>
-                        </ul>
+                        </div>
                     </div>
+                    <a class="h3" th:href="@{/messages/team/{id}(id=${userTeamId})}">Team Chat</a>
                     <div>
                         <ul>
                             <li th:each="user : ${users}">

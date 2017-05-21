@@ -32,8 +32,6 @@
                                 <li th:each="project : ${projects}">
                                     <a th:href="@{/project/{id}(id=${project.id})}"><span th:text="${project.name}"></span></a>
                                 </li>
-                                <li class="divider"></li>
-                                <li><a th:href="@{/projects/new}"><i class="fa fa-plus" aria-hidden="true"></i><span th:text="#{admin.newproject}"></span></a></li>
                             </ul>
                         </li>
                         <li class="dropdown">
