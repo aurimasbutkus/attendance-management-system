@@ -4,7 +4,7 @@
 <head>
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
-    <title>EMS Projects Page</title>
+    <title>EMS Chat Page</title>
     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
     <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.min.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
@@ -12,6 +12,7 @@
     <link th:href="@{/css/font-awesome.css}" rel="stylesheet" />
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
     <link th:href="@{/css/style.css}" rel="stylesheet" />
+    <link th:href="@{/css/chat.css}" rel="stylesheet" />
     <script th:src="@{/js/bootstrap.min.js}"></script>
     <script th:src="@{/js/scripts.js}"></script>
     <link  th:href="@{/css/calendar.css}" rel="stylesheet" />
@@ -76,136 +77,158 @@
     </script>
 </head>
 <body>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <nav class="navbar navbar-default align-middle" role="navigation">
-                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        <ul class="nav navbar-nav">
-                            <li><a th:href="@{/index}"><i class="fa fa-home" aria-hidden="true"></i><span th:text="#{admin.home}"></span></a></li>
-                            <li><a th:href="@{/messages}"><i class="fa fa-inbox" aria-hidden="true"></i><span th:text="#{admin.messages}"></span></a></li>
-                            <li><a th:href="@{/team}"><i class="fa fa-users" aria-hidden="true"></i><span th:text="#{admin.team}"></span></a></li>
-                            <li sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/admin}"><i class="fa fa-unlock-alt" aria-hidden="true"></i><span th:text="#{admin.admin}"></span></a></li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-folder" aria-hidden="true"></i><span th:text="#{admin.project}"></span><strong class="caret"></strong></a>
-                                <ul class="dropdown-menu">
-                                    <li th:each="project : ${projects}">
-                                        <a th:href="@{/project/{id}(id=${project.id})}"><span th:text="${project.name}"></span></a>
-                                    </li>
-                                    <li class="divider"></li>
-                                    <li><a th:href="@{/projects/new}"><i class="fa fa-plus" aria-hidden="true"></i><span th:text="#{admin.newproject}"></span></a></li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cog" aria-hidden="true"></i><span th:text="#{admin.options}"></span><strong class="caret"></strong></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">Settings</a></li>
-                                    <li><a href="#">Another action</a></li>
-                                    <li><a href="#">Something else here</a></li>
-                                </ul>
-                            </li>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <nav class="navbar navbar-default align-middle" role="navigation">
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li><a th:href="@{/index}"><i class="fa fa-home" aria-hidden="true"></i><span th:text="#{admin.home}"></span></a></li>
+                        <li><a th:href="@{/messages}"><i class="fa fa-inbox" aria-hidden="true"></i><span th:text="#{admin.messages}"></span></a></li>
+                        <li><a th:href="@{/team}"><i class="fa fa-users" aria-hidden="true"></i><span th:text="#{admin.team}"></span></a></li>
+                        <li sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/admin}"><i class="fa fa-unlock-alt" aria-hidden="true"></i><span th:text="#{admin.admin}"></span></a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-folder" aria-hidden="true"></i><span th:text="#{admin.project}"></span><strong class="caret"></strong></a>
+                            <ul class="dropdown-menu">
+                                <li th:each="project : ${projects}">
+                                    <a th:href="@{/project/{id}(id=${project.id})}"><span th:text="${project.name}"></span></a>
+                                </li>
+                                <li class="divider"></li>
+                                <li><a th:href="@{/projects/new}"><i class="fa fa-plus" aria-hidden="true"></i><span th:text="#{admin.newproject}"></span></a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cog" aria-hidden="true"></i><span th:text="#{admin.options}"></span><strong class="caret"></strong></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Settings</a></li>
+                                <li><a href="#">Another action</a></li>
+                                <li><a href="#">Something else here</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <p class="navbar-text navbar-right margin-15">Signed in as <a href="#" class="navbar-link" th:text="${currentUserName}">_______</a></p>
+                        </li>
+                        <li>
+                            <form th:action="@{/logout}"  method="post">
+                                <button class="navbar-btn btn btn-secondary margin-15" type="submit"><i class="fa fa-sign-out" aria-hidden="true"></i><span th:text="#{admin.signOut}"></span></button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3 left-box">
+            <div class="margin-15">
+                <div class="panel-group margin-10" id="panel-1">
+                    <div>
+                        <ul>
+                            <div class="panel-group">
+                                <div>
+                                    <a class="h3" data-toggle="collapse" href="#panel-element-add"><i class="fa fa-plus" aria-hidden="true"></i><span th:text="#{project.newMessage}"></span></a>
+                                </div>
+                                <div id="panel-element-add" class="panel-collapse collapse">
+                                    <div class="form-group">
+                                        <form th:action = "@{/messages/new}" th:object="${newUserMessage}" method="post" class="new-message-form" style = "display: block">
+                                            <label	th:if="${#fields.hasErrors('receiverUsername')}" th:errors="*{receiverUsername}"></label>
+                                            <input th:field="*{receiverUsername}" type="text" placeholder="Receiver's username"/>
+                                            <input th:field="*{text}" type="text" placeholder="Message"/>
+                                            <input type="submit" value="Send"/>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <a class="h3" th:href="@{/messages/team/{id}(id=${userTeamId})}">Team Chat</a>
                         </ul>
-                        <ul class="nav navbar-nav navbar-right">
-                            <li>
-                                <p class="navbar-text navbar-right margin-15">Signed in as <a href="#" class="navbar-link" th:text="${currentUserName}">_______</a></p>
-                            </li>
-                            <li>
-                                <form th:action="@{/logout}"  method="post">
-                                   <button class="navbar-btn btn btn-secondary margin-15" type="submit"><i class="fa fa-sign-out" aria-hidden="true"></i><span th:text="#{admin.signOut}"></span></button>
-                                </form>
+                    </div>
+                    <div>
+                        <ul>
+                            <li th:each="user : ${users}">
+                                <a th:href="@{/messages/chat/{id}(id=${user.id})}" th:text="${user.username}"></a>
                             </li>
                         </ul>
                     </div>
-                </nav>
+                </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-3 left-box">
-                <div class="margin-15">
-                    <div class="panel-group margin-10" id="panel-1">
-                        <div>
-                            <ul>
-                                <div class="panel-group">
-                                    <div>
-                                        <a class="h3" data-toggle="collapse" href="#panel-element-add"><i class="fa fa-plus" aria-hidden="true"></i><span th:text="#{project.newMessage}"></span></a>
-                                    </div>
-                                    <div id="panel-element-add" class="panel-collapse collapse">
-                                        <div class="form-group">
-                                            <form th:action = "@{/messages/new}" th:object="${newUserMessage}" method="post" class="new-message-form" style = "display: block">
-                                                <label	th:if="${#fields.hasErrors('receiverUsername')}" th:errors="*{receiverUsername}"></label>
-                                                <input th:field="*{receiverUsername}" type="text" placeholder="Receiver's username"/>
-                                                <input th:field="*{text}" type="text" placeholder="Message"/>
-                                                <input type="submit" value="Send"/>
-                                            </form>
-                                        </div>
-                                    </div>
+        <div class="col-md-5 left-box">
+            <div class="panel panel-default">
+                <div class="panel-heading top-bar">
+                    <div class="col-md-8 col-xs-8">
+                        <span class="panel-title glyphicon glyphicon-comment"></span><h3 th:text="${receiverUserName}" class="panel-title"></h3>
+                    </div>
+                </div>
+                <div class="scrollDiv" id="scrollDivID">
+                    <div th:each="message : ${messages}">
+                        <div th:if="${message.getReceiverUsername() == currentUserName}" class="row msg_container base_receive margin-0">
+                            <div class="col-xs-10 col-md-10">
+                                <div class="messages msg_receive pull-left">
+                                    <p th:text="${message.getText()}"></p>
+                                    <time ><span th:text="${message.getDate()+' '+receiverUserName}"></span></time>
                                 </div>
-                                    <a class="h3" th:href="@{/messages/team/{id}(id=${userTeamId})}">Team Chat</a>
-
-                            </ul>
+                            </div>
                         </div>
-
-                        <div>
-                            <ul>
-                                <li th:each="user : ${users}">
-                                    <a th:href="@{/messages/chat/{id}(id=${user.id})}" th:text="${user.username}"></a>
-                                </li>
-                            </ul>
+                        <div th:if="${message.getReceiverUsername() == receiverUserName}" class="row msg_container base_sent margin-0">
+                            <div class="col-xs-10 col-md-10">
+                                <div class="messages msg_sent pull-right">
+                                    <p th:text="${message.getText()}"></p>
+                                    <time ><span th:text="${message.getDate()+' '+currentUserName}"></span></time>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-5 left-box">
-                <div>
-                    <ul>
-                        <li th:each="message : ${messages}">
-                            <a th:text="${message.formattedText}"></a>
-                        </li>
-                    </ul>
+            <div class="panel-footer">
+                <div class="input-group">
                     <form th:action = "@{/messages/chat/{id}(id=${receiver})}" th:object="${newMessage}" method="post" class="new-message-form" style = "display: block">
-                        <input th:field="*{text}" type="text" placeholder="Message"/>
-                        <input type="submit" value="Send"/>
+                        <input th:field="*{text}" type="text" class="form-control input-sm chat_input" placeholder="Write your message here..." />
+                        <span class="input-group-btn">
+                                <button class="btn btn-primary btn-sm" id="btn-chat">Send</button>
+                            </span>
                     </form>
                 </div>
             </div>
-            <div class="col-md-3 right-box pull-right">
-                <div align="center" id="calendar"></div>
-                <div align="center">
-                    <p id="task-description"></p>
-                </div>
+        </div>
+        <div class="col-md-3 right-box pull-right">
+            <div align="center" id="calendar"></div>
+            <div align="center">
+                <p id="task-description"></p>
             </div>
         </div>
     </div>
-    <script th:inline="javascript">
+</div>
+<script th:inline="javascript">
 
-        function findDeadlines() {
-            //<![CDATA[
-            var tasks = [[${tasks}]];
+    function findDeadlines() {
+        //<![CDATA[
+        var tasks = [[${tasks}]];
+        for (var i = 0; i < tasks.length; i++) {
+            var fullDate = new Date(tasks[i].deadline);
+            var month = parseInt(fullDate.getMonth()) + 1;
+            var date = fullDate.getFullYear() + "-" + (month < 10 ? "0" + month : month) + "-" + fullDate.getDate();
+            $("td[data-day='" + date + "']").addClass("deadline-day");
+
+        }
+        $("td.deadline-day").click(function () {
             for (var i = 0; i < tasks.length; i++) {
                 var fullDate = new Date(tasks[i].deadline);
                 var month = parseInt(fullDate.getMonth()) + 1;
                 var date = fullDate.getFullYear() + "-" + (month < 10 ? "0" + month : month) + "-" + fullDate.getDate();
-                $("td[data-day='" + date + "']").addClass("deadline-day");
+                if(date == $(this).data("day")) {
+                    $("#task-description").html(tasks[i].description);
+                }
 
             }
-            $("td.deadline-day").click(function () {
-                for (var i = 0; i < tasks.length; i++) {
-                    var fullDate = new Date(tasks[i].deadline);
-                    var month = parseInt(fullDate.getMonth()) + 1;
-                    var date = fullDate.getFullYear() + "-" + (month < 10 ? "0" + month : month) + "-" + fullDate.getDate();
-                    if(date == $(this).data("day")) {
-                        $("#task-description").html(tasks[i].description);
-                    }
-
-                }
-            });
-            //]]>
-        }
-
-        $(document).ready(function (){
-            findDeadlines();
         });
-
-    </script>
+        //]]>
+    }
+    $(document).ready(function (){
+        findDeadlines();
+    });
+</script>
 </body>
 </html>

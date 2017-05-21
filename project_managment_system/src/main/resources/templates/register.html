@@ -21,7 +21,8 @@
                 <label th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></label>
                 <input th:field="*{password}" type="password" placeholder="password"/>
                 <input type="submit" value="create"/>
-                <p class="message">Already registered? <a th:href="@{/login}">Sign In</a></p>
+
+                <p th:text="#{login.loginNew}" class="message"><a th:href="@{/login}" th:text="#{login.signIn}"></a></p>
             </form>
         </div>
     </div>

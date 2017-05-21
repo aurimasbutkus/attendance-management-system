@@ -67,7 +67,7 @@ public class MessagesController {
         int userId = userService.getIdByUsername(authentication.getName());
         List<Message> messages = messageService.listAllMessagesWith(userId, id);
         for(Message message : messages){
-            message.getFormattedText(userService);
+            message.setReceiverUsername(userService.getUser(message.getFkAccountReceiver()).getUsername());
         }
         int teamId = userService.getUser(userId).getFkTeam();
         List<User> users = messageService.listAllInteractedUsers(userId);
@@ -78,6 +78,7 @@ public class MessagesController {
         model.addAttribute("newMessage", new Message());
         model.addAttribute("newUserMessage", new Message());
         model.addAttribute("currentUserName", authentication.getName());
+        model.addAttribute("receiverUserName",  userService.getUser(id).getUsername());
         model.addAttribute("tasks", projectService.listAllTasks());
         model.addAttribute("projects", projectService.listAllUserProjects(userId));
         return "/messages/chat";
@@ -92,16 +93,22 @@ public class MessagesController {
 
     @GetMapping(value="messages/team/{id}")
     public String showTeamChat(Model model, @PathVariable("id") int id, Authentication authentication){
+
         int userId = userService.getIdByUsername(authentication.getName());
         List<TeamMessage> messages = messageService.listAllTeamMessages(userService.getUser(userId).getFkTeam());
         for(TeamMessage message : messages){
-            message.getFormattedText(userService, teamService);
+            message.setSenderUsername(userService.getUser(message.getFkAccountSender()).getUsername());
         }
+        int teamId = userService.getUser(userId).getFkTeam();
+        List<User> users = messageService.listAllInteractedUsers(userId);
+        model.addAttribute("users", users);
+        model.addAttribute("userTeamId", teamId);
         model.addAttribute("messages", messages);
-        model.addAttribute("currentUserName", authentication.getName());
         model.addAttribute("receiver", id);
-        model.addAttribute("newMessage", new TeamMessage());
+        model.addAttribute("newMessage", new Message());
         model.addAttribute("newUserMessage", new Message());
+        model.addAttribute("currentUserName", authentication.getName());
+        model.addAttribute("teamName",  teamService.getTeamById(id).getName());
         model.addAttribute("tasks", projectService.listAllTasks());
         model.addAttribute("projects", projectService.listAllUserProjects(userId));
         return "/messages/team";

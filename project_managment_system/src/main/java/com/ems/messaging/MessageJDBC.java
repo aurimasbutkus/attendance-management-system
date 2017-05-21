@@ -56,7 +56,7 @@ public class MessageJDBC implements MessageService{
 
     @Override
     public List<Message> listAllMessagesWith(Integer userId, Integer receiverId) {
-        String SQL = "select distinct private_message.id, private_message.text, private_message.date, private_message.fk_account_sender, private_message.fk_account_receiver from private_message, account where (private_message.fk_account_receiver = ? AND private_message.fk_account_sender = ?) OR (private_message.fk_account_receiver = ? AND private_message.fk_account_sender = ?) order by id desc";
+        String SQL = "select distinct private_message.id, private_message.text, private_message.date, private_message.fk_account_sender, private_message.fk_account_receiver from private_message, account where (private_message.fk_account_receiver = ? AND private_message.fk_account_sender = ?) OR (private_message.fk_account_receiver = ? AND private_message.fk_account_sender = ?) order by id asc";
         return jdbcTemplateObject.query(SQL, new MessageMapper(), userId, receiverId, receiverId, userId);
     }
     @Override
@@ -91,7 +91,7 @@ public class MessageJDBC implements MessageService{
 
     @Override
     public List<TeamMessage> listAllTeamMessages(Integer fkTeam) {
-        String SQL = "select distinct team_message.id, team_message.text, team_message.date, team_message.fk_account_sender, team_message.fk_team_receiver from team_message, account where team_message.fk_team_receiver = ? order by id desc";
+        String SQL = "select distinct team_message.id, team_message.text, team_message.date, team_message.fk_account_sender, team_message.fk_team_receiver from team_message, account where team_message.fk_team_receiver = ? order by id asc";
         return jdbcTemplateObject.query(SQL, new TeamMessageMapper(), fkTeam);
     }
 }

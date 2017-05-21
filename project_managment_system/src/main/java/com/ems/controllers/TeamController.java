@@ -73,14 +73,4 @@ public class TeamController {
         teamService.removeMemberFromTeam(user_id);
         return "redirect:/team";
     }
-
-    @GetMapping(value="team/new")
-    public String teamCreation( Model model, Authentication authentication){
-        model.addAttribute("newTeam", new Team());
-        String username = authentication.getName();
-        Integer userId = userService.getUser(username).getId();
-        model.addAttribute("projects", projectService.listAllUserProjects(userId));
-        return "team-creation";
-    }
-
 }

@@ -19,7 +19,7 @@
             <input th:field="*{username}" name="username" type="text" placeholder="username"/>
             <input th:field="*{password}" name="password" type="password" placeholder="password"/>
             <input type="submit" value="login"/>
-            <p class="message">Don't have an account? <a th:href="@{/register}">Register</a></p>
+            <p th:text="#{login.createNew}" class="message"><a th:href="@{/register}" th:text="#{login.register}"></a></p>
         </form>
     </div>
 </div>

@@ -84,16 +84,7 @@
                         <ul class="nav navbar-nav">
                             <li><a th:href="@{/index}"><i class="fa fa-home" aria-hidden="true"></i><span th:text="#{admin.home}"></span></a></li>
                             <li><a th:href="@{/messages}"><i class="fa fa-inbox" aria-hidden="true"></i><span th:text="#{admin.messages}"></span></a></li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-users" aria-hidden="true"></i><span th:text="#{admin.team}"></span><strong class="caret"></strong></a>
-                                <ul class="dropdown-menu">
-                                    <li >
-                                        <a th:href="@{/team}"><i class="fa fa-users" aria-hidden="true"></i><span th:text="#{admin.team}"></span></a>
-                                    </li>
-                                    <li class="divider"></li>
-                                    <li><a th:href="@{/team/new}"><i class="fa fa-plus" aria-hidden="true"></i><span th:text="#{admin.newteam}"></span></a></li>
-                                </ul>
-                            </li>
+                            <li><a th:href="@{/team}"><i class="fa fa-users" aria-hidden="true"></i><span th:text="#{admin.team}"></span></a></li>
                             <li sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/admin}"><i class="fa fa-unlock-alt" aria-hidden="true"></i><span th:text="#{admin.admin}"></span></a></li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-folder" aria-hidden="true"></i><span th:text="#{admin.project}"></span><strong class="caret"></strong></a>
@@ -151,13 +142,11 @@
                                 </form>
                             </div>
                         </div>
-
-                                <form th:action = "@{/project/{id}/add-team (id=${project.id})}" th:object="${newTeam}" method="post">
-                                    <label th:text="#{admin.teamName}"></label>
-                                    <input th:field="*{name}" class="form-control" name="name" type="text" placeholder="Teams's name" required="required"/>
-                                    <button class="btn btn-success btn-xs" type="submit"><i class="fa fa-plus-square-o" aria-hidden="true"></i><span th:text="#{button.create}"></span></button>
-                                </form>
-
+                        <form th:action = "@{/project/{id}/add-team (id=${project.id})}" th:object="${newTeam}" method="post">
+                            <label th:text="#{admin.teamName}"></label>
+                            <input th:field="*{name}" class="form-control" name="name" type="text" placeholder="Teams's name" required="required"/>
+                            <button class="btn btn-success btn-xs" type="submit"><i class="fa fa-plus-square-o" aria-hidden="true"></i><span th:text="#{button.create}"></span></button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -199,7 +188,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="col-md-5">
                 <h2>Project's teams</h2>
                 <div class="panel-group margin-10">
@@ -215,7 +203,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="col-md-3 right-box pull-right">
                 <div align="center" id="calendar"></div>
                 <div align="center">

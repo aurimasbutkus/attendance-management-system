@@ -19,6 +19,8 @@ public class TeamMessage {
     @Transient
     public String formattedText;
 
+    @Transient
+    private String senderUsername;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
@@ -83,6 +85,13 @@ public class TeamMessage {
         this.fkAccountSender = fkAccountSender;
     }
 
+    public String getSenderUsername() {
+        return senderUsername;
+    }
+
+    public void setSenderUsername(String senderUsername) {
+        this.senderUsername = senderUsername;
+    }
     public void getFormattedText(UserService userService, TeamService teamService){
         formattedText = date.toString() + " | " + userService.getUsernameById(fkAccountSender) + " -> " + teamService.getTeamById(fkTeamReceiver).getName() + " | " + text;
     }

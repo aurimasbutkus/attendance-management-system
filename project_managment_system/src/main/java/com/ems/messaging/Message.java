@@ -78,6 +78,11 @@ public class Message {
 
     public String getReceiverUsername(UserService userService) { return userService.getUsernameById(fkAccountReceiver); }
 
+    public void setReceiverUsername(String receiverUsername)
+    {
+        this.receiverUsername = receiverUsername;
+    }
+
     public void getFormattedText(UserService userService){
         formattedText = date.toString() + " | " + getSenderUsername(userService) + " -> " + getReceiverUsername(userService) + " | " + text;
     }
@@ -96,10 +101,6 @@ public class Message {
 
     public String getReceiverUsername() {
         return receiverUsername;
-    }
-
-    public void setReceiverUsername(String receiverUsername) {
-        this.receiverUsername = receiverUsername;
     }
 
     @Override
