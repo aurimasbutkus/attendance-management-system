@@ -2,6 +2,7 @@ package com.ems;
 
 import com.ems.projectsinfo.Project;
 import com.ems.projectsinfo.ProjectJDBC;
+import com.ems.projectsinfo.Task;
 import com.ems.teaminfo.Team;
 import com.ems.teaminfo.TeamJDBC;
 import com.ems.userinfo.User;
@@ -18,11 +19,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.Date;
 
 /**
- * Created by Martynas on 5/17/2017.
+ * Created by MARTYNAS on 17/05/21.
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class TeamTests extends AbstractTransactionalJUnit4SpringContextTests {
+public class TaskTests extends AbstractTransactionalJUnit4SpringContextTests {
     @Autowired
     private UserJDBC sqlUser;
     @Autowired
@@ -33,6 +34,7 @@ public class TeamTests extends AbstractTransactionalJUnit4SpringContextTests {
     private Project project;
     private User user;
     private Team team;
+    private Task task;
 
     @Before
     public void setUp() throws Exception {
@@ -41,40 +43,14 @@ public class TeamTests extends AbstractTransactionalJUnit4SpringContextTests {
         project = new Project("Projektas","Aprašymas", new Date(System.currentTimeMillis()));
         team = new Team("Komanda","Komandos aprašymas");
         team.setId(1);
+        sqlProject.create(project);
+        task = new Task("Aprasymas", new Date(System.currentTimeMillis()),
+                new Date(System.currentTimeMillis()), sqlProject.getProject("Projektas").getId());
     }
 
     @Test
-    public void createNewTeam(){
-        sqlTeam.createNewTeam(team);
-        Assert.assertEquals("Komanda",sqlTeam.getTeamByName("Komanda").getName());
+    public void createNewTask(){
+        sqlProject.create(task);
+        Assert.assertEquals("Aprasymas",sqlProject.getTask("Aprasymas").getDescription());
     }
-
-    @Test
-    public void getTeamById(){
-        sqlTeam.createNewTeam(team);
-        Team newTeam = sqlTeam.getTeamByName("Komanda");
-        Assert.assertNotNull(sqlTeam.getTeamById(newTeam.getId()));
-    }
-
-    @Test
-    public void getTeamByName(){
-        sqlTeam.createNewTeam(team);
-        Team newTeam = sqlTeam.getTeamByName("Komanda");
-        Assert.assertEquals("Komanda", newTeam.getName());
-    }
-
-    @Test
-    public void getTeamByName_BadName(){
-        sqlTeam.createNewTeam(team);
-        Team newTeam = sqlTeam.getTeamByName("Neratokio");
-        Assert.assertNull(newTeam);
-    }
-
-    @Test
-    public void getTeamById_BadId(){
-        sqlTeam.createNewTeam(team);
-        Team newTeam = sqlTeam.getTeamById(-55);
-        Assert.assertNull(newTeam);
-    }
-
 }

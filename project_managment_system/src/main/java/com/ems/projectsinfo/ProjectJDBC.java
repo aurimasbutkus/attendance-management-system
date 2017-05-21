@@ -191,6 +191,17 @@ public class ProjectJDBC implements ProjectService {
     }
 
     @Override
+    public Task getTask(String desc) {
+        String SQL = "select * from task where description = ?";
+        try {
+            return jdbcTemplateObject.queryForObject(SQL, new Object[]{desc}, new TaskMapper());
+        }
+        catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
+
+    @Override
     public Subtask getSubtask(Integer id) {
         String SQL = "select * from subtask where id = ?";
         try {
