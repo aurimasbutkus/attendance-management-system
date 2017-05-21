@@ -18,6 +18,13 @@ public class Role {
     @Column(name="role")
     private String role;
 
+    public Role() {
+    }
+    public Role(String username, String role) {
+        this.username = username;
+        this.role = role;
+    }
+
     public String getUsername() {
         return username;
     }

@@ -17,12 +17,11 @@ public interface UserService {
     Integer getIdByUsername(String name);
     String getUsernameById(Integer id);
 
-    List<User> listAllUsers();
+    List<User> getUserList();
 
     void delete(Integer id);
     void delete(String username);
 
-    void updateRole(String username, Integer role);
     void updateInfo(String username, Date dateOfBirth, String phoneNumber, Integer gender, String nationality);
     void updateEverything(User user);
     boolean userExists(Integer id);

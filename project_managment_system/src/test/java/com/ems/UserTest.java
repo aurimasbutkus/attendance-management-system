@@ -10,6 +10,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class UserTest extends AbstractTransactionalJUnit4SpringContextTests {
@@ -51,5 +54,20 @@ public class UserTest extends AbstractTransactionalJUnit4SpringContextTests {
 	public void getUser_Null() {
 		User testUser = sql.getUser("badName");
 		Assert.assertNull(testUser);
+	}
+	@Test
+	public void getUserList() {
+		boolean success = false;
+		sql.create("List1", "Password123", "test@test.com", "Name", "Last name");
+		sql.create("List3", "Password123", "test@test.com", "Name", "Last name");
+		sql.create("List2", "Password123", "test@test.com", "Name", "Last name");
+		List<String> names = new ArrayList<>();
+		List<User> userArrayList = sql.getUserList();
+		for (User user : userArrayList) {
+			names.add(user.getUsername());
+		}
+		if(names.contains("List1") && names.contains("List2") && names.contains("List3"))
+			success = true;
+		Assert.assertTrue(success);
 	}
 }

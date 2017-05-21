@@ -109,7 +109,7 @@ public class UserJDBC implements UserService {
         }
     }
     @Override
-    public List<User> listAllUsers() {
+    public List<User> getUserList() {
         String SQL = "select * from account";
         return jdbcTemplateObject.query(SQL, new UserMapper());
     }
@@ -124,12 +124,6 @@ public class UserJDBC implements UserService {
         String SQL = "delete from account where username = ?";
         jdbcTemplateObject.update(SQL, username);
         System.out.println("Deleted Record with username = " + username );
-    }
-    @Override
-    public void updateRole(String username, Integer role){
-        String SQL = "update account set user_role = ? where id = ?";
-        jdbcTemplateObject.update(SQL, role, username);
-        System.out.println("Updated role with username = " + username );
     }
     @Override
     public void updateInfo(String username, Date dateOfBirth, String phoneNumber, Integer gender, String nationality){

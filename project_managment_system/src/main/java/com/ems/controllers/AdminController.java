@@ -53,7 +53,7 @@ public class AdminController {
     }    
     @RequestMapping(value="/admin/user", method = RequestMethod.GET)
     public String user(Model model) {
-        model.addAttribute("users", userService.listAllUsers());
+        model.addAttribute("users", userService.getUserList());
         return "admin/user";
     }    
     @GetMapping(value = "/admin/user/{id}")
