@@ -94,4 +94,36 @@ public class MessageJDBC implements MessageService{
         String SQL = "select distinct team_message.id, team_message.text, team_message.date, team_message.fk_account_sender, team_message.fk_team_receiver from team_message, account where team_message.fk_team_receiver = ? order by id asc";
         return jdbcTemplateObject.query(SQL, new TeamMessageMapper(), fkTeam);
     }
+
+    @Override
+    public boolean messageExists(Integer id) {
+        String SQL = "select * from private_message where id = ?";
+        try {
+             return jdbcTemplateObject.queryForObject(SQL, new Object[]{id}, new MessageMapper()).getId() == id;
+        }
+        catch (EmptyResultDataAccessException e) {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean messageExists(String text) {
+        String SQL = "select * from private_message where text = ?";
+        try {
+            return jdbcTemplateObject.queryForObject(SQL, new Object[]{text}, new MessageMapper()).getText().equals(text);
+        }
+        catch (EmptyResultDataAccessException e) {
+            return false;
+        }
+    }
+
+    private boolean validate(String SQL, Object o){
+        try {
+            jdbcTemplateObject.queryForObject(SQL, new Object[]{o}, new MessageMapper());
+            return true;
+        }
+        catch (EmptyResultDataAccessException e) {
+            return false;
+        }
+    }
 }
