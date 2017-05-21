@@ -5,6 +5,7 @@ import com.ems.projectsinfo.ProjectMapper;
 import com.ems.userinfo.User;
 import com.ems.userinfo.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -27,14 +28,24 @@ public class TeamJDBC implements TeamService {
 
     @Override
     public Team getTeamByUser(Integer id) {
-        String SQL = "select team.* from team, account where account.fk_Team = team.id and account.id = ?";
-        return jdbcTemplateObject.queryForObject(SQL, new Object[]{id}, new TeamMapper());
+        try {
+            String SQL = "select team.* from team, account where account.fk_Team = team.id and account.id = ?";
+            return jdbcTemplateObject.queryForObject(SQL, new Object[]{id}, new TeamMapper());
+        }
+        catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     @Override
     public Team getTeamByName(String name) {
-        String SQL = "select * from team where team.name = ?";
-        return jdbcTemplateObject.queryForObject(SQL, new Object[]{name}, new TeamMapper());
+        try {
+            String SQL = "select * from team where team.name = ?";
+            return jdbcTemplateObject.queryForObject(SQL, new Object[]{name}, new TeamMapper());
+        }
+        catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     @Override
@@ -55,14 +66,24 @@ public class TeamJDBC implements TeamService {
 
     @Override
     public Team getTeamById(Integer id) {
-        String SQL = "select team.* from team where team.id = ?";
-        return jdbcTemplateObject.queryForObject(SQL, new Object[]{id}, new TeamMapper());
+        try {
+            String SQL = "select team.* from team where team.id = ?";
+            return jdbcTemplateObject.queryForObject(SQL, new Object[]{id}, new TeamMapper());
+        }
+        catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     @Override
     public List<Project> getProjects(Integer id) {
-        String SQL = "select project.* from team, project, project_teams where team.id = ? and project_teams.fk_Team = team.id and project_teams.fk_Project = project.id";
-        return jdbcTemplateObject.query(SQL, new Object[]{id}, new ProjectMapper());
+        try {
+            String SQL = "select project.* from team, project, project_teams where team.id = ? and project_teams.fk_Team = team.id and project_teams.fk_Project = project.id";
+            return jdbcTemplateObject.query(SQL, new Object[]{id}, new ProjectMapper());
+        }
+        catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     @Override
