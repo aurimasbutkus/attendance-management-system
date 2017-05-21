@@ -69,6 +69,20 @@
                         <a th:href="@{/project/{id}(id=${project.id})}" th:text="${project.name}"></a>
                     </li>
                 </ul>
+                <div sec:authorize="hasAnyAuthority('ADMIN', 'MANAGER')" class="panel-group">
+                    <div>
+                        <a class="panel-title" data-toggle="collapse" href="#panel-element-addTeam"><i class="fa fa-plus" aria-hidden="true"></i><span th:text="#{project.addProjectToTeam}"></span></a>
+                    </div>
+                    <div id="panel-element-addTeam" class="panel-collapse collapse">
+                        <div class="form-group">
+                            <form th:action = "@{/team/addProject/{id} (id=${team_info.id})}" th:object="${newProject}" method="post">
+                                <label th:text="#{admin.teamName}"></label>
+                                <input th:field="*{name}" class="form-control" name="name" type="text" placeholder="Project name" required="required"/>
+                                <button class="btn btn-success btn-xs" type="submit"><i class="fa fa-plus-square-o" aria-hidden="true"></i><span th:text="#{button.create}"></span></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="col-md-4 left-box padding-15">

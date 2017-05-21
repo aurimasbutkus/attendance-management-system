@@ -1,5 +1,6 @@
 package com.ems.controllers;
 
+import com.ems.projectsinfo.Project;
 import com.ems.projectsinfo.ProjectService;
 import com.ems.teaminfo.Team;
 import com.ems.teaminfo.TeamService;
@@ -30,12 +31,6 @@ public class TeamController {
     @Autowired
     private ProjectService projectService;
 
-    @Autowired
-    private TeamValidator teamValidator;
-
-    @Autowired
-    private org.springframework.context.MessageSource messageSource;
-
     @RequestMapping(value="team")
     public String team(Model model, Authentication authentication){
         String username = authentication.getName();
@@ -45,6 +40,7 @@ public class TeamController {
         model.addAttribute("projects", projectService.listAllUserProjects(user_id));
         model.addAttribute("members", teamService.getMembers(team.getId()));
         model.addAttribute("newMember", new User());
+        model.addAttribute("newProject", new Project());
         model.addAttribute("team_info", team);
         model.addAttribute("team_projects", teamService.getProjects(team.getId()));
         model.addAttribute("tasks", projectService.listAllTasks());
@@ -65,6 +61,15 @@ public class TeamController {
         teamService.addMemberToTeam(team_id, user.getId());
         model.addAttribute("members", teamService.getMembers(team.getId()));
         return "team";
+    }
+    @PostMapping(value="team/addProject/{id}")
+    public String addProjectToTeam(@ModelAttribute("newProject") Project newProject, @PathVariable("id") Integer team_id, BindingResult bindingResult,
+                                  Model model, Authentication authentication)
+    {
+        Project project = projectService.getProject(newProject.getName());
+        if(project == null) return team(model, authentication);
+        projectService.assignTeamToProject(team_id, project.getId());
+        return "redirect:/team";
     }
 
     @RequestMapping(value="team/removeMember/{id}", method = RequestMethod.POST)
