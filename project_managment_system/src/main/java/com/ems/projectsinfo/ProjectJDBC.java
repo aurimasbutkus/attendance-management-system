@@ -32,22 +32,22 @@ public class ProjectJDBC implements ProjectService {
     }
 
     @Override
-    public void create(String name, String description, Date start_date) {
+    public void create(String name, String description, Date startDate) {
         if(!projectExists(name)){
-            if(start_date == null) start_date = new Date(System.currentTimeMillis());
+            if(startDate == null) startDate = new Date(System.currentTimeMillis());
             String SQL = "insert into project (name, description, start_date, deadline) values (?, ?, ?, ?)";
-            jdbcTemplateObject.update( SQL, name, description, start_date, null);
+            jdbcTemplateObject.update( SQL, name, description, startDate, null);
             System.out.println("Created Project = " + name);
         }
         else System.out.println("Project name already exists! = " + name);
     }
 
     @Override
-    public void create(String name, String description, Date start_date, Date deadline) {
+    public void create(String name, String description, Date startDate, Date deadline) {
         if(!projectExists(name)){
-            if(start_date == null) start_date = new Date(System.currentTimeMillis());
+            if(startDate == null) startDate = new Date(System.currentTimeMillis());
             String SQL = "insert into project (name, description, start_date, deadline) values (?, ?, ?, ?)";
-            jdbcTemplateObject.update( SQL, name, description, start_date, deadline);
+            jdbcTemplateObject.update( SQL, name, description, startDate, deadline);
             System.out.println("Created Project = " + name);
         }
         else System.out.println("Project name already exists! = " + name);

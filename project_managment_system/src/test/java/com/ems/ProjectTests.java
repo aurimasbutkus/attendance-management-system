@@ -21,8 +21,7 @@ import java.sql.Date;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class ProjectTests extends AbstractTransactionalJUnit4SpringContextTests {
-    @Autowired
-    private UserJDBC sqlUser;
+
     @Autowired
     private ProjectJDBC sqlProject;
 

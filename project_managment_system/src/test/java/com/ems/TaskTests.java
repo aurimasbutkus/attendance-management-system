@@ -25,11 +25,7 @@ import java.util.Date;
 @SpringBootTest
 public class TaskTests extends AbstractTransactionalJUnit4SpringContextTests {
     @Autowired
-    private UserJDBC sqlUser;
-    @Autowired
     private ProjectJDBC sqlProject;
-    @Autowired
-    private TeamJDBC sqlTeam;
 
     private Project project;
     private User user;

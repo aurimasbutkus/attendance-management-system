@@ -10,8 +10,8 @@ import java.util.List;
  */
 public interface ProjectService {
 
-    void create(String name, String description, Date start_date, Date end_date);
-    void create(String name, String description, Date start_date);
+    void create(String name, String description, Date startDate, Date endDate);
+    void create(String name, String description, Date startDate);
     void create(Project project);
 
     void create(Task task);

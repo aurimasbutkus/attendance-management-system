@@ -21,16 +21,12 @@ import java.sql.Date;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class MessageTests extends AbstractTransactionalJUnit4SpringContextTests {
-    //@Autowired
-   // private UserJDBC sqlUser;
     @Autowired
     private MessageJDBC sqlMessage;
-   // private User user;
     private Message message;
     private Date date;
     @Before
     public void setUp() throws Exception {
-        //user = new User("Test", "Password123@test.com", "test@test.com", "Name", "Last name");
         message = new Message("Testas", 14,14);
         date = new Date(System.currentTimeMillis());
         message.setDate(date);

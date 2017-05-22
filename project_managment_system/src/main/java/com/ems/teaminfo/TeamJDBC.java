@@ -49,19 +49,19 @@ public class TeamJDBC implements TeamService {
     }
 
     @Override
-    public void addMemberToTeam(Integer team_id, Integer member_id)
+    public void addMemberToTeam(Integer teamId, Integer memberId)
     {
         String SQL = "update account set account.fk_Team = ? where account.id = ?";
-        jdbcTemplateObject.update(SQL, team_id, member_id);
-        System.out.println("Added user with id " + member_id + " to team with id " + team_id);
+        jdbcTemplateObject.update(SQL, teamId, memberId);
+        System.out.println("Added user with id " + memberId + " to team with id " + teamId);
     }
 
     @Override
-    public void removeMemberFromTeam(Integer member_id)
+    public void removeMemberFromTeam(Integer memberId)
     {
         String SQL = "update account set account.fk_Team = null where account.id = ?";
-        jdbcTemplateObject.update(SQL, member_id);
-        System.out.println("Removed user with id " + member_id + " from team ");
+        jdbcTemplateObject.update(SQL, memberId);
+        System.out.println("Removed user with id " + memberId + " from team ");
     }
 
     @Override

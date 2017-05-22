@@ -94,14 +94,6 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cog" aria-hidden="true"></i><span th:text="#{admin.options}"></span><strong class="caret"></strong></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">Settings</a></li>
-                                    <li><a href="#">Another action</a></li>
-                                    <li><a href="#">Something else here</a></li>
-                                </ul>
-                            </li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <li>
@@ -146,9 +138,9 @@
                         <div id="panel-element-addTeam" class="panel-collapse collapse">
                             <div class="form-group">
                                 <form th:action = "@{/project/{id}/add-team (id=${project.id})}" th:object="${newTeam}" method="post">
-                                    <label th:text="#{admin.teamName}"></label>
+                                    <label th:text="#{project.addNewTeamToProject}"></label>
                                     <input th:field="*{name}" class="form-control" name="name" type="text" placeholder="Teams's name" required="required"/>
-                                    <button class="btn btn-success btn-xs" type="submit"><i class="fa fa-plus-square-o" aria-hidden="true"></i><span th:text="#{button.create}"></span></button>
+                                    <button class="btn btn-success btn-xs" type="submit"><i class="fa fa-plus-square-o" aria-hidden="true"></i><span th:text="#{button.add}"></span></button>
                                 </form>
                             </div>
                         </div>
